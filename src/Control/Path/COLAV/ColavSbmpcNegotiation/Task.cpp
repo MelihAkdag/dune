@@ -420,8 +420,6 @@ namespace Control
             //  return;
             m_des_speed = msg->value;
             m_des_speed_units = msg->speed_units;
-            //des_speed.value = msg->value;
-            std::cout<< "SPEED DESIRED: " << des_speed.value << std::endl;
           }
 
 
@@ -463,27 +461,23 @@ namespace Control
             intention_to_send.cog_int = Angles::normalizeRadian(ref + psi_os);
             intention_to_send.sog_int = m_des_speed * u_os;
             intention_to_send.state = 0.0;
-            dispatch(intention_to_send);
-            //std::cout << intention_to_send.mmsi << " " << intention_to_send.cog_int << " " << intention_to_send.sog_int << " " << intention_to_send.state << " end " << std::endl;
-            std::cout << "HEYOOOO SENDING NEGOTIATION DATA!" << std::endl;
+            dispatch(intention_to_send, DF_LOOP_BACK);
           }
 
 
           void
           consume(const IMC::NegotiationData* msg)
           {
-            //for(unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
-            //{
-            //    if(m_dyn_obst_state(n, 9) == std::stoi(msg->mmsi))
-            //    {
-            //        std::cout << m_dyn_obst_state(n, 9) << msg->mmsi << std::endl;
-            //    }
-            //}
-            //m_dyn_obst_mmsi = msg->mmsi;
-            //m_dyn_obst_cog_int = msg->cog_int;
-            //m_dyn_obst_sog_int = msg->sog_int;
-            //m_dyn_obst_state = msg->state;
-            std::cout << "HEYOOOO RECEIVED NEGOTIATION DATA" << msg->mmsi << std::endl;
+            for(unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            {
+                if(m_dyn_obst_state(n, 9) == std::stoi(msg->mmsi))
+                {
+                    m_dyn_obst_state(n, 10) = msg->cog_int; // Intended COG
+                    m_dyn_obst_state(n, 11) = msg->sog_int; // Intended SOG
+                    m_dyn_obst_state(n, 12) = msg->state;   // Negotiation state
+                    spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(msg->mmsi), Angles::degrees(msg->cog_int), msg->sog_int, msg->state);
+                }
+            }
           }
 
 
@@ -558,7 +552,6 @@ namespace Control
             {
               sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
               publish_negotiation_data(ref, psi_os, u_os);
-              spew("Psi off: %.0f U off: %.2f", Angles::degrees(psi_os), u_os);
             }
             
             double m_des_speed_ = m_des_speed * u_os;
@@ -569,13 +562,6 @@ namespace Control
             m_heading.value = Angles::normalizeRadian(ref + psi_os);
             m_heading.off = Angles::degrees(psi_os);
             dispatch(m_heading);
-
-            //intention_to_send.mmsi = m_mmsi;
-            //intention_to_send.cog_int = m_heading.value;
-            //intention_to_send.sog_int = des_speed.value;
-            //intention_to_send.state = "0";
-            //dispatch(intention_to_send);
-            //std::cout << intention_to_send.mmsi << " " << intention_to_send.cog_int << " " << intention_to_send.sog_int << " " << intention_to_send.state << " end " << std::endl;
           }
 
 

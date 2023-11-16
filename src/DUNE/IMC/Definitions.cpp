@@ -28,7 +28,7 @@
 //***************************************************************************
 // Automatically generated.                                                 *
 //***************************************************************************
-// IMC XML MD5: 86c7ceace2a6f6239ea89a0e5bc64a3f                            *
+// IMC XML MD5: bc2765321262233e448a7c647616f5da                            *
 //***************************************************************************
 
 // ISO C++ 98 headers.
@@ -31325,7 +31325,7 @@ namespace DUNE
       mmsi.clear();
       cog_int = 0;
       sog_int = 0;
-      state.clear();
+      state = 0;
     }
 
     bool
@@ -31374,7 +31374,7 @@ namespace DUNE
       bfr__ += IMC::reverseDeserialize(mmsi, bfr__, size__);
       bfr__ += IMC::reverseDeserialize(cog_int, bfr__, size__);
       bfr__ += IMC::reverseDeserialize(sog_int, bfr__, size__);
-      bfr__ += IMC::reverseDeserialize(state, bfr__, size__);
+      bfr__ += IMC::deserialize(state, bfr__, size__);
       return bfr__ - start__;
     }
 
