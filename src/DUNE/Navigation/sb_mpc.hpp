@@ -65,7 +65,7 @@ namespace DUNE
 	void create(double T, double DT, double P, double Q, double D_CLOSE, double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, 
 							double PHI_HO, double PHI_CR, double KAPPA, double K_P, double K_CHI, double K_DP, double K_DCHI_SB, double K_DCHI_P, double K_CHI_SB, double K_CHI_P);
 	
-	void getBestControlOffset(double &u_os_best, double &psi_os_best, double u_d, double psi_d, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
+	std::tuple<double, double, double> getBestControlOffset(double &u_os_best, double &psi_os_best, double u_d, double psi_d, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
 
 	/**
 	 * @brief  Returns the simulation time (prediction horizon) [sec].
@@ -157,6 +157,15 @@ namespace DUNE
 	double getKChiSB();
 	double getKChiP();
 
+	Eigen::VectorXd Chi_ca_;
+	Eigen::VectorXd P_ca_;
+	double cost_;
+	double psi_os_best;
+	double u_os_best;
+	// State Variables
+	double Chi_ca_last_;
+	double P_ca_last_;
+
 
 	/**
 	 * @brief Sets the prediction horizon [sec].
@@ -224,15 +233,7 @@ namespace DUNE
 	double K_CHI_SB_;
 	double K_CHI_P_;
 	
-	// State Variables
-	double Chi_ca_last_;
-	double P_ca_last_;
-
-	double cost_;
-
-	Eigen::VectorXd Chi_ca_;
-	Eigen::VectorXd P_ca_;
-
+	
 	autonaut *asv;
 	std::vector<obstacle*> obst_vect;
 

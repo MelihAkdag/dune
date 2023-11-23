@@ -100,7 +100,8 @@ namespace DUNE
 
 	}
 
-	void 
+
+	std::tuple<double, double, double> 
 	simulationBasedMpc::getBestControlOffset(double &u_os_best, double &psi_os_best, double u_d, double psi_d_, const std::vector<double>& asv_state, const Math::Matrix& obst_states)
 	{
 		double cost = INFINITY;
@@ -114,7 +115,7 @@ namespace DUNE
 			psi_os_best = 0;
 			P_ca_last_ = 1;
 			Chi_ca_last_ = 0;
-			return;
+			return std::make_tuple(psi_os_best, u_os_best, cost);
 		}
 		else
 		{
@@ -125,7 +126,6 @@ namespace DUNE
 			}
 			n_obst = obst_vect.size();
 		}
-
 
 		for (int i=0; i<Chi_ca_.size(); i++)
 		{
@@ -164,8 +164,9 @@ namespace DUNE
 		}
 		obst_vect.clear();
 
-		P_ca_last_ = u_os_best;
-		Chi_ca_last_ = psi_os_best;
+		//P_ca_last_ = u_os_best;
+		//Chi_ca_last_ = psi_os_best;
+		return std::make_tuple(psi_os_best, u_os_best, cost);
 	}
 
 
@@ -288,7 +289,7 @@ namespace DUNE
 
 				//if(i == 0)
 				//{
-				//	std::cout<< "OT:" << OT << " SB:" << SB << " HO:" << HO << " CR:" << CR << std::endl;
+				//	std::cout<< "i:" << i << " OT:" << OT << " SB:" << SB << " HO:" << HO << " CR:" << CR << std::endl;
 				//}
 
 			}
@@ -313,7 +314,7 @@ namespace DUNE
 		return cost;
 	}
 
-			
+
 	double 
 	simulationBasedMpc::deltaP(double P_ca)
 	{
