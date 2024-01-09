@@ -176,7 +176,7 @@ namespace DUNE
 	{
 		double dist, phi, phi_o, psi_o, psi_rel, R, C, k_coll, d_safe_i;
 		Eigen::Vector2d d, los, los_inv, v_o, v_s;
-		bool mu, OT, SB, HO, CR;
+		bool mu, OT, SB, HO, CR, CR_passed;
 		double d_safe = D_SAFE_;
 		double d_close = D_CLOSE_;
 		double H0 = 0;
@@ -219,6 +219,9 @@ namespace DUNE
 				phi = atan2(d(1),d(0)) - normalize_angle(asv->m_psi[i]);
 				phi = normalize_angle(phi);
 
+				phi_o = atan2(-d(1),-d(0)) - obst_vect[k]->psi_;
+				phi_o = normalize_angle(phi_o);
+
 				psi_rel = psi_o - asv->m_psi[i];
 				psi_rel = normalize_angle(psi_rel);
 				//psi_rel = angle_diff(asv->m_psi[i], psi_o); // normalized
@@ -260,8 +263,7 @@ namespace DUNE
 				//}
 				*/
 				d_safe_i = d_safe;
-
-
+        
 				if (dist < d_safe_i)
 				{
 					R = (1/pow(fabs(t-t0),P_))*pow(d_safe/dist,Q_);
@@ -286,12 +288,11 @@ namespace DUNE
 						&& ((SB && psi_rel < 0)); // (ENU: > 0, NED: < 0)
 
 				mu = ( SB && HO ) || ( CR && !OT);
-
+				
 				//if(i == 0)
 				//{
 				//	std::cout<< "i:" << i << " OT:" << OT << " SB:" << SB << " HO:" << HO << " CR:" << CR << std::endl;
 				//}
-
 			}
 
 			H0 = C*R + KAPPA_*mu;
