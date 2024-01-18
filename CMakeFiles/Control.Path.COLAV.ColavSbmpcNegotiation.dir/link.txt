@@ -1,0 +1,2 @@
+/usr/bin/ar qc libControl.Path.COLAV.ColavSbmpcNegotiation.a CMakeFiles/Control.Path.COLAV.ColavSbmpcNegotiation.dir/src/Control/Path/COLAV/ColavSbmpcNegotiation/Task.cpp.o
+/usr/bin/ranlib libControl.Path.COLAV.ColavSbmpcNegotiation.a

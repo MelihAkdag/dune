@@ -28,7 +28,7 @@
 //***************************************************************************
 // Automatically generated.                                                 *
 //***************************************************************************
-// IMC XML MD5: bc2765321262233e448a7c647616f5da                            *
+// IMC XML MD5: 587c2e61a3ec9d831b6e15c41b745d88                            *
 //***************************************************************************
 
 #ifndef DUNE_IMC_DEFINITIONS_HPP_INCLUDED_
@@ -29398,6 +29398,77 @@ namespace DUNE
       getFixedSerializationSize(void) const
       {
         return 9;
+      }
+
+      unsigned
+      getVariableSerializationSize(void) const
+      {
+        return IMC::getSerializationSize(mmsi);
+      }
+
+      void
+      fieldsToJSON(std::ostream& os__, unsigned nindent__) const;
+    };
+
+    //! Negotiation message log.
+    class NegotiationMsgLog: public Message
+    {
+    public:
+      //! MMSI.
+      std::string mmsi;
+      //! Received Messages.
+      uint8_t msg_in;
+      //! Transmitted Messages.
+      uint8_t msg_out;
+
+      static uint16_t
+      getIdStatic(void)
+      {
+        return 1011;
+      }
+
+      NegotiationMsgLog(void);
+
+      NegotiationMsgLog*
+      clone(void) const
+      {
+        return new NegotiationMsgLog(*this);
+      }
+
+      void
+      clear(void);
+
+      bool
+      fieldsEqual(const Message& msg__) const;
+
+      int
+      validate(void) const;
+
+      uint8_t*
+      serializeFields(uint8_t* bfr__) const;
+
+      uint16_t
+      deserializeFields(const uint8_t* bfr__, uint16_t size__);
+
+      uint16_t
+      reverseDeserializeFields(const uint8_t* bfr__, uint16_t size__);
+
+      uint16_t
+      getId(void) const
+      {
+        return NegotiationMsgLog::getIdStatic();
+      }
+
+      const char*
+      getName(void) const
+      {
+        return "NegotiationMsgLog";
+      }
+
+      unsigned
+      getFixedSerializationSize(void) const
+      {
+        return 2;
       }
 
       unsigned

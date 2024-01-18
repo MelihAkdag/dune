@@ -1,0 +1,2 @@
+/usr/bin/ar qc libSimulators.AIS.a CMakeFiles/Simulators.AIS.dir/src/Simulators/AIS/Task.cpp.o
+/usr/bin/ranlib libSimulators.AIS.a

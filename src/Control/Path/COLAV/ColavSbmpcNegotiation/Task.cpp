@@ -31,6 +31,7 @@
 #include <DUNE/DUNE.hpp>
 #include <DUNE/Control.hpp>
 #include <DUNE/Navigation/sb_mpc.hpp>
+#include <DUNE/Time/Delay.hpp>
 #include <Eigen/Dense>
 #include <random>
 #include <eFLL/Fuzzy.h>
@@ -62,6 +63,7 @@ namespace Control
           double int_init;
           bool out_vec;
           bool out_los;
+          bool collab_colav;
 
           // Sbmpc parameters
           double T, DT, P, Q, D_CLOSE, D_SAFE, K_COLL, 
@@ -91,6 +93,8 @@ namespace Control
           IMC::DesiredSpeed des_speed;
           //! Negotiation data to send
           IMC::NegotiationData intention_to_send;
+          //! Negotiation message counts
+          IMC::NegotiationMsgLog negotiation_msg_log;
           //! Ownship mmsi
           std::string m_mmsi;
           //! Ownship latitude
@@ -127,16 +131,17 @@ namespace Control
           bool in_negotiation;
           //! Negotiation state
           int negotiation_state;
-          //! Negotiation cycle iteration counter
-          int negotiation_iteration;
           //! All ships ready to finish negotiation
           bool others_ready;
+          //! All TCPAs are negative
+          bool all_tcpa_passed;
           //! Same decision counter for negotation
           int same_decision_counter;
           //! Sending message counter
           int msg_out_counter;
           //! Incoming message counter
           int msg_in_counter;
+          int utc_time_prev;
 
           //! Task arguments.
           Arguments m_args;
@@ -154,7 +159,7 @@ namespace Control
           cost(0.0),
           others_ready(false),
           in_negotiation(false),
-          negotiation_iteration(1),
+          all_tcpa_passed(false),
           negotiation_state(0),
           same_decision_counter(0),
           msg_out_counter(0),
@@ -162,6 +167,10 @@ namespace Control
           {
             param("MMSI",  m_args.mmsi)
             .description("Vessel MMSI");
+
+            param("Collaborative COLAV", m_args.collab_colav)
+            .defaultValue("true")
+            .description("Collaborative or Reactive COLAV");
 
             param("Corridor -- Width", m_args.corridor)
             .minimumValue("1.0")
@@ -452,7 +461,6 @@ namespace Control
             //  return;
             m_des_speed = msg->value;
             m_des_speed_units = msg->speed_units;
-            //std::cout << "DESIRED SPEED SET TO: " << msg->value << std::endl;
           }
 
 
@@ -464,11 +472,14 @@ namespace Control
             IMC::MessageList<IMC::CollisionAvoidance> ml;
             ml = msg -> obstacles;
             int row_num = ml.size();
+            int n = 0;
             m_dyn_obst_state.resize(row_num, 17);
             for(auto i = ml.begin(); i!=ml.end();++i)
             {
-              for(unsigned int n=0; n<row_num; ++n)
-              {
+              //for(unsigned int n=0; n<row_num; ++n)
+              //{
+              if (n < row_num)
+              {  
                 m_dyn_obst_state(n, 0) = (*i)->x;
                 m_dyn_obst_state(n, 1) = (*i)->y;
                 m_dyn_obst_state(n, 2) = (*i)->course;
@@ -480,22 +491,33 @@ namespace Control
                 m_dyn_obst_state(n, 8) = 2; //(*i)->width/2; //d = cas.width - c
                 // Convert MMSI from string to int for CAS.
                 std::stringstream geek((*i)->mmsi); //contains int MMSI.
-                int mmsi = 0; 
+                int mmsi; 
                 geek >> mmsi;
                 m_dyn_obst_state(n, 9) = mmsi;
                 m_dyn_obst_state(n, 10) = (*i)->course; // By default intended COG is course if targetship is not negotiating
                 m_dyn_obst_state(n, 11) = (*i)->speed;  // By default intended SOG is speed if targetship is not negotiating
-                m_dyn_obst_state(n, 12) = 0;            // By default negotiation state is true (1) if targetship is not negotiating
-            
-                std::tie(distance, dcpa, tcpa) = calculateCPA(m_asv_state[0], m_asv_state[1], m_asv_state[2], m_asv_state[3], (*i)->x, (*i)->y, (*i)->course, (*i)->speed);
+                m_dyn_obst_state(n, 12) = 1;            // By default negotiation state is true (1) if targetship is not negotiating
+                
+                std::tie(distance, dcpa, tcpa) = calculateCPA(m_asv_state[0], m_asv_state[1], m_asv_state[2], m_asv_state[3], (*i)->x, (*i)->y, Angles::radians((*i)->course), (*i)->speed);
                 m_dyn_obst_state(n, 13) = distance;
                 m_dyn_obst_state(n, 14) = dcpa;
                 m_dyn_obst_state(n, 15) = tcpa;
-                rule = colregRule(m_asv_state[0], m_asv_state[1], m_asv_state[2], m_asv_state[3], (*i)->x, (*i)->y, (*i)->course, (*i)->speed);
+                rule = colregRule(m_asv_state[0], m_asv_state[1], m_asv_state[2], m_asv_state[3], (*i)->x, (*i)->y, Angles::radians((*i)->course), (*i)->speed);
                 m_dyn_obst_state(n, 16) = rule;
+
+                n += 1;
+
+                // Debuging COLREG rule:
+                //std::string rule_cout;
+                //if (rule==0.0){rule_cout="None";}
+                //else if (rule==1.0){rule_cout="HO-GW";}
+                //else if (rule==2.0){rule_cout="ON-SO";}
+                //else if (rule==3.0){rule_cout="OG";}
+                //else if (rule==4.0){rule_cout="CR-SO";}
+                //else if (rule==5.0){rule_cout="CR-GW";}
+                //spew("MMSI: %i Dist: %f DCPA: %f TCPA: %f Rule: %s", mmsi, distance, dcpa, tcpa, rule_cout.c_str());
               }
             }
-            //spew("Matrix size: %d %d", m_dyn_obst_state.rows(), m_dyn_obst_state.columns());
           }
 
 
@@ -503,12 +525,24 @@ namespace Control
           publishNegotiationData(double ref, double psi_os, double u_os, int negotiation_state)
           {
             intention_to_send.mmsi = m_mmsi;
-            intention_to_send.cog_int = Angles::normalizeRadian(ref + psi_os);
-            intention_to_send.sog_int = m_des_speed * u_os;
+            intention_to_send.cog_int = Angles::degrees(Angles::normalizeRadian(ref + psi_os));
+            intention_to_send.sog_int = m_asv_state[3] * u_os;
             intention_to_send.state = negotiation_state;
             dispatch(intention_to_send); //, DF_LOOP_BACK);
-            spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(m_mmsi), Angles::degrees(Angles::normalizeRadian(ref + psi_os)), m_des_speed * u_os, negotiation_state);
+            //spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(m_mmsi), Angles::degrees(Angles::normalizeRadian(ref + psi_os)), m_asv_state[3] * u_os, negotiation_state);
             msg_out_counter += 1;
+            return;
+          }
+
+
+          void
+          publishNegotiationMsgLog(int msg_in_counter, int msg_out_counter)
+          {
+            negotiation_msg_log.mmsi = m_mmsi;
+            negotiation_msg_log.msg_in = msg_in_counter;
+            negotiation_msg_log.msg_out = msg_out_counter;
+            dispatch(negotiation_msg_log);
+            return;
           }
 
 
@@ -516,7 +550,7 @@ namespace Control
           consume(const IMC::NegotiationData* msg)
           {
             msg_in_counter += 1;
-            spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(msg->mmsi), Angles::degrees(msg->cog_int), msg->sog_int, msg->state);
+            spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(msg->mmsi), msg->cog_int, msg->sog_int, msg->state);
             for(unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
                 if(m_dyn_obst_state(n, 9) == std::stoi(msg->mmsi))
@@ -526,6 +560,7 @@ namespace Control
                     m_dyn_obst_state(n, 12) = msg->state;   // Negotiation state
                 }
             }
+            return;
           }
 
 
@@ -587,7 +622,7 @@ namespace Control
             // rule => 0.0=None, 1.0=HO-GW, 2.0=ON-SO, 3.0=OG, 4.0=CR-SO, 5.0=CR-GW
             double rule, RB_os_ts, RB_ts_os; // RB_os_ts = Relative bearing of TS from OS
             RB_os_ts = relativeBearing(self_x, self_y, self_cog, ts_x, ts_y);
-            RB_ts_os = relativeBearing(ts_x, ts_y, Angles::normalizeRadian(ts_cog*DEG2RAD), self_x, self_y);
+            RB_ts_os = relativeBearing(ts_x, ts_y, ts_cog, self_x, self_y);
             // Head-on, give-way
             if ( (std::abs(RB_os_ts) < 22.5*DEG2RAD) && (std::abs(RB_ts_os) < 22.5*DEG2RAD) )
             {
@@ -631,6 +666,7 @@ namespace Control
             return rule;
           }
 
+        
 
           //! Calculate DCPA and TCPA with other vessel
           std::tuple<double, double, double> 
@@ -666,11 +702,11 @@ namespace Control
             }
             else if ((ts_y - self_y < 0.0) && (ts_x - self_x) < 0)
             {
-                delta_alpha = 2 * M_PI;
+                delta_alpha = 2*M_PI;
             }
             else if ((ts_y - self_y < 0.0) && (ts_x - self_x) >= 0)
             {
-                delta_alpha = 2 * M_PI;
+                delta_alpha = 2*M_PI;
             }
             alpha_r = atan2((ts_y-self_y), (ts_x-self_x)) + delta_alpha; 
 
@@ -685,11 +721,11 @@ namespace Control
             }
             else if ((ts_v - self_v < 0) && (ts_u - self_u < 0))
             {
-                delta_chi = 2 * M_PI;
+                delta_chi = 2*M_PI;
             }
             else if ((ts_v - self_v < 0) && (ts_u - self_u >= 0))
             {
-                delta_chi = 2 * M_PI;
+                delta_chi = 2*M_PI;
             }
             chi_r = atan2((ts_v-self_v), (ts_u-self_u)) + delta_chi;
 
@@ -896,11 +932,11 @@ namespace Control
           
             // FuzzyInput
             FuzzyInput *distance_input = new FuzzyInput(1);
-            FuzzySet *distance_low = new FuzzySet(0, 20, 20, 40);
+            FuzzySet *distance_low = new FuzzySet(0, 40, 40, 80); //(0, 20, 20, 40);
             distance_input->addFuzzySet(distance_low);
-            FuzzySet *distance_medium = new FuzzySet(30, 50, 50, 70);
+            FuzzySet *distance_medium = new FuzzySet(70, 110, 110, 150); //(30, 50, 50, 70);
             distance_input->addFuzzySet(distance_medium);
-            FuzzySet *distance_high = new FuzzySet(60, 80, 80, 500);
+            FuzzySet *distance_high = new FuzzySet(140, 180, 180, 1000); //(60, 80, 80, 500);
             distance_input->addFuzzySet(distance_high);
             fuzzy->addFuzzyInput(distance_input);
           
@@ -1094,6 +1130,8 @@ namespace Control
                 dcpa = m_dyn_obst_state(n,14);
                 tcpa = m_dyn_obst_state(n,15);
                 rule = m_dyn_obst_state(n,16);   //rules => 0.0=None, 1.0=HO-GW, 2.0=ON-SO, 3.0=OG, 4.0=CR-SO, 5.0=CR-GW
+
+                //std::cout << "MMSI:" << mmsi << " Dist:" << distance << " rule:" << rule << std::endl;
                 
                 collision_risk_sum += fuzzyCollisionRisk(dcpa, tcpa);
 
@@ -1107,6 +1145,7 @@ namespace Control
                     gw_counter += 1;
                     gw_resp_sum += fuzzyGiveWayResponsibility(distance);
                 }
+                
                 spew("To:  %i GW resp: %f CR: %f", mmsi, gw_resp_sum, collision_risk_sum);
             }
 
@@ -1144,28 +1183,36 @@ namespace Control
                 sb_mpc.Chi_ca_ << 0.0;
                 sb_mpc.Chi_ca_ *= DEG2RAD;
             }
-            else if (0 <= concession_level && concession_level < 3)
+            else if (0 <= concession_level && concession_level < 2.5)
             {
                 sb_mpc.P_ca_.resize(1);
                 sb_mpc.P_ca_ << 1.0;
                 sb_mpc.Chi_ca_.resize(7);
-                sb_mpc.Chi_ca_ << -15.0,-10.0,-5.0,0.0,5.0,10.0,15.0;
+                sb_mpc.Chi_ca_ << -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0;
                 sb_mpc.Chi_ca_ *= DEG2RAD;
             }
-            else if (3 <= concession_level && concession_level < 7)
+            else if (2.5 <= concession_level && concession_level < 5)
             {
-                sb_mpc.P_ca_.resize(4);
-                sb_mpc.P_ca_ << 0.85, 0.9, 0.95, 1.0;
+                sb_mpc.P_ca_.resize(2);
+                sb_mpc.P_ca_ << 0.75, 1.0;
                 sb_mpc.Chi_ca_.resize(13);
-                sb_mpc.Chi_ca_ << -30.0,-25.0,-20.0,-15.0,-10.0,-5.0,0.0,5.0,10.0,15.0,20.0,25.0,30.0;
+                sb_mpc.Chi_ca_ << -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0;
                 sb_mpc.Chi_ca_ *= DEG2RAD;
             }
-            else if (concession_level > 7)
+            else if (5 <= concession_level < 7.5)
             {
                 sb_mpc.P_ca_.resize(3);
                 sb_mpc.P_ca_ << 0.5, 0.75, 1.0;
-                sb_mpc.Chi_ca_.resize(9);
-                sb_mpc.Chi_ca_ << -60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0;
+                sb_mpc.Chi_ca_.resize(13);
+                sb_mpc.Chi_ca_ << -60.0,-50.0,-40.0,-30.0,-20.0,-10.0,0.0,10.0,20.0,30.0,40.0,50.0,60.0;
+                sb_mpc.Chi_ca_ *= DEG2RAD;
+            }
+            else if (concession_level >= 7.5)
+            {
+                sb_mpc.P_ca_.resize(4);
+                sb_mpc.P_ca_ << 0.0, 0.25, 0.5, 1.0;
+                sb_mpc.Chi_ca_.resize(13);
+                sb_mpc.Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
                 sb_mpc.Chi_ca_ *= DEG2RAD;
             }
             else
@@ -1176,15 +1223,14 @@ namespace Control
                 sb_mpc.Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
                 sb_mpc.Chi_ca_ *= DEG2RAD;
             }
-
           }
 
 
           //! Update negotiation state based on Distributed Stochastic Search
           void 
-          updateNegotiationState()
+          updateNegotiationState(double& psi_os, double& u_os, int& negotiation_state)
           {
-            double probability = 0.75;
+            double probability = 0.85;
             // Create a random number generator engine
             std::random_device rd;
             std::mt19937 gen(rd());
@@ -1199,8 +1245,8 @@ namespace Control
                     psi_os = psi_os_temp;
                     u_os = u_os_temp;
                     cost_prev = cost;
-                    sb_mpc.Chi_ca_last_ = psi_os;
-                    sb_mpc.P_ca_last_ = u_os;
+                    sb_mpc.P_ca_last_ = u_os_temp;
+                    sb_mpc.Chi_ca_last_ = psi_os_temp;
                 }
             }
             else if (cost >= cost_prev)
@@ -1211,7 +1257,6 @@ namespace Control
             {
                 negotiation_state = 1;
             }
-
           }
 
 
@@ -1234,49 +1279,63 @@ namespace Control
           }
 
 
+          //! Check other ships TCPAs.
+          void
+          checkTCPAs()
+          {
+            int tcpa_passed_counter = 0;
+            for (unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            {
+                if (m_dyn_obst_state(n,15) < 0.0)
+                {
+                    tcpa_passed_counter+=1;
+                }
+            }
+            if (tcpa_passed_counter==m_dyn_obst_state.rows())
+            {
+                all_tcpa_passed = true;
+            }
+          }
+
+
           //! Collaborative collision avoidance algorithm
           void collabColav(double ref)
           {
             //std::cout << "In_Nego:" << in_negotiation << " Nego_State:" << negotiation_state << " Nego_state_others:" << others_ready << " Nego_Iter:" << negotiation_iteration <<std::endl;
             if (in_negotiation==false)
             {
-                // use current course and speed and calculate cost, send current decision as intention
-                //updateDecisionVariables(true);
-                //sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
                 publishNegotiationData(ref, psi_os, u_os, negotiation_state);
                 in_negotiation=true;
-                negotiation_iteration += 1;
             }
             else if (in_negotiation==true)
             {
                 if (negotiation_state==0)
                 {
                     updateDecisionVariables(false);
-                    std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
-                    updateNegotiationState();
+                    std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, m_asv_state[3], ref, m_asv_state, m_dyn_obst_state);
+                    updateNegotiationState(psi_os, u_os, negotiation_state);
                     publishNegotiationData(ref, psi_os, u_os, negotiation_state);
                 }
                 else if (negotiation_state==1)
                 {
                     publishNegotiationData(ref, psi_os, u_os, negotiation_state);
                 }
-                negotiation_iteration+=1;
             }
             checkNegotiationStates();
             if (negotiation_state==1 and others_ready==true)
-            {
+            { 
                 setOptCtrl(ref, psi_os, u_os);
-                publishNegotiationData(ref, psi_os, u_os, negotiation_state);
-                spew("MMSI: %i applying COG change: %f SOG change: %f", std::stoi(m_mmsi), psi_os*RAD2DEG, u_os);
+                //publishNegotiationData(ref, psi_os, u_os, negotiation_state);
+                publishNegotiationMsgLog(msg_in_counter, msg_out_counter);
+                spew("MMSI: %i Msg_in: %i Msg_out: %i", std::stoi(m_mmsi), msg_in_counter, msg_out_counter);
+                spew("MMSI: %i APPLYING COG change: %f SOG change: %f", std::stoi(m_mmsi), psi_os*RAD2DEG, u_os);
+                msg_out_counter = 0;
+                msg_in_counter = 0;
                 negotiation_state = 0;
-                negotiation_iteration = 0;
                 same_decision_counter = 0;
                 in_negotiation = false;
                 others_ready = false;
-                
-                std::cout << "Msg_out: " << msg_out_counter << " Msg_in: " << msg_in_counter << std::endl;
-                msg_out_counter = 0;
-                msg_in_counter = 0;
+                cost_prev = std::numeric_limits<double>::infinity();  
             }
           }
 
@@ -1284,7 +1343,7 @@ namespace Control
           //! Reactive collision avoidance algorithm without collaboration
           void colav(double ref)
           {
-            std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
+            std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, m_asv_state[3], ref, m_asv_state, m_dyn_obst_state);
             psi_os = psi_os_temp;
             u_os = u_os_temp;
             setOptCtrl(ref, psi_os, u_os);
@@ -1292,16 +1351,16 @@ namespace Control
 
 
           //! Dispatch desired heading and speed values
-          void setOptCtrl(double ref, double psi_os, double u_os)
+          void setOptCtrl(double ref, double psi_value, double u_value)
           {
-            double m_des_speed_ = m_des_speed * u_os;
-            des_speed.value = m_des_speed_;
-            dispatch(des_speed);
-            m_heading.value = Angles::normalizeRadian(ref + psi_os);
-            m_heading.off = Angles::degrees(psi_os);
+            //double m_des_speed_ = m_des_speed * u_value;
+            des_speed.value = m_des_speed * u_value;
+            dispatch(des_speed, Tasks::DF_LOOP_BACK);
+            m_heading.value = Angles::normalizeRadian(ref + psi_value);
+            m_heading.off = Angles::degrees(psi_value);
             dispatch(m_heading);
-            sb_mpc.P_ca_last_ = psi_os;
-            sb_mpc.Chi_ca_last_ = u_os;
+            sb_mpc.P_ca_last_ = u_value;
+            sb_mpc.Chi_ca_last_ = psi_value;
           }
 
 
@@ -1324,7 +1383,7 @@ namespace Control
             double timestep = m_last_step.getDelta();
             double kcorr = ts.track_pos.y / m_args.corridor;
             double akcorr = std::fabs(kcorr);
-  
+            
             if (akcorr > 1)
             {
               // Outside corridor, m_integrator OFF
@@ -1364,17 +1423,32 @@ namespace Control
               ref = ts.track_bearing - std::atan((ts.track_pos.y + m_args.int_gain * m_integrator) / m_args.lookahead);
             }
 
-            
-            int utc_time = ((uint32_t)Clock::getSinceEpoch()); // % 86400;
-            if(utc_time%5==0)
+            int utc_time = ((uint32_t)Clock::getSinceEpoch());
+            //int utc_time = Time::Clock::get();
+
+            checkTCPAs();
+            if (all_tcpa_passed)
             {
-                collabColav(ref);
-                //colav(ref);
+                setOptCtrl(ref, 0.0, 1.0);
+                all_tcpa_passed = false;
             }
-            //else
-            //{
-            //    setOptCtrl(ref, psi_os, u_os);
-            //}
+            //else if ((utc_time%5==0) && (utc_time != utc_time_prev))
+            else if (utc_time != utc_time_prev)
+            {
+                if (m_args.collab_colav == true)
+                {
+                    collabColav(ref);
+                } 
+                else if (m_args.collab_colav == false)
+                {
+                    colav(ref);
+                }
+                utc_time_prev = utc_time;
+            }
+            else
+            {
+                setOptCtrl(ref, psi_os, u_os);
+            }
           }
 
           //! Execute a loiter control step
@@ -1403,7 +1477,7 @@ namespace Control
           {
             while (!stopping())
             {
-              waitForMessages(1);
+                waitForMessages(1);
             }
           }
 

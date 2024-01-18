@@ -1,0 +1,2 @@
+/usr/bin/ar qc libControl.Path.COLAV.ColavSbmpcILOS.a CMakeFiles/Control.Path.COLAV.ColavSbmpcILOS.dir/src/Control/Path/COLAV/ColavSbmpcILOS/Task.cpp.o
+/usr/bin/ranlib libControl.Path.COLAV.ColavSbmpcILOS.a

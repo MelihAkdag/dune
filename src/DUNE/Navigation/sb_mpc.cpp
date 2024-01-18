@@ -22,6 +22,7 @@
 // Local headers.
 #include <DUNE/Navigation/sb_mpc.hpp>
 #include <DUNE/Navigation/autonaut.hpp>
+#include <DUNE/Navigation/obstacle.hpp>
 #include <DUNE/DUNE.hpp>
 
 static const double DEG2RAD = M_PI/180.0f;
@@ -84,10 +85,10 @@ namespace DUNE
 		K_DCHI_SB_ = K_DCHI_SB;	  // 0.9, (0.5) 0.1 (cost requires <1)
 		K_DCHI_P_ = K_DCHI_P;	  // 1.2, 0.9 (cost requires <1)
 
-		P_ca_last_ = 1;
-		Chi_ca_last_ = 0;
+		P_ca_last_ = 1.0;
+		Chi_ca_last_ = 0.0;
 
-		cost_ = INFINITY;
+		cost_ = std::numeric_limits<double>::infinity(); //INFINITY;
 
 		Chi_ca_.resize(13);
 		Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
@@ -102,19 +103,20 @@ namespace DUNE
 
 
 	std::tuple<double, double, double> 
-	simulationBasedMpc::getBestControlOffset(double &u_os_best, double &psi_os_best, double u_d, double psi_d_, const std::vector<double>& asv_state, const Math::Matrix& obst_states)
+	simulationBasedMpc::getBestControlOffset(double u_os, double psi_os, double u_d, double psi_d_, const std::vector<double>& asv_state, const Math::Matrix& obst_states)
 	{
-		double cost = INFINITY;
+		double cost = std::numeric_limits<double>::infinity(); //INFINITY;
 		double cost_k;
 		double cost_i = 0;
 		int n_obst;
+		double u_os_best, psi_os_best;
 
 		if (obst_states.rows() == 0)
 		{
-			u_os_best = 1;
-			psi_os_best = 0;
-			P_ca_last_ = 1;
-			Chi_ca_last_ = 0;
+			u_os_best = 1.0;
+			psi_os_best = 0.0;
+			//P_ca_last_ = 1.0;
+			//Chi_ca_last_ = 0.0;
 			return std::make_tuple(psi_os_best, u_os_best, cost);
 		}
 		else
@@ -132,7 +134,7 @@ namespace DUNE
 			for (int j=0; j<P_ca_.size(); j++)
 			{
 				// Simulate ASV trajectory for current control behavior
-				asv->linearPredictionInger(asv_state, u_d*P_ca_[j], psi_d_ + Chi_ca_[i]);
+				asv->linearPredictionInger(asv_state, u_d*P_ca_[j], Angles::normalizeRadian(psi_d_ + Chi_ca_[i]));
 
 				cost_i = -1;
 				for (int k=0; k<n_obst; k++)
@@ -152,8 +154,8 @@ namespace DUNE
 				}
 				if (cost == 0)
 				{
-					u_os_best = 1;
-					psi_os_best = 0;
+					u_os_best = u_os;
+					psi_os_best = psi_os;
 				}
 			}
 			//std::cout << "Costs: " << Angles::degrees(Chi_ca_[i]) << " : " << cost_i << std::endl;
@@ -174,9 +176,9 @@ namespace DUNE
 	double 
 	simulationBasedMpc::costFunction(double P_ca, double Chi_ca, int k)
 	{
-		double dist, phi, phi_o, psi_o, psi_rel, R, C, k_coll, d_safe_i;
-		Eigen::Vector2d d, los, los_inv, v_o, v_s;
-		bool mu, OT, SB, HO, CR, CR_passed;
+		double dist, dist2, phi, phi_o, psi_o, psi_rel, R, C, k_coll, d_safe_i;
+		Eigen::Vector2d d, d2, los, los_inv, v_o, v_s;
+		bool mu, OT, SB, HO, CR;
 		double d_safe = D_SAFE_;
 		double d_close = D_CLOSE_;
 		double H0 = 0;
@@ -229,48 +231,15 @@ namespace DUNE
 				los = d/dist;
 				los_inv = -d/dist;
 
-				/*
-				// Calculating d_safe: bug fix: *DEG2RAD applied where missing!
-				d_safe_i = d_safe + obst_vect[k]->getL()/2; // obstacle size determines init d_safe
-				if(phi < PHI_AH_*DEG2RAD)
-				{ // obst ahead
-					d_safe_i = d_safe+10; //d_safe + asv->getL()/2;
-				}else if(phi > PHI_OT_*DEG2RAD)
-				{ // obst behind
-					d_safe_i = d_safe; //0.5*d_safe + asv->getL()/2;
-				}else
-				{
-					d_safe_i = d_safe+2; //d_safe + asv->getW()/2;
-				}
-				
-				phi_o = atan2(-d(1),-d(0)) - obst_vect[k]->psi_;
-				phi_o = normalize_angle(phi_o);
-
-				if(phi_o < PHI_AH_*DEG2RAD)
-				{ // ship ahead
-					d_safe_i += d_safe+10; //d_safe + obst_vect[k]->getL()/2; // d_safe +
-				}else if(phi_o > PHI_OT_*DEG2RAD)
-				{ // ship behind
-					d_safe_i += d_safe; //0.5*d_safe + obst_vect[k]->getL()/2; // 0.5*d_safe +
-				}else
-				{
-					d_safe_i += d_safe+2; //d_safe + obst_vect[k]->getW()/2; //d_safe +
-				}
-
-				//if(v_s.dot(v_o) > cos(PHI_OT_*DEG2RAD)*v_s.norm()*v_o.norm() && v_s.norm() > v_o.norm())
-				//{
-				//	d_safe_i = d_safe + 10 + 10; //asv->getL()/2 + obst_vect[k]->getL()/2;
-				//}
-				*/
 				d_safe_i = d_safe;
         
 				if (dist < d_safe_i)
 				{
-					R = (1/pow(fabs(t-t0),P_))*pow(d_safe/dist,Q_);
-					//k_coll = K_COLL_*asv->getL()*obst_vect[k]->getL();
+					R = (1/pow(std::abs(t-t0),P_))*pow((d_safe_i/dist),Q_);
 					C = K_COLL_*pow((v_s-v_o).norm(),2);
 				}
 
+				/*
 				// Overtaken by obstacle
 				OT = v_s.dot(v_o) > cos(PHI_OT_*DEG2RAD)*v_s.norm()*v_o.norm();
 						//&& v_s.norm() < v_o.norm();
@@ -288,11 +257,23 @@ namespace DUNE
 						&& ((SB && psi_rel < 0)); // (ENU: > 0, NED: < 0)
 
 				mu = ( SB && HO ) || ( CR && !OT);
+				*/
+
+				// rule => 0.0=None, 1.0=HO-GW, 2.0=ON-SO, 3.0=OG, 4.0=CR-SO, 5.0=CR-GW
+				double rule, rel_bearing;
+				rule = colregRule(asv->m_x[i], asv->m_y[i], asv->m_psi[i], asv->m_u[i], obst_vect[k]->x_[i], obst_vect[k]->y_[i], obst_vect[k]->psi_, obst_vect[k]->u_[i]);
+				rel_bearing = relativeBearing(asv->m_x[i], asv->m_y[i], asv->m_psi[i], obst_vect[k]->x_[i], obst_vect[k]->y_[i]);
 				
-				//if(i == 0)
-				//{
-				//	std::cout<< "i:" << i << " OT:" << OT << " SB:" << SB << " HO:" << HO << " CR:" << CR << std::endl;
-				//}
+				// COLREG violation
+				if ((rule==1.0 && phi>=0) || (((rule==4.0 || rule==5.0) && phi<0) && !rule==2.0) || (rule==3.0 && std::abs(rel_bearing) <= 22.5*DEG2RAD))
+				{
+					mu = true;
+				}
+				else
+				{
+					mu = false;
+				}
+
 			}
 
 			H0 = C*R + KAPPA_*mu;
@@ -303,15 +284,17 @@ namespace DUNE
 			}
 		}
 
-		d(0) = obst_vect[k]->x_[0] - asv->m_x[0];
-		d(1) = obst_vect[k]->y_[0] - asv->m_y[0];
-		dist = d.norm();
-		if (dist < d_close)
+		d2(0) = obst_vect[k]->x_[0] - asv->m_x[0];
+		d2(1) = obst_vect[k]->y_[0] - asv->m_y[0];
+		dist2 = d2.norm();
+
+		if (dist2 < d_close)
 		{
 			H2 = K_P_*(1-P_ca) + K_CHI_*pow(Chi_ca,2) + deltaP(P_ca) + deltaChi(Chi_ca, k_dchi_p, k_dchi_sb);
-			cost = H1 + H2;
 		}
 		
+		cost = H1 + H2;
+
 		return cost;
 	}
 
@@ -328,11 +311,16 @@ namespace DUNE
 	simulationBasedMpc::deltaChi(double Chi_ca, double k_dchi_p, double k_dchi_sb)
 	{
 		double dChi = Chi_ca - Chi_ca_last_;
-		if(dChi < 0){ 		// ENU: > 0, NED (MR): < 0
+		if(dChi < 0)			// ENU: > 0, NED (MR): < 0
+		{
 			return k_dchi_p*pow(dChi,2); // K_DCHI_P_
-		}else if(dChi > 0){ 	// ENU: < 0, NED (MR): > 0
+		}
+		else if(dChi > 0)	// ENU: < 0, NED (MR): > 0
+		{
 			return k_dchi_sb*pow(dChi,2); // _SB_
-		}else{
+		}
+		else
+		{
 			return 0;
 		}
 	}
@@ -350,6 +338,102 @@ namespace DUNE
 	}
 
 
+	double
+	simulationBasedMpc::trueBearing(double self_x, double self_y, double ts_x, double ts_y)
+	{
+		double alpha_r, delta_alpha;
+    // Alpha_r (True bearing of the targetship)
+    if ((ts_y - self_y >= 0.0) && (ts_x - self_x >= 0.0))
+    {
+        delta_alpha = 0.0;
+    }
+    else if ((ts_y - self_y >= 0.0) && (ts_x - self_x) < 0)
+    {
+        delta_alpha = 0.0;
+    }
+    else if ((ts_y - self_y < 0.0) && (ts_x - self_x) < 0)
+    {
+        delta_alpha = 2 * M_PI;
+    }
+    else if ((ts_y - self_y < 0.0) && (ts_x - self_x) >= 0)
+    {
+        delta_alpha = 2 * M_PI;
+    }
+    alpha_r = atan2((ts_y-self_y), (ts_x-self_x)) + delta_alpha; 
+    return alpha_r;
+	}
+
+
+	double
+	simulationBasedMpc::relativeBearing(double self_x, double self_y, double self_psi, double ts_x, double ts_y)
+	{
+		double true_bearing, rel_bearing;
+    true_bearing = trueBearing(self_x, self_y, ts_x, ts_y);
+    rel_bearing = true_bearing - self_psi;
+    if (rel_bearing <= -M_PI) 
+    {
+        rel_bearing += 2*M_PI;
+    }
+    else if (rel_bearing > M_PI) 
+    {
+        rel_bearing -= 2*M_PI;
+    }
+    return rel_bearing;
+	}
+
+
+	double
+	simulationBasedMpc::colregRule(double self_x, double self_y, double self_cog, double self_sog, double ts_x, double ts_y, double ts_cog, double ts_sog)
+	{
+		// rule => 0.0=None, 1.0=HO-GW, 2.0=ON-SO, 3.0=OG, 4.0=CR-SO, 5.0=CR-GW
+    double rule, RB_os_ts, RB_ts_os; // RB_os_ts = Relative bearing of TS from OS
+    RB_os_ts = relativeBearing(self_x, self_y, self_cog, ts_x, ts_y);
+    RB_ts_os = relativeBearing(ts_x, ts_y, ts_cog, self_x, self_y);
+    // Head-on, give-way
+    if ( (std::abs(RB_os_ts) < 22.5*DEG2RAD) && (std::abs(RB_ts_os) < 22.5*DEG2RAD) )
+    {
+       rule = 1.0; //"HO-GW"
+    }
+    // Overtaken, stand-on
+    else if ( (std::abs(RB_os_ts) > 112.5*DEG2RAD) && (std::abs(RB_ts_os) < 45*DEG2RAD) && (ts_sog >= self_sog) )
+    {
+        rule = 2.0; //"ON-SO"
+    }
+    // Overtaking, give-way
+    else if ( (std::abs(RB_ts_os) > 112.5*DEG2RAD) && (std::abs(RB_os_ts) < 45*DEG2RAD) && (self_sog >= ts_sog) )
+    {
+        rule = 3.0; //"OG";
+    }
+    // Crossing, stand-on
+    else if ( (RB_os_ts < 10*DEG2RAD) && (RB_os_ts > -112.5*DEG2RAD) && (RB_ts_os > 0) && (RB_ts_os < 112.5*DEG2RAD) )
+    {
+        rule = 4.0; //"CR-SO";
+    }
+    // Crossing, give-way
+    else if ( (RB_os_ts > 0) && (RB_os_ts < 112.5*DEG2RAD) && (RB_ts_os < 10*DEG2RAD) && (RB_ts_os > -112.5*DEG2RAD) )
+    {
+        rule = 5.0; //"CR-GW";
+    }
+    else
+    {
+        rule = 0.0; //"None";
+    }
+
+    // Debuging COLREG rule:
+    //std::string rule_cout;
+    //if (rule==0.0){rule_cout="None";}
+    //else if (rule==1.0){rule_cout="HO-GW";}
+    //else if (rule==2.0){rule_cout="ON-SO";}
+    //else if (rule==3.0){rule_cout="OG";}
+    //else if (rule==4.0){rule_cout="CR-SO";}
+    //else if (rule==5.0){rule_cout="CR-GW";}
+    //std::cout << "RB_ts: " << RB_os_ts*RAD2DEG << " RB_os: " << RB_ts_os*RAD2DEG << " COLREG RULE: " << rule_cout << std::endl;
+
+    return rule;
+	}
+
+
+
 	void 
 	simulationBasedMpc::rot2d(double yaw, Eigen::Vector2d &res)
 	{
@@ -359,14 +443,24 @@ namespace DUNE
 		res = R*res;
 	}
 
+
 	// Normalize angle, option 1
 	inline double 
 	simulationBasedMpc::normalize_angle(double angle)
 	{
-		while(angle <= -M_PI) angle += 2*M_PI;
-		while (angle > M_PI) angle -= 2*M_PI;
+		//while(angle <= -M_PI) angle += 2*M_PI;
+		//while (angle > M_PI) angle -= 2*M_PI;
+		if (angle <= -M_PI)
+		{
+			angle += 2*M_PI;
+		}
+		else if (angle > M_PI)
+		{
+			angle -= 2*M_PI;
+		}
 		return angle;
 	}
+
 
 	inline double 
 	simulationBasedMpc::normalize_angle_360(double angle){
@@ -375,6 +469,7 @@ namespace DUNE
 		angle += 2*M_PI;
 		return angle;
 	}
+
 
 	inline double 
 	simulationBasedMpc::angle_diff(double a,double b){
@@ -388,9 +483,9 @@ namespace DUNE
 	// Normalize angle, option 2 - requires math.h
 	/*inline double simulationBasedMpc::normalize_angle(double angle)
 	{
-		angle = fmod(angle + PI, 2*PI);
-		if(angle < 0) angle += 2*PI;
-		return angle -  PI;
+		angle = fmod(angle + M_PI, 2*M_PI);
+		if(angle < 0) angle += 2*M_PI;
+		return angle -  M_PI;
 	}*/
 
 	double simulationBasedMpc::getT(){
@@ -557,6 +652,13 @@ namespace DUNE
 		if(K_Chi_P>0.0) K_CHI_P_ = K_Chi_P;
 	}
 
+	void simulationBasedMpc::setP_ca_last(double value){
+    P_ca_last_ = value;
+  }
+
+  void simulationBasedMpc::setChi_ca_last(double value){
+    Chi_ca_last_ = value;
+  }
 
   }
 }

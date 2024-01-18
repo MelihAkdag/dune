@@ -182,8 +182,8 @@ namespace Control
             m_asv_state[5] = 0.0; //! Assume zero.
             m_timestamp_new = msg->getTimeStamp();
           }
-  
-          
+
+
           void
           consume(const IMC::AisInfo* msg)
           {
@@ -344,7 +344,7 @@ namespace Control
                   //! Update Obstacle states to fit input of CAS (sb_mpc)
                   m_dyn_obst_state(i, 0) = dist_x; // north
                   m_dyn_obst_state(i, 1) = dist_y; // east
-                  m_dyn_obst_state(i, 2) = m_dyn_obst_vec[i].course;
+                  m_dyn_obst_state(i, 2) = Angles::degrees(m_dyn_obst_vec[i].course);
                   m_dyn_obst_state(i, 3) = m_dyn_obst_vec[i].speed; //sqrt(std::pow(m_dyn_obst_vec[i].u, 2) + std::pow(m_dyn_obst_vec[i].v, 2));
                   m_dyn_obst_state(i, 4) = 0.0;
                   if(m_dyn_obst_vec[i].a == 0.0)
@@ -369,11 +369,11 @@ namespace Control
                   int mmsi = 0; 
                   geek >> mmsi;
                   m_dyn_obst_state(i, 9) = mmsi;
-    
+
                   // Distance between Ownship and Obstacle.
                   double distance = WGS84::distance(m_lat_asv, m_lon_asv, 0, m_dyn_obst_vec[i].lat, m_dyn_obst_vec[i].lon, 0);
                   
-                  trace("x in NED = %0.1f, y in NED = %0.1f, Distance = %0.1f", dist_x, dist_y, distance);
+                  //trace("x in NED = %0.1f, y in NED = %0.1f, Distance = %0.1f", dist_x, dist_y, distance);
     
                   //! Fill in CAS message.
                   cas.mmsi = m_dyn_obst_vec[i].mmsi;

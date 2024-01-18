@@ -1,0 +1,2789 @@
+Determining if the __INTEL_COMPILER exist failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_78c0a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_78c0a.dir/build.make CMakeFiles/cmTC_78c0a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_78c0a.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_78c0a.dir/CheckSymbolExists.c.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘__INTEL_COMPILER’ undeclared (first use in this function)
+    8 |   return ((int*)(&__INTEL_COMPILER))[argc];
+      |                   ^~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_78c0a.dir/build.make:78: CMakeFiles/cmTC_78c0a.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_78c0a/fast] Error 2
+
+
+File /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __INTEL_COMPILER
+  return ((int*)(&__INTEL_COMPILER))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the __SUNPRO_C exist failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fce1b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fce1b.dir/build.make CMakeFiles/cmTC_fce1b.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_fce1b.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_fce1b.dir/CheckSymbolExists.c.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘__SUNPRO_C’ undeclared (first use in this function)
+    8 |   return ((int*)(&__SUNPRO_C))[argc];
+      |                   ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_fce1b.dir/build.make:78: CMakeFiles/cmTC_fce1b.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_fce1b/fast] Error 2
+
+
+File /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __SUNPRO_C
+  return ((int*)(&__SUNPRO_C))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the __clang__ exist failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_39e69/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_39e69.dir/build.make CMakeFiles/cmTC_39e69.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_39e69.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_39e69.dir/CheckSymbolExists.c.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘__clang__’ undeclared (first use in this function)
+    8 |   return ((int*)(&__clang__))[argc];
+      |                   ^~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_39e69.dir/build.make:78: CMakeFiles/cmTC_39e69.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_39e69/fast] Error 2
+
+
+File /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __clang__
+  return ((int*)(&__clang__))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___AMD64__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c20c7/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c20c7.dir/build.make CMakeFiles/cmTC_c20c7.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c20c7.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___AMD64__   -o CMakeFiles/cmTC_c20c7.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_c20c7.dir/build.make:78: CMakeFiles/cmTC_c20c7.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c20c7/fast] Error 2
+
+
+Source file was:
+#if !defined(__amd64__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___AMD64 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_54bc8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_54bc8.dir/build.make CMakeFiles/cmTC_54bc8.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_54bc8.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___AMD64   -o CMakeFiles/cmTC_54bc8.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_54bc8.dir/build.make:78: CMakeFiles/cmTC_54bc8.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_54bc8/fast] Error 2
+
+
+Source file was:
+#if !defined(__amd64)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS__AMD64_ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_50571/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_50571.dir/build.make CMakeFiles/cmTC_50571.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_50571.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS__AMD64_   -o CMakeFiles/cmTC_50571.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_50571.dir/build.make:78: CMakeFiles/cmTC_50571.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_50571/fast] Error 2
+
+
+Source file was:
+#if !defined(_AMD64_)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___X86_64__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_32b33/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_32b33.dir/build.make CMakeFiles/cmTC_32b33.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_32b33.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___X86_64__   -o CMakeFiles/cmTC_32b33.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_32b33.dir/build.make:78: CMakeFiles/cmTC_32b33.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_32b33/fast] Error 2
+
+
+Source file was:
+#if !defined(__x86_64__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___X86_64 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_81f67/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_81f67.dir/build.make CMakeFiles/cmTC_81f67.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_81f67.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___X86_64   -o CMakeFiles/cmTC_81f67.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_81f67.dir/build.make:78: CMakeFiles/cmTC_81f67.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_81f67/fast] Error 2
+
+
+Source file was:
+#if !defined(__x86_64)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS__M_X64 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0764b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0764b.dir/build.make CMakeFiles/cmTC_0764b.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0764b.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS__M_X64   -o CMakeFiles/cmTC_0764b.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_0764b.dir/build.make:78: CMakeFiles/cmTC_0764b.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_0764b/fast] Error 2
+
+
+Source file was:
+#if !defined(_M_X64)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___I386__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_d2086/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_d2086.dir/build.make CMakeFiles/cmTC_d2086.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_d2086.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___I386__   -o CMakeFiles/cmTC_d2086.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_d2086.dir/build.make:78: CMakeFiles/cmTC_d2086.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_d2086/fast] Error 2
+
+
+Source file was:
+#if !defined(__i386__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___I386 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f9bcb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f9bcb.dir/build.make CMakeFiles/cmTC_f9bcb.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_f9bcb.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___I386   -o CMakeFiles/cmTC_f9bcb.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_f9bcb.dir/build.make:78: CMakeFiles/cmTC_f9bcb.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_f9bcb/fast] Error 2
+
+
+Source file was:
+#if !defined(__i386)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS__M_IX86 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_76cad/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_76cad.dir/build.make CMakeFiles/cmTC_76cad.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_76cad.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS__M_IX86   -o CMakeFiles/cmTC_76cad.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_76cad.dir/build.make:78: CMakeFiles/cmTC_76cad.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_76cad/fast] Error 2
+
+
+Source file was:
+#if !defined(_M_IX86)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___X86_32__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a6ec2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a6ec2.dir/build.make CMakeFiles/cmTC_a6ec2.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a6ec2.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___X86_32__   -o CMakeFiles/cmTC_a6ec2.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_a6ec2.dir/build.make:78: CMakeFiles/cmTC_a6ec2.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_a6ec2/fast] Error 2
+
+
+Source file was:
+#if !defined(__x86_32__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___POWERPC64__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_86f00/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_86f00.dir/build.make CMakeFiles/cmTC_86f00.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_86f00.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___POWERPC64__   -o CMakeFiles/cmTC_86f00.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_86f00.dir/build.make:78: CMakeFiles/cmTC_86f00.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_86f00/fast] Error 2
+
+
+Source file was:
+#if !defined(__powerpc64__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___POWERPC__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_cd9fc/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_cd9fc.dir/build.make CMakeFiles/cmTC_cd9fc.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_cd9fc.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___POWERPC__   -o CMakeFiles/cmTC_cd9fc.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_cd9fc.dir/build.make:78: CMakeFiles/cmTC_cd9fc.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_cd9fc/fast] Error 2
+
+
+Source file was:
+#if !defined(__powerpc__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___PPC__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9e301/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9e301.dir/build.make CMakeFiles/cmTC_9e301.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9e301.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___PPC__   -o CMakeFiles/cmTC_9e301.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_9e301.dir/build.make:78: CMakeFiles/cmTC_9e301.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_9e301/fast] Error 2
+
+
+Source file was:
+#if !defined(__ppc__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_PPC failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_57326/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_57326.dir/build.make CMakeFiles/cmTC_57326.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_57326.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_PPC   -o CMakeFiles/cmTC_57326.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_57326.dir/build.make:78: CMakeFiles/cmTC_57326.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_57326/fast] Error 2
+
+
+Source file was:
+#if !defined(PPC)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___ALPHA__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_aeacb/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_aeacb.dir/build.make CMakeFiles/cmTC_aeacb.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_aeacb.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___ALPHA__   -o CMakeFiles/cmTC_aeacb.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_aeacb.dir/build.make:78: CMakeFiles/cmTC_aeacb.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_aeacb/fast] Error 2
+
+
+Source file was:
+#if !defined(__alpha__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___ARM_ARCH_4T__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_93b87/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_93b87.dir/build.make CMakeFiles/cmTC_93b87.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_93b87.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___ARM_ARCH_4T__   -o CMakeFiles/cmTC_93b87.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_93b87.dir/build.make:78: CMakeFiles/cmTC_93b87.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_93b87/fast] Error 2
+
+
+Source file was:
+#if !defined(__ARM_ARCH_4T__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___ARM_ARCH_5T__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c0d97/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c0d97.dir/build.make CMakeFiles/cmTC_c0d97.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c0d97.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___ARM_ARCH_5T__   -o CMakeFiles/cmTC_c0d97.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_c0d97.dir/build.make:78: CMakeFiles/cmTC_c0d97.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c0d97/fast] Error 2
+
+
+Source file was:
+#if !defined(__ARM_ARCH_5T__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___ARM_ARCH_7A__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b7191/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b7191.dir/build.make CMakeFiles/cmTC_b7191.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b7191.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___ARM_ARCH_7A__   -o CMakeFiles/cmTC_b7191.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_b7191.dir/build.make:78: CMakeFiles/cmTC_b7191.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b7191/fast] Error 2
+
+
+Source file was:
+#if !defined(__ARM_ARCH_7A__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___ARM__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_53480/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_53480.dir/build.make CMakeFiles/cmTC_53480.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_53480.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___ARM__   -o CMakeFiles/cmTC_53480.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_53480.dir/build.make:78: CMakeFiles/cmTC_53480.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_53480/fast] Error 2
+
+
+Source file was:
+#if !defined(__arm__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___SPARC__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6fd43/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_6fd43.dir/build.make CMakeFiles/cmTC_6fd43.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_6fd43.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___SPARC__   -o CMakeFiles/cmTC_6fd43.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_6fd43.dir/build.make:78: CMakeFiles/cmTC_6fd43.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_6fd43/fast] Error 2
+
+
+Source file was:
+#if !defined(__sparc__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___SPARCV9 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e2982/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e2982.dir/build.make CMakeFiles/cmTC_e2982.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e2982.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___SPARCV9   -o CMakeFiles/cmTC_e2982.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_e2982.dir/build.make:78: CMakeFiles/cmTC_e2982.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_e2982/fast] Error 2
+
+
+Source file was:
+#if !defined(__sparcv9)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___SPARCV8 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b4b43/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b4b43.dir/build.make CMakeFiles/cmTC_b4b43.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b4b43.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___SPARCV8   -o CMakeFiles/cmTC_b4b43.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_b4b43.dir/build.make:78: CMakeFiles/cmTC_b4b43.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b4b43/fast] Error 2
+
+
+Source file was:
+#if !defined(__sparcv8)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___MIPSEL__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9fd18/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9fd18.dir/build.make CMakeFiles/cmTC_9fd18.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_9fd18.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___MIPSEL__   -o CMakeFiles/cmTC_9fd18.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_9fd18.dir/build.make:78: CMakeFiles/cmTC_9fd18.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_9fd18/fast] Error 2
+
+
+Source file was:
+#if !defined(__MIPSEL__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___MIPSEB__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_003a2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_003a2.dir/build.make CMakeFiles/cmTC_003a2.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_003a2.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___MIPSEB__   -o CMakeFiles/cmTC_003a2.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_003a2.dir/build.make:78: CMakeFiles/cmTC_003a2.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_003a2/fast] Error 2
+
+
+Source file was:
+#if !defined(__MIPSEB__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS___AVR32__ failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_69f4c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_69f4c.dir/build.make CMakeFiles/cmTC_69f4c.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_69f4c.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS___AVR32__   -o CMakeFiles/cmTC_69f4c.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error undefined macro
+    2 | #error undefined macro
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_69f4c.dir/build.make:78: CMakeFiles/cmTC_69f4c.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_69f4c/fast] Error 2
+
+
+Source file was:
+#if !defined(__avr32__)
+#error undefined macro
+#endif
+int main(void){return 0;}
+Performing C++ SOURCE FILE Test DUNE_CPU_BIG_ENDIAN failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_348d9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_348d9.dir/build.make CMakeFiles/cmTC_348d9.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_348d9.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_CPU_BIG_ENDIAN   -o CMakeFiles/cmTC_348d9.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+Linking CXX executable cmTC_348d9
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_348d9.dir/link.txt --verbose=1
+/usr/bin/c++ -rdynamic CMakeFiles/cmTC_348d9.dir/src.cxx.o -o cmTC_348d9 
+/usr/bin/ld: /usr/lib/gcc/aarch64-linux-gnu/11/../../../aarch64-linux-gnu/Scrt1.o: in function `_start':
+(.text+0x1c): undefined reference to `main'
+/usr/bin/ld: (.text+0x20): undefined reference to `main'
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_348d9.dir/build.make:99: cmTC_348d9] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_348d9/fast] Error 2
+
+
+Source file was:
+
+#include <sys/types.h>
+#include <sys/param.h>
+
+#ifdef __BYTE_ORDER
+#  if (__BYTE_ORDER == __BIG_ENDIAN) || defined(_BIG_ENDIAN)
+int main(void) { return 0; }
+#  endif
+#endif
+
+Performing C++ SOURCE FILE Test armel failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_25b23/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_25b23.dir/build.make CMakeFiles/cmTC_25b23.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_25b23.dir/src.cxx.o
+/usr/bin/c++ -Darmel   -o CMakeFiles/cmTC_25b23.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error no __ARMEL__
+    2 | #error no __ARMEL__
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_25b23.dir/build.make:78: CMakeFiles/cmTC_25b23.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_25b23/fast] Error 2
+
+
+Source file was:
+#if !defined(__ARMEL__)
+#error no __ARMEL__
+#endif
+int main(void) {return 0;}
+
+Performing C++ SOURCE FILE Test armeb failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_040a7/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_040a7.dir/build.make CMakeFiles/cmTC_040a7.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_040a7.dir/src.cxx.o
+/usr/bin/c++ -Darmeb   -o CMakeFiles/cmTC_040a7.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:2: error: #error no __ARMEB__
+    2 | #error no __ARMEB__
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_040a7.dir/build.make:78: CMakeFiles/cmTC_040a7.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_040a7/fast] Error 2
+
+
+Source file was:
+#if !defined(__ARMEB__)
+#error no __ARMEB__
+#endif
+int main(void) {return 0;}
+
+Performing C++ SOURCE FILE Test DUNE_CPU_MIXED_ENDIAN_DOUBLES failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_df8c1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_df8c1.dir/build.make CMakeFiles/cmTC_df8c1.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_df8c1.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_CPU_MIXED_ENDIAN_DOUBLES   -o CMakeFiles/cmTC_df8c1.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:4: error: #error not ARM architecture
+    3 | #  error not ARM architecture
+      |    ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_df8c1.dir/build.make:78: CMakeFiles/cmTC_df8c1.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_df8c1/fast] Error 2
+
+
+Source file was:
+
+#if !defined(__arm__)
+#  error not ARM architecture
+#endif
+
+#if defined(__VFP_FP__)
+#  error normal doubles.
+#endif
+
+int main(void) { return 0; }
+
+Determining if the __ANDROID__ exist failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_9ce28/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_9ce28.dir/build.make CMakeFiles/cmTC_9ce28.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_9ce28.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_9ce28.dir/CheckSymbolExists.c.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘__ANDROID__’ undeclared (first use in this function)
+    8 |   return ((int*)(&__ANDROID__))[argc];
+      |                   ^~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_9ce28.dir/build.make:78: CMakeFiles/cmTC_9ce28.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_9ce28/fast] Error 2
+
+
+File /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __ANDROID__
+  return ((int*)(&__ANDROID__))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Performing C++ SOURCE FILE Test OS_LINUX24 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ebed0/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ebed0.dir/build.make CMakeFiles/cmTC_ebed0.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ebed0.dir/src.cxx.o
+/usr/bin/c++ -DOS_LINUX24   -o CMakeFiles/cmTC_ebed0.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:4: error: #error Linux 2.5 or greater
+    4 | #  error Linux 2.5 or greater
+      |    ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_ebed0.dir/build.make:78: CMakeFiles/cmTC_ebed0.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ebed0/fast] Error 2
+
+
+Source file was:
+
+#include <linux/version.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(2, 5, 0)
+#  error Linux 2.5 or greater
+#endif
+
+Performing C++ SOURCE FILE Test LLVM_LIBC failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ed020/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ed020.dir/build.make CMakeFiles/cmTC_ed020.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ed020.dir/src.cxx.o
+/usr/bin/c++ -DLLVM_LIBC   -o CMakeFiles/cmTC_ed020.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:26: error: ‘_LIBCPP_VERSION’ was not declared in this scope
+    2 |  int main(void) { return _LIBCPP_VERSION; }
+      |                          ^~~~~~~~~~~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_ed020.dir/build.make:78: CMakeFiles/cmTC_ed020.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ed020/fast] Error 2
+
+
+Source file was:
+#include <cstddef>
+ int main(void) { return _LIBCPP_VERSION; }
+Determining if the __UCLIBC__ exist failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e0895/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e0895.dir/build.make CMakeFiles/cmTC_e0895.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_e0895.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_e0895.dir/CheckSymbolExists.c.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘__UCLIBC__’ undeclared (first use in this function); did you mean ‘__LINE__’?
+    8 |   return ((int*)(&__UCLIBC__))[argc];
+      |                   ^~~~~~~~~~
+      |                   __LINE__
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_e0895.dir/build.make:78: CMakeFiles/cmTC_e0895.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_e0895/fast] Error 2
+
+
+File /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __UCLIBC__
+  return ((int*)(&__UCLIBC__))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the __BIONIC__ exist failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0bf3b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0bf3b.dir/build.make CMakeFiles/cmTC_0bf3b.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_0bf3b.dir/CheckSymbolExists.c.o
+/usr/bin/cc    -o CMakeFiles/cmTC_0bf3b.dir/CheckSymbolExists.c.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c: In function ‘main’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: error: ‘__BIONIC__’ undeclared (first use in this function); did you mean ‘__LINE__’?
+    8 |   return ((int*)(&__BIONIC__))[argc];
+      |                   ^~~~~~~~~~
+      |                   __LINE__
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:8:19: note: each undeclared identifier is reported only once for each function it appears in
+gmake[1]: *** [CMakeFiles/cmTC_0bf3b.dir/build.make:78: CMakeFiles/cmTC_0bf3b.dir/CheckSymbolExists.c.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_0bf3b/fast] Error 2
+
+
+File /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckSymbolExists.c:
+/* */
+#include <stdio.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef __BIONIC__
+  return ((int*)(&__BIONIC__))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+Determining if the function getch exists in the ws2_32 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_eddc2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_eddc2.dir/build.make CMakeFiles/cmTC_eddc2.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_eddc2.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=getch -o CMakeFiles/cmTC_eddc2.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_eddc2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eddc2.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=getch -rdynamic CMakeFiles/cmTC_eddc2.dir/CheckFunctionExists.c.o -o cmTC_eddc2  -lws2_32 -lrt 
+/usr/bin/ld: cannot find -lws2_32: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_eddc2.dir/build.make:99: cmTC_eddc2] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_eddc2/fast] Error 2
+
+
+
+Determining if the function getch exists in the wsock32 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_dbda1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_dbda1.dir/build.make CMakeFiles/cmTC_dbda1.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_dbda1.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=getch -o CMakeFiles/cmTC_dbda1.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_dbda1
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_dbda1.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=getch -rdynamic CMakeFiles/cmTC_dbda1.dir/CheckFunctionExists.c.o -o cmTC_dbda1  -lwsock32 -lrt 
+/usr/bin/ld: cannot find -lwsock32: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_dbda1.dir/build.make:99: cmTC_dbda1] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_dbda1/fast] Error 2
+
+
+
+Determining if the function getch exists in the iphlpapi failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_eeb8d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_eeb8d.dir/build.make CMakeFiles/cmTC_eeb8d.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_eeb8d.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=getch -o CMakeFiles/cmTC_eeb8d.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_eeb8d
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_eeb8d.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=getch -rdynamic CMakeFiles/cmTC_eeb8d.dir/CheckFunctionExists.c.o -o cmTC_eeb8d  -liphlpapi -lrt 
+/usr/bin/ld: cannot find -liphlpapi: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_eeb8d.dir/build.make:99: cmTC_eeb8d] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_eeb8d/fast] Error 2
+
+
+
+Determining if the function setsockopt exists in the socket failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_02387/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_02387.dir/build.make CMakeFiles/cmTC_02387.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_02387.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=setsockopt -o CMakeFiles/cmTC_02387.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_02387
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_02387.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=setsockopt -rdynamic CMakeFiles/cmTC_02387.dir/CheckFunctionExists.c.o -o cmTC_02387  -lsocket -lrt 
+/usr/bin/ld: cannot find -lsocket: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_02387.dir/build.make:99: cmTC_02387] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_02387/fast] Error 2
+
+
+
+Determining if the function inet_addr exists in the xnet failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_042c8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_042c8.dir/build.make CMakeFiles/cmTC_042c8.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_042c8.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=inet_addr -o CMakeFiles/cmTC_042c8.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_042c8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_042c8.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=inet_addr -rdynamic CMakeFiles/cmTC_042c8.dir/CheckFunctionExists.c.o -o cmTC_042c8  -lxnet -lrt -lpthread -lm 
+/usr/bin/ld: cannot find -lxnet: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_042c8.dir/build.make:99: cmTC_042c8] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_042c8/fast] Error 2
+
+
+
+Determining if the function gettext exists in the intl failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ff63b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ff63b.dir/build.make CMakeFiles/cmTC_ff63b.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_ff63b.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=gettext -o CMakeFiles/cmTC_ff63b.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+<command-line>: warning: conflicting types for built-in function ‘gettext’; expected ‘char *(const char *)’ [-Wbuiltin-declaration-mismatch]
+/usr/share/cmake-3.22/Modules/CheckFunctionExists.c:7:3: note: in expansion of macro ‘CHECK_FUNCTION_EXISTS’
+    7 |   CHECK_FUNCTION_EXISTS(void);
+      |   ^~~~~~~~~~~~~~~~~~~~~
+Linking C executable cmTC_ff63b
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_ff63b.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=gettext -rdynamic CMakeFiles/cmTC_ff63b.dir/CheckFunctionExists.c.o -o cmTC_ff63b  -lintl -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lintl: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_ff63b.dir/build.make:99: cmTC_ff63b] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ff63b/fast] Error 2
+
+
+
+Determining if the include file devctl.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_454df/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_454df.dir/build.make CMakeFiles/cmTC_454df.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_454df.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_454df.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: devctl.h: No such file or directory
+    1 | #include <devctl.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_454df.dir/build.make:78: CMakeFiles/cmTC_454df.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_454df/fast] Error 2
+
+
+
+Determining if the include file sys/io.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_2c762/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2c762.dir/build.make CMakeFiles/cmTC_2c762.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2c762.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_2c762.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: sys/io.h: No such file or directory
+    1 | #include <sys/io.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_2c762.dir/build.make:78: CMakeFiles/cmTC_2c762.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_2c762/fast] Error 2
+
+
+
+Determining if the include file windows.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_a1ed8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_a1ed8.dir/build.make CMakeFiles/cmTC_a1ed8.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_a1ed8.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_a1ed8.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: windows.h: No such file or directory
+    1 | #include <windows.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_a1ed8.dir/build.make:78: CMakeFiles/cmTC_a1ed8.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_a1ed8/fast] Error 2
+
+
+
+Determining if the include file direct.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_6ddf9/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_6ddf9.dir/build.make CMakeFiles/cmTC_6ddf9.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_6ddf9.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_6ddf9.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: direct.h: No such file or directory
+    1 | #include <direct.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_6ddf9.dir/build.make:78: CMakeFiles/cmTC_6ddf9.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_6ddf9/fast] Error 2
+
+
+
+Determining if the include file winsock2.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_67565/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_67565.dir/build.make CMakeFiles/cmTC_67565.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_67565.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_67565.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: winsock2.h: No such file or directory
+    1 | #include <winsock2.h>
+      |          ^~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_67565.dir/build.make:78: CMakeFiles/cmTC_67565.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_67565/fast] Error 2
+
+
+
+Determining if the include file mach-o/dyld.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3a2d8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_3a2d8.dir/build.make CMakeFiles/cmTC_3a2d8.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_3a2d8.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_3a2d8.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: mach-o/dyld.h: No such file or directory
+    1 | #include <mach-o/dyld.h>
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_3a2d8.dir/build.make:78: CMakeFiles/cmTC_3a2d8.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_3a2d8/fast] Error 2
+
+
+
+Determining if the include file process.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_25663/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_25663.dir/build.make CMakeFiles/cmTC_25663.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_25663.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_25663.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: process.h: No such file or directory
+    1 | #include <process.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_25663.dir/build.make:78: CMakeFiles/cmTC_25663.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_25663/fast] Error 2
+
+
+
+Determining if the include file bsp.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fca5b/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fca5b.dir/build.make CMakeFiles/cmTC_fca5b.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_fca5b.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++    -o CMakeFiles/cmTC_fca5b.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: bsp.h: No such file or directory
+    1 | #include <bsp.h>
+      |          ^~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_fca5b.dir/build.make:78: CMakeFiles/cmTC_fca5b.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_fca5b/fast] Error 2
+
+
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_SYS_SYSCTL_H failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_4d079/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_4d079.dir/build.make CMakeFiles/cmTC_4d079.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_4d079.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_SYS_SYSCTL_H   -o CMakeFiles/cmTC_4d079.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:10: fatal error: sys/sysctl.h: No such file or directory
+    3 | #include <sys/sysctl.h>
+      |          ^~~~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_4d079.dir/build.make:78: CMakeFiles/cmTC_4d079.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_4d079/fast] Error 2
+
+
+Source file was:
+#include <sys/types.h>
+
+#include <sys/sysctl.h>
+int main(void){ return 0; }
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_TIMEPPS_H failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0fc3f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0fc3f.dir/build.make CMakeFiles/cmTC_0fc3f.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0fc3f.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_TIMEPPS_H   -o CMakeFiles/cmTC_0fc3f.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:10: fatal error: timepps.h: No such file or directory
+    3 | #include <timepps.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_0fc3f.dir/build.make:78: CMakeFiles/cmTC_0fc3f.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_0fc3f/fast] Error 2
+
+
+Source file was:
+#include <unistd.h>
+
+#include <timepps.h>
+int main(void){ return 0; }
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_IPHLPAPI_H failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_eba54/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_eba54.dir/build.make CMakeFiles/cmTC_eba54.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_eba54.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_IPHLPAPI_H   -o CMakeFiles/cmTC_eba54.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:10: fatal error: iphlpapi.h: No such file or directory
+    2 | #include <iphlpapi.h>
+      |          ^~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_eba54.dir/build.make:78: CMakeFiles/cmTC_eba54.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_eba54/fast] Error 2
+
+
+Source file was:
+
+#include <iphlpapi.h>
+int main(void){ return 0; }
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WS2TCPIP_H failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ce980/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ce980.dir/build.make CMakeFiles/cmTC_ce980.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ce980.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WS2TCPIP_H   -o CMakeFiles/cmTC_ce980.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:10: fatal error: ws2tcpip.h: No such file or directory
+    2 | #include <ws2tcpip.h>
+      |          ^~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_ce980.dir/build.make:78: CMakeFiles/cmTC_ce980.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ce980/fast] Error 2
+
+
+Source file was:
+
+#include <ws2tcpip.h>
+int main(void){ return 0; }
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WS2SPI_H failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_389d3/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_389d3.dir/build.make CMakeFiles/cmTC_389d3.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_389d3.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WS2SPI_H   -o CMakeFiles/cmTC_389d3.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:10: fatal error: ws2spi.h: No such file or directory
+    2 | #include <ws2spi.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_389d3.dir/build.make:78: CMakeFiles/cmTC_389d3.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_389d3/fast] Error 2
+
+
+Source file was:
+
+#include <ws2spi.h>
+int main(void){ return 0; }
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_STRNCPY_S failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e2b61/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e2b61.dir/build.make CMakeFiles/cmTC_e2b61.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e2b61.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_STRNCPY_S  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_e2b61.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘size_t’ was not declared in this scope
+    4 | size_t xx;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:1:1: note: ‘size_t’ is defined in header ‘<cstddef>’; did you forget to ‘#include <cstddef>’?
+  +++ |+#include <cstddef>
+    1 | 
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:7: error: expected ‘;’ before ‘xxxx’
+    6 | size_t xxxx;
+      |       ^~~~~
+      |       ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:2: error: ‘errno_t’ was not declared in this scope
+    8 |  errno_t rv = strncpy_s(&x, xx, &xxx, xxxx);
+      |  ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:6: warning: unused variable ‘x’ [-Wunused-variable]
+    3 | char x;
+      |      ^
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:6: warning: unused variable ‘xxx’ [-Wunused-variable]
+    5 | char xxx;
+      |      ^~~
+gmake[1]: *** [CMakeFiles/cmTC_e2b61.dir/build.make:78: CMakeFiles/cmTC_e2b61.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_e2b61/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+char x;
+size_t xx;
+char xxx;
+size_t xxxx;
+
+ errno_t rv = strncpy_s(&x, xx, &xxx, xxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_VSNPRINTF_S failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c38aa/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c38aa.dir/build.make CMakeFiles/cmTC_c38aa.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c38aa.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_VSNPRINTF_S  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_c38aa.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘size_t’ was not declared in this scope
+    4 | size_t xx;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:1:1: note: ‘size_t’ is defined in header ‘<cstddef>’; did you forget to ‘#include <cstddef>’?
+  +++ |+#include <cstddef>
+    1 | 
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:7: error: expected ‘;’ before ‘xxx’
+    5 | size_t xxx;
+      |       ^~~~
+      |       ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:2: error: ‘va_list’ was not declared in this scope
+    7 |  va_list xxxxx;
+      |  ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:1:1: note: ‘va_list’ is defined in header ‘<cstdarg>’; did you forget to ‘#include <cstdarg>’?
+  +++ |+#include <cstdarg>
+    1 | 
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:27: error: ‘xx’ was not declared in this scope; did you mean ‘x’?
+    9 |  int rv = vsnprintf_s(&x, xx, xxx, &xxxx, xxxxx);
+      |                           ^~
+      |                           x
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:31: error: ‘xxx’ was not declared in this scope; did you mean ‘xxxx’?
+    9 |  int rv = vsnprintf_s(&x, xx, xxx, &xxxx, xxxxx);
+      |                               ^~~
+      |                               xxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:43: error: ‘xxxxx’ was not declared in this scope; did you mean ‘xxxx’?
+    9 |  int rv = vsnprintf_s(&x, xx, xxx, &xxxx, xxxxx);
+      |                                           ^~~~~
+      |                                           xxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:11: error: ‘vsnprintf_s’ was not declared in this scope
+    9 |  int rv = vsnprintf_s(&x, xx, xxx, &xxxx, xxxxx);
+      |           ^~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    9 |  int rv = vsnprintf_s(&x, xx, xxx, &xxxx, xxxxx);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_c38aa.dir/build.make:78: CMakeFiles/cmTC_c38aa.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c38aa/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+char x;
+size_t xx;
+size_t xxx;
+char xxxx;
+ va_list xxxxx;
+
+ int rv = vsnprintf_s(&x, xx, xxx, &xxxx, xxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CLOSESOCKET failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_33f4e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_33f4e.dir/build.make CMakeFiles/cmTC_33f4e.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_33f4e.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CLOSESOCKET  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_33f4e.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘SOCKET’ was not declared in this scope
+    3 | SOCKET x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:23: error: ‘x’ was not declared in this scope
+    5 |  int rv = closesocket(x);
+      |                       ^
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:11: error: ‘closesocket’ was not declared in this scope
+    5 |  int rv = closesocket(x);
+      |           ^~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    5 |  int rv = closesocket(x);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_33f4e.dir/build.make:78: CMakeFiles/cmTC_33f4e.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_33f4e/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+SOCKET x;
+
+ int rv = closesocket(x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_PTHREAD_WIN32_PROCESS_ATTACH_NP failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_19b78/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_19b78.dir/build.make CMakeFiles/cmTC_19b78.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_19b78.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_PTHREAD_WIN32_PROCESS_ATTACH_NP  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_19b78.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:11: error: ‘pthread_win32_process_attach_np’ was not declared in this scope
+    5 |  int rv = pthread_win32_process_attach_np();
+      |           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    5 |  int rv = pthread_win32_process_attach_np();
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_19b78.dir/build.make:78: CMakeFiles/cmTC_19b78.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_19b78/fast] Error 2
+
+
+Source file was:
+#include <pthread.h>
+
+int main(void) {
+
+ int rv = pthread_win32_process_attach_np();
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS__GETCWD failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_1abf6/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_1abf6.dir/build.make CMakeFiles/cmTC_1abf6.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1abf6.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS__GETCWD  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_1abf6.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:13: error: ‘_getcwd’ was not declared in this scope
+    6 |  char* rv = _getcwd(&x, xx);
+      |             ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:8: warning: unused variable ‘rv’ [-Wunused-variable]
+    6 |  char* rv = _getcwd(&x, xx);
+      |        ^~
+gmake[1]: *** [CMakeFiles/cmTC_1abf6.dir/build.make:78: CMakeFiles/cmTC_1abf6.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_1abf6/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+char x;
+int xx;
+
+ char* rv = _getcwd(&x, xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_FORMAT_MESSAGE failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_1b45c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_1b45c.dir/build.make CMakeFiles/cmTC_1b45c.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1b45c.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_FORMAT_MESSAGE  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_1b45c.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘DWORD’ was not declared in this scope
+    3 | DWORD x;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:6: error: expected ‘;’ before ‘xxx’
+    5 | DWORD xxx;
+      |      ^~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:6: error: expected ‘;’ before ‘xxxx’
+    6 | DWORD xxxx;
+      |      ^~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:6: error: expected ‘;’ before ‘xxxxxx’
+    8 | DWORD xxxxxx;
+      |      ^~~~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:1: error: ‘va_list’ was not declared in this scope
+    9 | va_list xxxxxxx;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:1:1: note: ‘va_list’ is defined in header ‘<cstdarg>’; did you forget to ‘#include <cstdarg>’?
+  +++ |+#include <cstdarg>
+    1 | 
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:11:7: error: expected ‘;’ before ‘rv’
+   11 |  DWORD rv = FormatMessage(x, &xx, xxx, xxxx, &xxxxx, xxxxxx, &xxxxxxx);
+      |       ^~~
+      |       ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:6: warning: unused variable ‘xx’ [-Wunused-variable]
+    4 | char xx;
+      |      ^~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:6: warning: unused variable ‘xxxxx’ [-Wunused-variable]
+    7 | char xxxxx;
+      |      ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_1b45c.dir/build.make:78: CMakeFiles/cmTC_1b45c.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_1b45c/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+DWORD x;
+char xx;
+DWORD xxx;
+DWORD xxxx;
+char xxxxx;
+DWORD xxxxxx;
+va_list xxxxxxx;
+
+ DWORD rv = FormatMessage(x, &xx, xxx, xxxx, &xxxxx, xxxxxx, &xxxxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_IOPERM failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_8ed17/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_8ed17.dir/build.make CMakeFiles/cmTC_8ed17.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_8ed17.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_IOPERM  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_8ed17.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:11: error: ‘ioperm’ was not declared in this scope
+    8 |  int rv = ioperm(x, xx, xxx);
+      |           ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    8 |  int rv = ioperm(x, xx, xxx);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_8ed17.dir/build.make:78: CMakeFiles/cmTC_8ed17.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_8ed17/fast] Error 2
+
+
+Source file was:
+#include <unistd.h>
+
+int main(void) {
+unsigned long x;
+unsigned long xx;
+int xxx;
+
+ int rv = ioperm(x, xx, xxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_GET_SYSTEM_TIME_AS_FILE_TIME failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_ecd4a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_ecd4a.dir/build.make CMakeFiles/cmTC_ecd4a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_ecd4a.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_GET_SYSTEM_TIME_AS_FILE_TIME  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_ecd4a.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘FILETIME’ was not declared in this scope
+    3 | FILETIME x;
+      | ^~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:26: error: ‘x’ was not declared in this scope
+    5 | GetSystemTimeAsFileTime(&x);
+      |                          ^
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘GetSystemTimeAsFileTime’ was not declared in this scope
+    5 | GetSystemTimeAsFileTime(&x);
+      | ^~~~~~~~~~~~~~~~~~~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_ecd4a.dir/build.make:78: CMakeFiles/cmTC_ecd4a.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_ecd4a/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+FILETIME x;
+
+GetSystemTimeAsFileTime(&x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_QUERY_PERFORMANCE_COUNTER failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_048d1/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_048d1.dir/build.make CMakeFiles/cmTC_048d1.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_048d1.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_QUERY_PERFORMANCE_COUNTER  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_048d1.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘LARGE_INTEGER’ was not declared in this scope
+    3 | LARGE_INTEGER x;
+      | ^~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:37: error: ‘x’ was not declared in this scope
+    5 |  bool rv = QueryPerformanceCounter(&x);
+      |                                     ^
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:12: error: ‘QueryPerformanceCounter’ was not declared in this scope
+    5 |  bool rv = QueryPerformanceCounter(&x);
+      |            ^~~~~~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:7: warning: unused variable ‘rv’ [-Wunused-variable]
+    5 |  bool rv = QueryPerformanceCounter(&x);
+      |       ^~
+gmake[1]: *** [CMakeFiles/cmTC_048d1.dir/build.make:78: CMakeFiles/cmTC_048d1.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_048d1/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+LARGE_INTEGER x;
+
+ bool rv = QueryPerformanceCounter(&x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_GET_LAST_ERROR failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_1756a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_1756a.dir/build.make CMakeFiles/cmTC_1756a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_1756a.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_GET_LAST_ERROR  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_1756a.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:2: error: ‘DWORD’ was not declared in this scope
+    4 |  DWORD rv = GetLastError();
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_1756a.dir/build.make:78: CMakeFiles/cmTC_1756a.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_1756a/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+
+ DWORD rv = GetLastError();
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CREATE_WAITABLE_TIMER failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fa260/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fa260.dir/build.make CMakeFiles/cmTC_fa260.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_fa260.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CREATE_WAITABLE_TIMER  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_fa260.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘SECURITY_ATTRIBUTES’ was not declared in this scope
+    3 | SECURITY_ATTRIBUTES x;
+      | ^~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘BOOL’ was not declared in this scope
+    4 | BOOL xx;
+      | ^~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:2: error: ‘HANDLE’ was not declared in this scope
+    7 |  HANDLE rv = CreateWaitableTimer(&x, xx, &xxx);
+      |  ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:6: warning: unused variable ‘xxx’ [-Wunused-variable]
+    5 | char xxx;
+      |      ^~~
+gmake[1]: *** [CMakeFiles/cmTC_fa260.dir/build.make:78: CMakeFiles/cmTC_fa260.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_fa260/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+SECURITY_ATTRIBUTES x;
+BOOL xx;
+char xxx;
+
+ HANDLE rv = CreateWaitableTimer(&x, xx, &xxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_GET_MODULE_FILE_NAME failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bb74c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bb74c.dir/build.make CMakeFiles/cmTC_bb74c.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_bb74c.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_GET_MODULE_FILE_NAME  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_bb74c.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HMODULE’ was not declared in this scope
+    3 | HMODULE x;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘LPSTR’ was not declared in this scope
+    4 | LPSTR xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘DWORD’ was not declared in this scope
+    5 | DWORD xxx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:7: error: expected ‘;’ before ‘rv’
+    7 |  DWORD rv = GetModuleFileName(x, xx, xxx);
+      |       ^~~
+      |       ;
+gmake[1]: *** [CMakeFiles/cmTC_bb74c.dir/build.make:78: CMakeFiles/cmTC_bb74c.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_bb74c/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HMODULE x;
+LPSTR xx;
+DWORD xxx;
+
+ DWORD rv = GetModuleFileName(x, xx, xxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_LOAD_LIBRARY failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_e40c7/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_e40c7.dir/build.make CMakeFiles/cmTC_e40c7.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_e40c7.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_LOAD_LIBRARY  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_e40c7.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:2: error: ‘HMODULE’ was not declared in this scope
+    5 |  HMODULE rv = LoadLibrary(&x);
+      |  ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:6: warning: unused variable ‘x’ [-Wunused-variable]
+    3 | char x;
+      |      ^
+gmake[1]: *** [CMakeFiles/cmTC_e40c7.dir/build.make:78: CMakeFiles/cmTC_e40c7.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_e40c7/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+char x;
+
+ HMODULE rv = LoadLibrary(&x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_TLS_ALLOC failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_4cd6d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_4cd6d.dir/build.make CMakeFiles/cmTC_4cd6d.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_4cd6d.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_TLS_ALLOC  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_4cd6d.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:2: error: ‘DWORD’ was not declared in this scope
+    4 |  DWORD rv = TlsAlloc();
+      |  ^~~~~
+gmake[1]: *** [CMakeFiles/cmTC_4cd6d.dir/build.make:78: CMakeFiles/cmTC_4cd6d.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_4cd6d/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+
+ DWORD rv = TlsAlloc();
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CREATE_DIRECTORY failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_09b1a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_09b1a.dir/build.make CMakeFiles/cmTC_09b1a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_09b1a.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CREATE_DIRECTORY  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_09b1a.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘LPCTSTR’ was not declared in this scope
+    3 | LPCTSTR x;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘LPSECURITY_ATTRIBUTES’ was not declared in this scope
+    4 | LPSECURITY_ATTRIBUTES xx;
+      | ^~~~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:2: error: ‘BOOL’ was not declared in this scope
+    6 |  BOOL rv = CreateDirectory(x, xx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_09b1a.dir/build.make:78: CMakeFiles/cmTC_09b1a.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_09b1a/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+LPCTSTR x;
+LPSECURITY_ATTRIBUTES xx;
+
+ BOOL rv = CreateDirectory(x, xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WSA_STARTUP failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5a067/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_5a067.dir/build.make CMakeFiles/cmTC_5a067.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5a067.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WSA_STARTUP  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_5a067.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘WORD’ was not declared in this scope
+    3 | WORD x;
+      | ^~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘WSADATA’ was not declared in this scope
+    4 | WSADATA xx;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:22: error: ‘x’ was not declared in this scope
+    6 |  int rv = WSAStartup(x, &xx);
+      |                      ^
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:26: error: ‘xx’ was not declared in this scope
+    6 |  int rv = WSAStartup(x, &xx);
+      |                          ^~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:11: error: ‘WSAStartup’ was not declared in this scope
+    6 |  int rv = WSAStartup(x, &xx);
+      |           ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    6 |  int rv = WSAStartup(x, &xx);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_5a067.dir/build.make:78: CMakeFiles/cmTC_5a067.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_5a067/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+WORD x;
+WSADATA xx;
+
+ int rv = WSAStartup(x, &xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WSA_CLEANUP failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_58848/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_58848.dir/build.make CMakeFiles/cmTC_58848.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_58848.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WSA_CLEANUP  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_58848.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:11: error: ‘WSACleanup’ was not declared in this scope
+    4 |  int rv = WSACleanup();
+      |           ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    4 |  int rv = WSACleanup();
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_58848.dir/build.make:78: CMakeFiles/cmTC_58848.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_58848/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+
+ int rv = WSACleanup();
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WSA_STRING_TO_ADDRESS failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bf65a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bf65a.dir/build.make CMakeFiles/cmTC_bf65a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_bf65a.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WSA_STRING_TO_ADDRESS  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_bf65a.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘WSAPROTOCOL_INFO’ was not declared in this scope
+    5 | WSAPROTOCOL_INFO xxx;
+      | ^~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:1: error: ‘SOCKADDR’ was not declared in this scope
+    6 | SOCKADDR xxxx;
+      | ^~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:39: error: ‘xxx’ was not declared in this scope; did you mean ‘xx’?
+    9 |  int rv = WSAStringToAddress(&x, xx, &xxx, &xxxx, &xxxxx);
+      |                                       ^~~
+      |                                       xx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:45: error: ‘xxxx’ was not declared in this scope; did you mean ‘xxxxx’?
+    9 |  int rv = WSAStringToAddress(&x, xx, &xxx, &xxxx, &xxxxx);
+      |                                             ^~~~
+      |                                             xxxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:11: error: ‘WSAStringToAddress’ was not declared in this scope
+    9 |  int rv = WSAStringToAddress(&x, xx, &xxx, &xxxx, &xxxxx);
+      |           ^~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    9 |  int rv = WSAStringToAddress(&x, xx, &xxx, &xxxx, &xxxxx);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_bf65a.dir/build.make:78: CMakeFiles/cmTC_bf65a.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_bf65a/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+char x;
+int xx;
+WSAPROTOCOL_INFO xxx;
+SOCKADDR xxxx;
+int xxxxx;
+
+ int rv = WSAStringToAddress(&x, xx, &xxx, &xxxx, &xxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WSA_IOCTL failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b111f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b111f.dir/build.make CMakeFiles/cmTC_b111f.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b111f.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WSA_IOCTL  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_b111f.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘SOCKET’ was not declared in this scope
+    3 | SOCKET x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:6: error: expected ‘;’ before ‘xxxx’
+    6 | DWORD xxxx;
+      |      ^~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:6: error: expected ‘;’ before ‘xxxxxx’
+    8 | DWORD xxxxxx;
+      |      ^~~~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:1: error: ‘LPDWORD’ was not declared in this scope
+    9 | LPDWORD xxxxxxx;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:10:1: error: ‘LPWSAOVERLAPPED’ was not declared in this scope
+   10 | LPWSAOVERLAPPED xxxxxxxx;
+      | ^~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:11:1: error: ‘LPWSAOVERLAPPED_COMPLETION_ROUTINE’ was not declared in this scope
+   11 | LPWSAOVERLAPPED_COMPLETION_ROUTINE xxxxxxxxx;
+      | ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:20: error: ‘x’ was not declared in this scope
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                    ^
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:23: error: ‘xx’ was not declared in this scope; did you mean ‘xxx’?
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                       ^~
+      |                       xxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:33: error: ‘xxxx’ was not declared in this scope; did you mean ‘xxxxx’?
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                                 ^~~~
+      |                                 xxxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:47: error: ‘xxxxxx’ was not declared in this scope; did you mean ‘xxxxx’?
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                                               ^~~~~~
+      |                                               xxxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:55: error: ‘xxxxxxx’ was not declared in this scope; did you mean ‘xxxxx’?
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                                                       ^~~~~~~
+      |                                                       xxxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:64: error: ‘xxxxxxxx’ was not declared in this scope; did you mean ‘xxxxx’?
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                                                                ^~~~~~~~
+      |                                                                xxxxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:74: error: ‘xxxxxxxxx’ was not declared in this scope
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |                                                                          ^~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:11: error: ‘WSAIoctl’ was not declared in this scope
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |           ^~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:13:6: warning: unused variable ‘rv’ [-Wunused-variable]
+   13 |  int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_b111f.dir/build.make:78: CMakeFiles/cmTC_b111f.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b111f/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+SOCKET x;
+DWORD xx;
+char xxx;
+DWORD xxxx;
+char xxxxx;
+DWORD xxxxxx;
+LPDWORD xxxxxxx;
+LPWSAOVERLAPPED xxxxxxxx;
+LPWSAOVERLAPPED_COMPLETION_ROUTINE xxxxxxxxx;
+
+ int rv = WSAIoctl(x, xx, &xxx, xxxx, &xxxxx, xxxxxx, xxxxxxx, xxxxxxxx, xxxxxxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_POSIX_STRERROR_R failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_46106/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_46106.dir/build.make CMakeFiles/cmTC_46106.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_46106.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_POSIX_STRERROR_R  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_46106.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:21: error: invalid conversion from ‘char*’ to ‘int’ [-fpermissive]
+    9 |  int rv = strerror_r(x, &xx, xxx);
+      |           ~~~~~~~~~~^~~~~~~~~~~~~
+      |                     |
+      |                     char*
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    9 |  int rv = strerror_r(x, &xx, xxx);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_46106.dir/build.make:78: CMakeFiles/cmTC_46106.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_46106/fast] Error 2
+
+
+Source file was:
+#include <cstring>
+#include <string.h>
+
+int main(void) {
+int x;
+char xx;
+size_t xxx;
+
+ int rv = strerror_r(x, &xx, xxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CREATE_FILE failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_2b940/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2b940.dir/build.make CMakeFiles/cmTC_2b940.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_2b940.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CREATE_FILE  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_2b940.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘LPCSTR’ was not declared in this scope
+    3 | LPCSTR x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:6: error: expected ‘;’ before ‘xxx’
+    5 | DWORD xxx;
+      |      ^~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:1: error: ‘SECURITY_ATTRIBUTES’ was not declared in this scope
+    6 | SECURITY_ATTRIBUTES xxxx;
+      | ^~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:6: error: expected ‘;’ before ‘xxxxx’
+    7 | DWORD xxxxx;
+      |      ^~~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:6: error: expected ‘;’ before ‘xxxxxx’
+    8 | DWORD xxxxxx;
+      |      ^~~~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:1: error: ‘HANDLE’ was not declared in this scope
+    9 | HANDLE xxxxxxx;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:11:8: error: expected ‘;’ before ‘rv’
+   11 |  HANDLE rv = CreateFile(x, xx, xxx, &xxxx, xxxxx, xxxxxx, xxxxxxx);
+      |        ^~~
+      |        ;
+gmake[1]: *** [CMakeFiles/cmTC_2b940.dir/build.make:78: CMakeFiles/cmTC_2b940.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_2b940/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+LPCSTR x;
+DWORD xx;
+DWORD xxx;
+SECURITY_ATTRIBUTES xxxx;
+DWORD xxxxx;
+DWORD xxxxxx;
+HANDLE xxxxxxx;
+
+ HANDLE rv = CreateFile(x, xx, xxx, &xxxx, xxxxx, xxxxxx, xxxxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_READ_FILE failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_fbe56/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_fbe56.dir/build.make CMakeFiles/cmTC_fbe56.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_fbe56.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_READ_FILE  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_fbe56.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘LPVOID’ was not declared in this scope
+    4 | LPVOID xx;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘DWORD’ was not declared in this scope
+    5 | DWORD xxx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:6: error: expected ‘;’ before ‘xxxx’
+    6 | DWORD xxxx;
+      |      ^~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:1: error: ‘OVERLAPPED’ was not declared in this scope
+    7 | OVERLAPPED xxxxx;
+      | ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:2: error: ‘BOOL’ was not declared in this scope
+    9 |  BOOL rv = ReadFile(x, xx, xxx, &xxxx, &xxxxx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_fbe56.dir/build.make:78: CMakeFiles/cmTC_fbe56.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_fbe56/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+LPVOID xx;
+DWORD xxx;
+DWORD xxxx;
+OVERLAPPED xxxxx;
+
+ BOOL rv = ReadFile(x, xx, xxx, &xxxx, &xxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WRITE_FILE failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_52f75/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_52f75.dir/build.make CMakeFiles/cmTC_52f75.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_52f75.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WRITE_FILE  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_52f75.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘LPCVOID’ was not declared in this scope
+    4 | LPCVOID xx;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘DWORD’ was not declared in this scope
+    5 | DWORD xxx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:6: error: expected ‘;’ before ‘xxxx’
+    6 | DWORD xxxx;
+      |      ^~~~~
+      |      ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:1: error: ‘OVERLAPPED’ was not declared in this scope
+    7 | OVERLAPPED xxxxx;
+      | ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:9:2: error: ‘BOOL’ was not declared in this scope
+    9 |  BOOL rv = WriteFile(x, xx, xxx, &xxxx, &xxxxx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_52f75.dir/build.make:78: CMakeFiles/cmTC_52f75.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_52f75/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+LPCVOID xx;
+DWORD xxx;
+DWORD xxxx;
+OVERLAPPED xxxxx;
+
+ BOOL rv = WriteFile(x, xx, xxx, &xxxx, &xxxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_GET_OVERLAPPED_RESULT failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c529c/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c529c.dir/build.make CMakeFiles/cmTC_c529c.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c529c.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_GET_OVERLAPPED_RESULT  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_c529c.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘OVERLAPPED’ was not declared in this scope
+    4 | OVERLAPPED xx;
+      | ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘DWORD’ was not declared in this scope
+    5 | DWORD xxx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:1: error: ‘BOOL’ was not declared in this scope
+    6 | BOOL xxxx;
+      | ^~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:6: error: expected ‘;’ before ‘rv’
+    8 |  BOOL rv = GetOverlappedResult(x, &xx, &xxx, xxxx);
+      |      ^~~
+      |      ;
+gmake[1]: *** [CMakeFiles/cmTC_c529c.dir/build.make:78: CMakeFiles/cmTC_c529c.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c529c/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+OVERLAPPED xx;
+DWORD xxx;
+BOOL xxxx;
+
+ BOOL rv = GetOverlappedResult(x, &xx, &xxx, xxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_SET_COMM_STATE failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_70d0d/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_70d0d.dir/build.make CMakeFiles/cmTC_70d0d.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_70d0d.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_SET_COMM_STATE  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_70d0d.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DCB’ was not declared in this scope
+    4 | DCB xx;
+      | ^~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:2: error: ‘BOOL’ was not declared in this scope
+    6 |  BOOL rv = SetCommState(x, &xx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_70d0d.dir/build.make:78: CMakeFiles/cmTC_70d0d.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_70d0d/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DCB xx;
+
+ BOOL rv = SetCommState(x, &xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_GET_COMM_STATE failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c5360/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c5360.dir/build.make CMakeFiles/cmTC_c5360.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c5360.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_GET_COMM_STATE  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_c5360.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DCB’ was not declared in this scope
+    4 | DCB xx;
+      | ^~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:2: error: ‘BOOL’ was not declared in this scope
+    6 |  BOOL rv = GetCommState(x, &xx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_c5360.dir/build.make:78: CMakeFiles/cmTC_c5360.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c5360/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DCB xx;
+
+ BOOL rv = GetCommState(x, &xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_SET_COMM_MASK failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_73c6e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_73c6e.dir/build.make CMakeFiles/cmTC_73c6e.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_73c6e.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_SET_COMM_MASK  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_73c6e.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:2: error: ‘BOOL’ was not declared in this scope
+    6 |  BOOL rv = SetCommMask(x, xx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_73c6e.dir/build.make:78: CMakeFiles/cmTC_73c6e.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_73c6e/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DWORD xx;
+
+ BOOL rv = SetCommMask(x, xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_PURGE_COMM failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c81e7/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c81e7.dir/build.make CMakeFiles/cmTC_c81e7.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c81e7.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_PURGE_COMM  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_c81e7.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:2: error: ‘BOOL’ was not declared in this scope
+    6 |  BOOL rv = PurgeComm(x, xx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_c81e7.dir/build.make:78: CMakeFiles/cmTC_c81e7.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c81e7/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DWORD xx;
+
+ BOOL rv = PurgeComm(x, xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WAIT_COMM_EVENT failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_3fd23/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_3fd23.dir/build.make CMakeFiles/cmTC_3fd23.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_3fd23.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WAIT_COMM_EVENT  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_3fd23.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘OVERLAPPED’ was not declared in this scope
+    5 | OVERLAPPED xxx;
+      | ^~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:2: error: ‘BOOL’ was not declared in this scope
+    7 |  BOOL rv = WaitCommEvent(x, &xx, &xxx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_3fd23.dir/build.make:78: CMakeFiles/cmTC_3fd23.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_3fd23/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DWORD xx;
+OVERLAPPED xxx;
+
+ BOOL rv = WaitCommEvent(x, &xx, &xxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_SET_COMM_BREAK failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_eb5cd/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_eb5cd.dir/build.make CMakeFiles/cmTC_eb5cd.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_eb5cd.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_SET_COMM_BREAK  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_eb5cd.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:2: error: ‘BOOL’ was not declared in this scope
+    5 |  BOOL rv = SetCommBreak(x);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_eb5cd.dir/build.make:78: CMakeFiles/cmTC_eb5cd.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_eb5cd/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+
+ BOOL rv = SetCommBreak(x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CLEAR_COMM_BREAK failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_4b9f3/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_4b9f3.dir/build.make CMakeFiles/cmTC_4b9f3.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_4b9f3.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CLEAR_COMM_BREAK  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_4b9f3.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:2: error: ‘BOOL’ was not declared in this scope
+    5 |  BOOL rv = ClearCommBreak(x);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_4b9f3.dir/build.make:78: CMakeFiles/cmTC_4b9f3.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_4b9f3/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+
+ BOOL rv = ClearCommBreak(x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CLEAR_COMM_ERROR failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_5dcd0/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_5dcd0.dir/build.make CMakeFiles/cmTC_5dcd0.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_5dcd0.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CLEAR_COMM_ERROR  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_5dcd0.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:1: error: ‘COMSTAT’ was not declared in this scope
+    5 | COMSTAT xxx;
+      | ^~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:7:2: error: ‘BOOL’ was not declared in this scope
+    7 |  BOOL rv = ClearCommError(x, &xx, &xxx);
+      |  ^~~~
+gmake[1]: *** [CMakeFiles/cmTC_5dcd0.dir/build.make:78: CMakeFiles/cmTC_5dcd0.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_5dcd0/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DWORD xx;
+COMSTAT xxx;
+
+ BOOL rv = ClearCommError(x, &xx, &xxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_WAIT_FOR_SINGLE_OBJECT failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c33c4/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c33c4.dir/build.make CMakeFiles/cmTC_c33c4.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c33c4.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_WAIT_FOR_SINGLE_OBJECT  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_c33c4.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘HANDLE’ was not declared in this scope
+    3 | HANDLE x;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘DWORD’ was not declared in this scope
+    4 | DWORD xx;
+      | ^~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:7: error: expected ‘;’ before ‘rv’
+    6 |  DWORD rv = WaitForSingleObject(x, xx);
+      |       ^~~
+      |       ;
+gmake[1]: *** [CMakeFiles/cmTC_c33c4.dir/build.make:78: CMakeFiles/cmTC_c33c4.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c33c4/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+HANDLE x;
+DWORD xx;
+
+ DWORD rv = WaitForSingleObject(x, xx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CREATE_EVENT failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_c3396/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_c3396.dir/build.make CMakeFiles/cmTC_c3396.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_c3396.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CREATE_EVENT  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_c3396.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:1: error: ‘SECURITY_ATTRIBUTES’ was not declared in this scope
+    3 | SECURITY_ATTRIBUTES x;
+      | ^~~~~~~~~~~~~~~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:1: error: ‘BOOL’ was not declared in this scope
+    4 | BOOL xx;
+      | ^~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:5:5: error: expected ‘;’ before ‘xxx’
+    5 | BOOL xxx;
+      |     ^~~~
+      |     ;
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:1: error: ‘LPCSTR’ was not declared in this scope
+    6 | LPCSTR xxxx;
+      | ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:8:2: error: ‘HANDLE’ was not declared in this scope
+    8 |  HANDLE rv = CreateEvent(&x, xx, xxx, xxxx);
+      |  ^~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_c3396.dir/build.make:78: CMakeFiles/cmTC_c3396.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_c3396/fast] Error 2
+
+
+Source file was:
+
+int main(void) {
+SECURITY_ATTRIBUTES x;
+BOOL xx;
+BOOL xxx;
+LPCSTR xxxx;
+
+ HANDLE rv = CreateEvent(&x, xx, xxx, xxxx);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS__ISNAN failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_0428a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_0428a.dir/build.make CMakeFiles/cmTC_0428a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_0428a.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS__ISNAN  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_0428a.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:11: error: ‘_isnan’ was not declared in this scope
+    6 |  int rv = _isnan(x);
+      |           ^~~~~~
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:6:6: warning: unused variable ‘rv’ [-Wunused-variable]
+    6 |  int rv = _isnan(x);
+      |      ^~
+gmake[1]: *** [CMakeFiles/cmTC_0428a.dir/build.make:78: CMakeFiles/cmTC_0428a.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_0428a/fast] Error 2
+
+
+Source file was:
+#include <float.h>
+
+int main(void) {
+double x;
+
+ int rv = _isnan(x);
+return 0;
+}
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_CRITICAL_SECTION failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7f81a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7f81a.dir/build.make CMakeFiles/cmTC_7f81a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_7f81a.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_CRITICAL_SECTION  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_7f81a.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx: In function ‘int main()’:
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:2:18: error: ‘CRITICAL_SECTION’ was not declared in this scope
+    2 | int main(void) { CRITICAL_SECTION x; return 0;}
+      |                  ^~~~~~~~~~~~~~~~
+gmake[1]: *** [CMakeFiles/cmTC_7f81a.dir/build.make:78: CMakeFiles/cmTC_7f81a.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_7f81a/fast] Error 2
+
+
+Source file was:
+
+int main(void) { CRITICAL_SECTION x; return 0;}
+
+Determining if the function BVTSonar_Create exists in the bvtsdk failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_483c2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_483c2.dir/build.make CMakeFiles/cmTC_483c2.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_483c2.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=BVTSonar_Create -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_483c2.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_483c2
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_483c2.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=BVTSonar_Create -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_483c2.dir/CheckFunctionExists.c.o -o cmTC_483c2  -lbvtsdk -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lbvtsdk: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_483c2.dir/build.make:99: cmTC_483c2] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_483c2/fast] Error 2
+
+
+
+Determining if the include file bvt_sdk.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b2d12/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b2d12.dir/build.make CMakeFiles/cmTC_b2d12.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b2d12.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++   -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_b2d12.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: bvt_sdk.h: No such file or directory
+    1 | #include <bvt_sdk.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_b2d12.dir/build.make:78: CMakeFiles/cmTC_b2d12.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b2d12/fast] Error 2
+
+
+
+Determining if the function libusb_init exists in the usb-1.0 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_822f0/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_822f0.dir/build.make CMakeFiles/cmTC_822f0.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_822f0.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=libusb_init -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_822f0.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_822f0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_822f0.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=libusb_init -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_822f0.dir/CheckFunctionExists.c.o -o cmTC_822f0  -lusb-1.0 -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lusb-1.0: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_822f0.dir/build.make:99: cmTC_822f0] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_822f0/fast] Error 2
+
+
+
+Determining if the function FT_Open exists in the ftd2xx failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_8d8c3/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_8d8c3.dir/build.make CMakeFiles/cmTC_8d8c3.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_8d8c3.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=FT_Open -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_8d8c3.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_8d8c3
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_8d8c3.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=FT_Open -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_8d8c3.dir/CheckFunctionExists.c.o -o cmTC_8d8c3  -lftd2xx -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lftd2xx: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_8d8c3.dir/build.make:99: cmTC_8d8c3] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_8d8c3/fast] Error 2
+
+
+
+Determining if the include file ftd2xx.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_dc911/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_dc911.dir/build.make CMakeFiles/cmTC_dc911.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_dc911.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++   -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_dc911.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: ftd2xx.h: No such file or directory
+    1 | #include <ftd2xx.h>
+      |          ^~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_dc911.dir/build.make:78: CMakeFiles/cmTC_dc911.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_dc911/fast] Error 2
+
+
+
+Determining if the function jpeg_set_defaults exists in the jpeg failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_f716e/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_f716e.dir/build.make CMakeFiles/cmTC_f716e.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_f716e.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=jpeg_set_defaults -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_f716e.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_f716e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_f716e.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=jpeg_set_defaults -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_f716e.dir/CheckFunctionExists.c.o -o cmTC_f716e  -ljpeg -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -ljpeg: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_f716e.dir/build.make:99: cmTC_f716e] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_f716e/fast] Error 2
+
+
+
+Performing C++ SOURCE FILE Test DUNE_SYS_HAS_JPEGLIB_H failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_b9a9f/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_b9a9f.dir/build.make CMakeFiles/cmTC_b9a9f.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_b9a9f.dir/src.cxx.o
+/usr/bin/c++ -DDUNE_SYS_HAS_JPEGLIB_H  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_b9a9f.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:4:10: fatal error: jpeglib.h: No such file or directory
+    4 | #include <jpeglib.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_b9a9f.dir/build.make:78: CMakeFiles/cmTC_b9a9f.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_b9a9f/fast] Error 2
+
+
+Source file was:
+#include <sys/types.h>
+#include <stdio.h>
+
+#include <jpeglib.h>
+int main(void){ return 0; }
+
+Performing C++ SOURCE FILE Test HAVE_LIB_JPEG_80 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_63683/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_63683.dir/build.make CMakeFiles/cmTC_63683.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_63683.dir/src.cxx.o
+/usr/bin/c++ -DHAVE_LIB_JPEG_80  -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_63683.dir/src.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/src.cxx:3:10: fatal error: jpeglib.h: No such file or directory
+    3 | #include <jpeglib.h>
+      |          ^~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_63683.dir/build.make:78: CMakeFiles/cmTC_63683.dir/src.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_63683/fast] Error 2
+
+
+Source file was:
+
+#include <stdio.h>
+#include <jpeglib.h>
+#if JPEG_LIB_VERSION < 80
+#  error JPEG too old
+#endif
+int main(void) {return 0;}
+Determining if the function hid_close exists in the hidapi-libusb failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7d179/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7d179.dir/build.make CMakeFiles/cmTC_7d179.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_7d179.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=hid_close -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_7d179.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_7d179
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_7d179.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=hid_close -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_7d179.dir/CheckFunctionExists.c.o -o cmTC_7d179  -lhidapi-libusb -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lhidapi-libusb: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_7d179.dir/build.make:99: cmTC_7d179] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_7d179/fast] Error 2
+
+
+
+Determining if the function usb_device_find_USB_MCC exists in the mccusb failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_750c8/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_750c8.dir/build.make CMakeFiles/cmTC_750c8.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_750c8.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=usb_device_find_USB_MCC -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_750c8.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_750c8
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_750c8.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=usb_device_find_USB_MCC -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_750c8.dir/CheckFunctionExists.c.o -o cmTC_750c8  -lmccusb -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lmccusb: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_750c8.dir/build.make:99: cmTC_750c8] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_750c8/fast] Error 2
+
+
+
+Determining if the include file mccusb/pmd.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_7739a/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_7739a.dir/build.make CMakeFiles/cmTC_7739a.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_7739a.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++   -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_7739a.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: mccusb/pmd.h: No such file or directory
+    1 | #include <mccusb/pmd.h>
+      |          ^~~~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_7739a.dir/build.make:78: CMakeFiles/cmTC_7739a.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_7739a/fast] Error 2
+
+
+
+Determining if the function CPhidgetBridge_setEnabled exists in the phidget21 failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_40604/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_40604.dir/build.make CMakeFiles/cmTC_40604.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_40604.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=CPhidgetBridge_setEnabled -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_40604.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_40604
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_40604.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=CPhidgetBridge_setEnabled -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_40604.dir/CheckFunctionExists.c.o -o cmTC_40604  -lphidget21 -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lphidget21: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_40604.dir/build.make:99: cmTC_40604] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_40604/fast] Error 2
+
+
+
+Determining if the include file phidget21.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bbde2/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bbde2.dir/build.make CMakeFiles/cmTC_bbde2.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_bbde2.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++   -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_bbde2.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: phidget21.h: No such file or directory
+    1 | #include <phidget21.h>
+      |          ^~~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_bbde2.dir/build.make:78: CMakeFiles/cmTC_bbde2.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_bbde2/fast] Error 2
+
+
+
+Determining if the function sbp_state_init exists in the swiftnav-static failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_2efac/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_2efac.dir/build.make CMakeFiles/cmTC_2efac.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_2efac.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=sbp_state_init -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_2efac.dir/CheckFunctionExists.c.o -c /usr/share/cmake-3.22/Modules/CheckFunctionExists.c
+Linking C executable cmTC_2efac
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_2efac.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=sbp_state_init -Wall -Wshadow -pedantic -rdynamic CMakeFiles/cmTC_2efac.dir/CheckFunctionExists.c.o -o cmTC_2efac  -lswiftnav-static -lrt -lpthread -lm -lnsl -ldl 
+/usr/bin/ld: cannot find -lswiftnav-static: No such file or directory
+collect2: error: ld returned 1 exit status
+gmake[1]: *** [CMakeFiles/cmTC_2efac.dir/build.make:99: cmTC_2efac] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_2efac/fast] Error 2
+
+
+
+Determining if the include file libswiftnav/sbp.h exists failed with the following output:
+Change Dir: /home/parallels/dune/dune/CMakeFiles/CMakeTmp
+
+Run Build Command(s):/usr/bin/gmake -f Makefile cmTC_bd7d7/fast && /usr/bin/gmake  -f CMakeFiles/cmTC_bd7d7.dir/build.make CMakeFiles/cmTC_bd7d7.dir/build
+gmake[1]: Entering directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+Building CXX object CMakeFiles/cmTC_bd7d7.dir/CheckIncludeFile.cxx.o
+/usr/bin/c++   -Wall -Wshadow -pedantic -o CMakeFiles/cmTC_bd7d7.dir/CheckIncludeFile.cxx.o -c /home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx
+/home/parallels/dune/dune/CMakeFiles/CMakeTmp/CheckIncludeFile.cxx:1:10: fatal error: libswiftnav/sbp.h: No such file or directory
+    1 | #include <libswiftnav/sbp.h>
+      |          ^~~~~~~~~~~~~~~~~~~
+compilation terminated.
+gmake[1]: *** [CMakeFiles/cmTC_bd7d7.dir/build.make:78: CMakeFiles/cmTC_bd7d7.dir/CheckIncludeFile.cxx.o] Error 1
+gmake[1]: Leaving directory '/home/parallels/dune/dune/CMakeFiles/CMakeTmp'
+gmake: *** [Makefile:127: cmTC_bd7d7/fast] Error 2
+
+
+

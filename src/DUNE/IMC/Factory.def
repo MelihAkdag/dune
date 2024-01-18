@@ -28,7 +28,7 @@
 //***************************************************************************
 // Automatically generated.                                                 *
 //***************************************************************************
-// IMC XML MD5: bc2765321262233e448a7c647616f5da                            *
+// IMC XML MD5: 587c2e61a3ec9d831b6e15c41b745d88                            *
 //***************************************************************************
 
 MESSAGE(1, EntityState)
@@ -394,4 +394,5 @@ MESSAGE(1317, UbxSat)
 MESSAGE(1318, UbxRelPosNED)
 MESSAGE(1000, DynObsVec)
 MESSAGE(1010, NegotiationData)
+MESSAGE(1011, NegotiationMsgLog)
 #undef MESSAGE

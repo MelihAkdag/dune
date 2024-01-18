@@ -65,7 +65,7 @@ namespace DUNE
 	void create(double T, double DT, double P, double Q, double D_CLOSE, double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, 
 							double PHI_HO, double PHI_CR, double KAPPA, double K_P, double K_CHI, double K_DP, double K_DCHI_SB, double K_DCHI_P, double K_CHI_SB, double K_CHI_P);
 	
-	std::tuple<double, double, double> getBestControlOffset(double &u_os_best, double &psi_os_best, double u_d, double psi_d, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
+	std::tuple<double, double, double> getBestControlOffset(double u_os, double psi_os, double u_d, double psi_d, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
 
 	/**
 	 * @brief  Returns the simulation time (prediction horizon) [sec].
@@ -166,7 +166,6 @@ namespace DUNE
 	double Chi_ca_last_;
 	double P_ca_last_;
 
-
 	/**
 	 * @brief Sets the prediction horizon [sec].
 	 */
@@ -198,17 +197,23 @@ namespace DUNE
 	void setKChiSB(double K_Chi_SB);
 	void setKChiP(double K_Chi_P);
 
+	void setP_ca_last(double value);
+  void setChi_ca_last(double value);
+
 	private:
 
 	double costFunction(double P_ca, double Chi_ca, int k); 
 	double deltaP(double P_ca);
 	double deltaChi(double Chi_ca, double k_dchi_p, double k_dchi_sb); 
-	double sqrChi(double Chi_ca, double k_chi_p, double k_chi_sb); 						// BUNU KONTROL ET DAHA SONRA
+	double sqrChi(double Chi_ca, double k_chi_p, double k_chi_sb);
 	inline double normalize_angle(double angle); 
 	inline double normalize_angle_360(double angle); 
 	inline double angle_diff(double a,double b); // Computes angle difference
-
 	void rot2d(double yaw, Eigen::Vector2d &res);
+
+	double trueBearing(double self_x, double self_y, double ts_x, double ts_y);
+	double relativeBearing(double self_x, double self_y, double self_psi, double ts_x, double ts_y);
+	double colregRule(double self_x, double self_y, double self_cog, double self_sog, double ts_x, double ts_y, double ts_cog, double ts_sog);
 
 	// Simulation Parameters
 	double T_;

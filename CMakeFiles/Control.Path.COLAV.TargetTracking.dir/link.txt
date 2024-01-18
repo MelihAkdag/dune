@@ -1,0 +1,2 @@
+/usr/bin/ar qc libControl.Path.COLAV.TargetTracking.a CMakeFiles/Control.Path.COLAV.TargetTracking.dir/src/Control/Path/COLAV/TargetTracking/Task.cpp.o
+/usr/bin/ranlib libControl.Path.COLAV.TargetTracking.a
