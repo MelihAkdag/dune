@@ -26,7 +26,6 @@
 // DUNE headers.
 #include <DUNE/DUNE.hpp>
 #include <DUNE/Tasks/Task.hpp>
-#include <DUNE/Navigation/Kalman.hpp>
 #include <Eigen/Dense>
 
 namespace DUNE

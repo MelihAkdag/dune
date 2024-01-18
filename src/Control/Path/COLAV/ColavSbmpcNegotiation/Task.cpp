@@ -476,8 +476,6 @@ namespace Control
             m_dyn_obst_state.resize(row_num, 17);
             for(auto i = ml.begin(); i!=ml.end();++i)
             {
-              //for(unsigned int n=0; n<row_num; ++n)
-              //{
               if (n < row_num)
               {  
                 m_dyn_obst_state(n, 0) = (*i)->x;
@@ -652,17 +650,6 @@ namespace Control
             {
                 rule = 0.0; //"None";
             }
-
-            // Debuging COLREG rule:
-            //std::string rule_cout;
-            //if (rule==0.0){rule_cout="None";}
-            //else if (rule==1.0){rule_cout="HO-GW";}
-            //else if (rule==2.0){rule_cout="ON-SO";}
-            //else if (rule==3.0){rule_cout="OG";}
-            //else if (rule==4.0){rule_cout="CR-SO";}
-            //else if (rule==5.0){rule_cout="CR-GW";}
-            //std::cout << "RB_ts: " << RB_os_ts*RAD2DEG << " RB_os: " << RB_ts_os*RAD2DEG << " COLREG RULE: " << rule_cout << std::endl;
-
             return rule;
           }
 
@@ -932,11 +919,11 @@ namespace Control
           
             // FuzzyInput
             FuzzyInput *distance_input = new FuzzyInput(1);
-            FuzzySet *distance_low = new FuzzySet(0, 40, 40, 80); //(0, 20, 20, 40);
+            FuzzySet *distance_low = new FuzzySet(0, 20, 20, 40); 
             distance_input->addFuzzySet(distance_low);
-            FuzzySet *distance_medium = new FuzzySet(70, 110, 110, 150); //(30, 50, 50, 70);
+            FuzzySet *distance_medium = new FuzzySet(30, 50, 50, 70); 
             distance_input->addFuzzySet(distance_medium);
-            FuzzySet *distance_high = new FuzzySet(140, 180, 180, 1000); //(60, 80, 80, 500);
+            FuzzySet *distance_high = new FuzzySet(60, 80, 80, 500);
             distance_input->addFuzzySet(distance_high);
             fuzzy->addFuzzyInput(distance_input);
           
@@ -1353,7 +1340,6 @@ namespace Control
           //! Dispatch desired heading and speed values
           void setOptCtrl(double ref, double psi_value, double u_value)
           {
-            //double m_des_speed_ = m_des_speed * u_value;
             des_speed.value = m_des_speed * u_value;
             dispatch(des_speed, Tasks::DF_LOOP_BACK);
             m_heading.value = Angles::normalizeRadian(ref + psi_value);
@@ -1424,8 +1410,7 @@ namespace Control
             }
 
             int utc_time = ((uint32_t)Clock::getSinceEpoch());
-            //int utc_time = Time::Clock::get();
-
+            
             checkTCPAs();
             if (all_tcpa_passed)
             {

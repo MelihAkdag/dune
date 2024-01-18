@@ -38,7 +38,7 @@ namespace DUNE
   namespace Navigation
   {
 
-    autonaut::autonaut(double T, double dt)
+    ownship::ownship(double T, double dt)
     : m_n_samp(T/dt)
     {
       m_x.resize(m_n_samp);
@@ -63,10 +63,10 @@ namespace DUNE
       calculate_position_offsets();
     }
 
-    autonaut::~autonaut(){
+    ownship::~ownship(){
     }
 
-    void autonaut::linearPredictionInger(const std::vector<double>& state, double u_d, double psi_d)
+    void ownship::linearPredictionInger(const std::vector<double>& state, double u_d, double psi_d)
     {
       m_psi(0) = normalize_angle(psi_d);
 	    m_x(0) = state[0] + m_os_x*cos(state[2]) - m_os_y*sin(state[2]);
@@ -93,102 +93,102 @@ namespace DUNE
     }
 
 
-    Eigen::VectorXd autonaut::getX(){
+    Eigen::VectorXd ownship::getX(){
       return m_x;
     }
 
-    Eigen::VectorXd autonaut::getY(){
+    Eigen::VectorXd ownship::getY(){
       return m_y;
     }
 
-    Eigen::VectorXd autonaut::getPsi(){
+    Eigen::VectorXd ownship::getPsi(){
       return m_psi;
     }
 
-    Eigen::VectorXd autonaut::getU(){
+    Eigen::VectorXd ownship::getU(){
       return m_u;
     }
 
-    Eigen::VectorXd autonaut::getV(){
+    Eigen::VectorXd ownship::getV(){
       return m_v;
     }
 
-    Eigen::VectorXd autonaut::getR(){
+    Eigen::VectorXd ownship::getR(){
       return m_r;
     }
 
-    double autonaut::getA(){
+    double ownship::getA(){
       return m_A;
     }
 
-    double autonaut::getB(){
+    double ownship::getB(){
       return m_B;
     }
 
-    double autonaut::getC(){
+    double ownship::getC(){
       return m_C;
     }
 
-    double autonaut::getD(){
+    double ownship::getD(){
       return m_D;
     }
 
-    double autonaut::getL(){
+    double ownship::getL(){
       return m_l;
     }
 
-    double autonaut::getW(){
+    double ownship::getW(){
       return m_w;
     }
 
-    double autonaut::getT(){
+    double ownship::getT(){
       return m_T;
     }
 
-    double autonaut::getDT(){
+    double ownship::getDT(){
       return m_DT;	
     }
 
-    double autonaut::getNsamp(){
+    double ownship::getNsamp(){
       return m_n_samp;
     }
 
-    void  autonaut::setA(double A){
+    void  ownship::setA(double A){
       m_A = A;
     }
 
-    void autonaut::setB(double B){
+    void ownship::setB(double B){
       m_B = B;
     }
 
-    void autonaut::setC(double C){
+    void ownship::setC(double C){
       m_C = C;
     }
 
-    void autonaut::setD(double D){
+    void ownship::setD(double D){
       m_D = D;
     }
 
-    void autonaut::setT(double T){
+    void ownship::setT(double T){
       m_T = T;
     }
 
-    void autonaut::setDT(double DT){
+    void ownship::setDT(double DT){
       m_DT = DT;
     }
 
-    void autonaut::setNsamp(int n_samp){
+    void ownship::setNsamp(int n_samp){
       m_n_samp = n_samp;
     }
 
 
-    void autonaut::calculate_position_offsets(){
+    void ownship::calculate_position_offsets(){
       m_os_x = m_A-m_B;
       m_os_y = m_D-m_C;
     }
 
     // This is not needed, dune has it already.
-    double autonaut::normalize_angle(double angle)
+    double ownship::normalize_angle(double angle)
     {
       if( std::isinf(angle)) return angle;
       

@@ -40,17 +40,17 @@ namespace DUNE
   namespace Navigation
   {
     // Export DLL Symbol.
-    class DUNE_DLL_SYM autonaut;
+    class DUNE_DLL_SYM ownship;
 
-    class autonaut
+    class ownship
     {
       public:
 
       /// Constructor
-      autonaut(double T, double dt);
+      ownship(double T, double dt);
 
       /// Destructor
-      ~autonaut();
+      ~ownship();
 
       void linearPredictionInger(const std::vector<double>& state, double u_d, double psi_d);
 

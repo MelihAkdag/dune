@@ -21,7 +21,6 @@
 
 #include <DUNE/DUNE.hpp>
 #include <DUNE/Navigation/obstacle.hpp>
-#include <DUNE/Navigation/Kalman.hpp>
 
 namespace DUNE
 {

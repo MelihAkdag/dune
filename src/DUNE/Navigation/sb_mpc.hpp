@@ -197,9 +197,6 @@ namespace DUNE
 	void setKChiSB(double K_Chi_SB);
 	void setKChiP(double K_Chi_P);
 
-	void setP_ca_last(double value);
-  void setChi_ca_last(double value);
-
 	private:
 
 	double costFunction(double P_ca, double Chi_ca, int k); 
@@ -239,7 +236,7 @@ namespace DUNE
 	double K_CHI_P_;
 	
 	
-	autonaut *asv;
+	ownship *asv;
 	std::vector<obstacle*> obst_vect;
 
 	};

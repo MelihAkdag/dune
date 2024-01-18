@@ -92,12 +92,12 @@ namespace DUNE
 
 		Chi_ca_.resize(13);
 		Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
-		Chi_ca_ *= DEG2RAD; //Math::Angles::radians(Chi_ca);
+		Chi_ca_ *= DEG2RAD;
 
 		P_ca_.resize(4);
 		P_ca_ << 0.0, 0.25, 0.5, 1.0;
 		
-		asv = new autonaut(T_,DT_);
+		asv = new ownship(T_,DT_);
 
 	}
 
@@ -115,8 +115,6 @@ namespace DUNE
 		{
 			u_os_best = 1.0;
 			psi_os_best = 0.0;
-			//P_ca_last_ = 1.0;
-			//Chi_ca_last_ = 0.0;
 			return std::make_tuple(psi_os_best, u_os_best, cost);
 		}
 		else
@@ -158,7 +156,6 @@ namespace DUNE
 					psi_os_best = psi_os;
 				}
 			}
-			//std::cout << "Costs: " << Angles::degrees(Chi_ca_[i]) << " : " << cost_i << std::endl;
 		}
 		for (int k=0; k<n_obst; k++)
 		{
@@ -166,8 +163,6 @@ namespace DUNE
 		}
 		obst_vect.clear();
 
-		//P_ca_last_ = u_os_best;
-		//Chi_ca_last_ = psi_os_best;
 		return std::make_tuple(psi_os_best, u_os_best, cost);
 	}
 
@@ -302,7 +297,6 @@ namespace DUNE
 	double 
 	simulationBasedMpc::deltaP(double P_ca)
 	{
-		//return K_DP_*std::abs(P_ca_last_-P_ca);
 		return K_DP_*pow(P_ca_last_ - P_ca,2);
 	}
 
@@ -418,17 +412,6 @@ namespace DUNE
     {
         rule = 0.0; //"None";
     }
-
-    // Debuging COLREG rule:
-    //std::string rule_cout;
-    //if (rule==0.0){rule_cout="None";}
-    //else if (rule==1.0){rule_cout="HO-GW";}
-    //else if (rule==2.0){rule_cout="ON-SO";}
-    //else if (rule==3.0){rule_cout="OG";}
-    //else if (rule==4.0){rule_cout="CR-SO";}
-    //else if (rule==5.0){rule_cout="CR-GW";}
-    //std::cout << "RB_ts: " << RB_os_ts*RAD2DEG << " RB_os: " << RB_ts_os*RAD2DEG << " COLREG RULE: " << rule_cout << std::endl;
-
     return rule;
 	}
 
@@ -572,7 +555,6 @@ namespace DUNE
 		return K_CHI_P_;
 	}
 
-
 	void simulationBasedMpc::setP(double p){
 		if(p>0.0) P_ = p;
 	}
@@ -613,7 +595,6 @@ namespace DUNE
 		if(kappa>0.0) KAPPA_ = kappa;
 	}
 
-
 	void simulationBasedMpc::setKP(double K_P){
 		if(K_P>0.0) K_P_ = K_P;
 	}
@@ -652,13 +633,6 @@ namespace DUNE
 		if(K_Chi_P>0.0) K_CHI_P_ = K_Chi_P;
 	}
 
-	void simulationBasedMpc::setP_ca_last(double value){
-    P_ca_last_ = value;
-  }
+}
 
-  void simulationBasedMpc::setChi_ca_last(double value){
-    Chi_ca_last_ = value;
-  }
-
-  }
 }
