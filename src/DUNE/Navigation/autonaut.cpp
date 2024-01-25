@@ -69,11 +69,11 @@ namespace DUNE
     void ownship::linearPredictionInger(const std::vector<double>& state, double u_d, double psi_d)
     {
       m_psi(0) = normalize_angle(psi_d);
-	    m_x(0) = state[0] + m_os_x*cos(state[2]) - m_os_y*sin(state[2]);
-	    m_y(0) = state[1] + m_os_x*sin(state[2]) + m_os_y*cos(state[2]);
-	    m_u(0) = state[3];
-	    m_v(0) = state[4];
-	    m_r(0) = state[5];
+      m_x(0) = state[0] + m_os_x*cos(state[2]) - m_os_y*sin(state[2]);
+      m_y(0) = state[1] + m_os_x*sin(state[2]) + m_os_y*cos(state[2]);
+      m_u(0) = state[3];
+      m_v(0) = state[4];
+      m_r(0) = state[5];
 
       double r11, r12, r21, r22;
 
@@ -89,7 +89,7 @@ namespace DUNE
         m_psi(i+1) = psi_d;
         m_u(i+1) = u_d;
         m_v(i+1) = 0;
-	    }
+      }
     }
 
 
@@ -146,7 +146,7 @@ namespace DUNE
     }
 
     double ownship::getDT(){
-      return m_DT;	
+      return m_DT;  
     }
 
     double ownship::getNsamp(){

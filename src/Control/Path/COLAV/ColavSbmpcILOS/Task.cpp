@@ -61,7 +61,7 @@ namespace Control
           // Sbmpc parameters
           double T, DT, P, Q, D_CLOSE, D_SAFE, K_COLL, 
           KAPPA, PHI_AH, PHI_OT, PHI_HO, PHI_CR, K_P, K_DP,
-          K_CHI, K_DCHI_SB, K_DCHI_P, K_CHI_SB, K_CHI_P;
+          K_CHI, K_DCHI, K_DCHI_SB, K_DCHI_P;
         };
 
         struct Task: public DUNE::Control::PathController
@@ -112,15 +112,15 @@ namespace Control
 
           Task(const std::string& name, Tasks::Context& ctx):
           DUNE::Control::PathController(name, ctx),
-          u_os(1.0),
-          psi_os(0.0),
           m_lat_asv(0.0),
           m_lon_asv(0.0),
           m_lat_obst(0.0),
           m_lon_obst(0.0),
           m_timestamp_new(0.0),
           m_timestamp_prev(0.0),
-          cost(0.0)
+          cost(0.0),
+          u_os(1.0),
+          psi_os(0.0)
           {
             param("Corridor -- Width", m_args.corridor)
             .minimumValue("1.0")
@@ -257,6 +257,12 @@ namespace Control
             .maximumValue("10.0")
             .defaultValue("1.3")
             .description("Cost of deviating from the nominal Course.");
+
+            param("Cost of Course change", m_args.K_DCHI)
+            .minimumValue("0.0")
+            .maximumValue("10.0")
+            .defaultValue("0.9")
+            .description("Cost of Changing the Course Offset.");
   
             param("Cost of Course change to SB", m_args.K_DCHI_SB)
             .minimumValue("0.0")
@@ -269,19 +275,6 @@ namespace Control
             .maximumValue("11.0")
             .defaultValue("1.2")
             .description("Cost of Changing the Course Offset to Port.");
-  
-            param("Cost of Selecting Turn to SB", m_args.K_CHI_SB)
-            .units(Units::Meter)
-            .minimumValue("0.0")
-            .maximumValue("20.0")
-            .defaultValue("0.9")
-            .description("Cost of Selecting Turn to SB.");
-  
-            param("Cost of Selecting Turn to Port", m_args.K_CHI_P)
-            .minimumValue("0.0")
-            .maximumValue("11.0")
-            .defaultValue("1.2")
-            .description("Cost of Selecting Turn to Port.");
   
             // Everything is ok so set task entity state at normal with 'Active' message.
             setEntityState(IMC::EntityState::ESTA_NORMAL, Status::CODE_ACTIVE);
@@ -309,8 +302,7 @@ namespace Control
             if(paramChanged(m_args.T) || paramChanged(m_args.DT))
                 sb_mpc.create(m_args.T, m_args.DT, m_args.P, m_args.Q, m_args.D_CLOSE,
                           m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR,
-                          m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI_SB,
-                          m_args.K_DCHI_P, m_args.K_CHI_SB, m_args.K_CHI_P);
+                          m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI, m_args.K_DCHI_SB, m_args.K_DCHI_P);
             if(paramChanged(m_args.P))
                 sb_mpc.setP(m_args.P);
             if(paramChanged(m_args.Q))
@@ -337,14 +329,12 @@ namespace Control
                 sb_mpc.setKdP(m_args.K_DP);
             if(paramChanged(m_args.K_CHI))
                 sb_mpc.setKChi(m_args.K_CHI);
+            if(paramChanged(m_args.K_DCHI))
+                sb_mpc.setKdChiSB(m_args.K_DCHI);
             if(paramChanged(m_args.K_DCHI_SB))
                 sb_mpc.setKdChiSB(m_args.K_DCHI_SB);
             if(paramChanged(m_args.K_DCHI_P))
                 sb_mpc.setKdChiP(m_args.K_DCHI_P);
-            if(paramChanged(m_args.K_CHI_SB))
-                sb_mpc.setKChiSB(m_args.K_CHI_SB);
-            if(paramChanged(m_args.K_CHI_P))
-                sb_mpc.setKChiP(m_args.K_CHI_P);
           }
 
           void
@@ -366,8 +356,7 @@ namespace Control
           {
             sb_mpc.create(m_args.T, m_args.DT, m_args.P, m_args.Q, m_args.D_CLOSE,
                         m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR,
-                        m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI_SB,
-                        m_args.K_DCHI_P, m_args.K_CHI_SB, m_args.K_CHI_P);
+                        m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI, m_args.K_DCHI_SB, m_args.K_DCHI_P);
           }
   
           void
@@ -414,7 +403,7 @@ namespace Control
             m_dyn_obst_state.resize(row_num, 10);
             for(auto i = ml.begin(); i!=ml.end();++i)
             {
-              for(unsigned int n=0; n<row_num; ++n)
+              for(int n=0; n<row_num; ++n)
               {
                 m_dyn_obst_state(n, 0) = (*i)->x;
                 m_dyn_obst_state(n, 1) = (*i)->y;
@@ -505,10 +494,10 @@ namespace Control
             //std::cout << "BEFORE: " <<Angles::degrees(m_heading.value) << std::endl;
 
             int utc_time = ((uint32_t)Clock::getSinceEpoch()); // % 86400;
-            if(utc_time%5==0)
-            {
-              sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
-            }
+            //if(utc_time%5==0)
+            //{
+            //  sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
+            //}
             
             double m_des_speed_ = m_des_speed * u_os;
             des_speed.value = m_des_speed_;

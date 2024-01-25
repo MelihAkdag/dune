@@ -61,7 +61,6 @@ namespace DUNE
 		r22_ = std::cos(psi_);
 
 		calculateTrajectory();
-		
 	}
 
 	obstacle::~obstacle(){
@@ -125,7 +124,6 @@ namespace DUNE
 			v_(i) = (v_(i-1));
 		}
 	}
-
 
 	inline double obstacle::normalize(double angle)
 	{

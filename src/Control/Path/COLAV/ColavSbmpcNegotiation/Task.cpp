@@ -68,7 +68,7 @@ namespace Control
           // Sbmpc parameters
           double T, DT, P, Q, D_CLOSE, D_SAFE, K_COLL, 
           KAPPA, PHI_AH, PHI_OT, PHI_HO, PHI_CR, K_P, K_DP,
-          K_CHI, K_DCHI_SB, K_DCHI_P, K_CHI_SB, K_CHI_P;
+          K_CHI, K_DCHI, K_DCHI_SB, K_DCHI_P;
 
           std::string mmsi;
         };
@@ -113,6 +113,7 @@ namespace Control
           double m_des_heading;
           //! Desired speed message.
           double m_des_speed;
+          double m_des_speed_init;
           //! Desired speed units.
           uint8_t m_des_speed_units;
           //! Desired speed temporary
@@ -129,6 +130,10 @@ namespace Control
           double u_os_temp;
           //! Heading offset temporary <Output from CAS>
           double psi_os_temp;
+
+          double u_os_prev;
+          double psi_os_prev;
+          
           //! Variable to check if own ship is in negotation cycle
           bool in_negotiation;
           //! Negotiation state
@@ -146,14 +151,13 @@ namespace Control
           //! Incoming message counter
           int msg_in_counter;
           int utc_time_prev;
+          double concession_level;
 
           //! Task arguments.
           Arguments m_args;
 
           Task(const std::string& name, Tasks::Context& ctx):
           DUNE::Control::PathController(name, ctx),
-          u_os(1.0),
-          psi_os(0.0),
           m_lat_asv(0.0),
           m_lon_asv(0.0),
           m_lat_obst(0.0),
@@ -161,14 +165,19 @@ namespace Control
           m_timestamp_new(0.0),
           m_timestamp_prev(0.0),
           cost(0.0),
-          others_ready(false),
+          u_os(1.0),
+          psi_os(0.0),
+          u_os_prev(1.0),
+          psi_os_prev(0.0),
           in_negotiation(false),
+          negotiation_state(0),
+          others_ready(false),
           all_tcpa_passed(false),
           colav_state(false),
-          negotiation_state(0),
           same_decision_counter(0),
           msg_out_counter(0),
-          msg_in_counter(0)
+          msg_in_counter(0),
+          concession_level(0.0)
           {
             param("MMSI",  m_args.mmsi)
             .description("Vessel MMSI");
@@ -179,15 +188,15 @@ namespace Control
 
             param("Corridor -- Width", m_args.corridor)
             .minimumValue("1.0")
-            .maximumValue("50.0")
-            .defaultValue("5.0")
+            .maximumValue("100.0")
+            .defaultValue("100.0")
             .units(Units::Meter)
             .description("Width of corridor for attack entry angle");
   
             param("Corridor -- Entry Angle", m_args.entry_angle)
             .minimumValue("2")
             .maximumValue("45")
-            .defaultValue("15")
+            .defaultValue("10")
             .units(Units::Degree)
             .description("Attack angle when lateral track error equals corridor width");
   
@@ -202,7 +211,7 @@ namespace Control
             param("ILOS Lookahead Distance", m_args.lookahead)
             .minimumValue("1.0")
             .maximumValue("100.0")
-            .defaultValue("10.0")
+            .defaultValue("100.0")
             .units(Units::Meter)
             .description("Integral Line-of-Sight look ahead distance");
   
@@ -272,7 +281,7 @@ namespace Control
             .units(Units::Degree)
             .minimumValue("0.0")
             .maximumValue("180.0")
-            .defaultValue("15.0")
+            .defaultValue("22.5")
             .description("Angle within which an obstacle is said to be ahead [deg].");
   
             param("PHI OT", m_args.PHI_OT)
@@ -297,7 +306,7 @@ namespace Control
             
             param("Cost of Deviating from Nominal Speed", m_args.K_P)
             .minimumValue("0.0")
-            .maximumValue("11.0")
+            .maximumValue("10.0")
             .defaultValue("2.5")
             .description("Cost of deviating from the nominal speed.");
   
@@ -312,6 +321,12 @@ namespace Control
             .maximumValue("10.0")
             .defaultValue("1.3")
             .description("Cost of deviating from the nominal Course.");
+
+            param("Cost of Course offset change", m_args.K_DCHI)
+            .minimumValue("0.0")
+            .maximumValue("10.0")
+            .defaultValue("0.9")
+            .description("Cost of Changing the Course Offset.");
   
             param("Cost of Course change to SB", m_args.K_DCHI_SB)
             .minimumValue("0.0")
@@ -321,23 +336,10 @@ namespace Control
   
             param("Cost of Course change to Port", m_args.K_DCHI_P)
             .minimumValue("0.0")
-            .maximumValue("11.0")
+            .maximumValue("10.0")
             .defaultValue("1.2")
             .description("Cost of Changing the Course Offset to Port.");
-  
-            param("Cost of Selecting Turn to SB", m_args.K_CHI_SB)
-            .units(Units::Meter)
-            .minimumValue("0.0")
-            .maximumValue("20.0")
-            .defaultValue("0.9")
-            .description("Cost of Selecting Turn to SB.");
-  
-            param("Cost of Selecting Turn to Port", m_args.K_CHI_P)
-            .minimumValue("0.0")
-            .maximumValue("11.0")
-            .defaultValue("1.2")
-            .description("Cost of Selecting Turn to Port.");
-  
+    
             // Everything is ok so set task entity state at normal with 'Active' message.
             setEntityState(IMC::EntityState::ESTA_NORMAL, Status::CODE_ACTIVE);
 
@@ -345,6 +347,7 @@ namespace Control
             bind<IMC::GpsFix>(this);
             bind<IMC::DynObsVec>(this);
             bind<IMC::DesiredSpeed>(this);
+            bind<IMC::DesiredPath>(this);
             bind<IMC::NegotiationData>(this);
           }
 
@@ -366,8 +369,7 @@ namespace Control
             if(paramChanged(m_args.T) || paramChanged(m_args.DT))
                 sb_mpc.create(m_args.T, m_args.DT, m_args.P, m_args.Q, m_args.D_CLOSE,
                           m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR,
-                          m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI_SB,
-                          m_args.K_DCHI_P, m_args.K_CHI_SB, m_args.K_CHI_P);
+                          m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI, m_args.K_DCHI_SB, m_args.K_DCHI_P);
             if(paramChanged(m_args.P))
                 sb_mpc.setP(m_args.P);
             if(paramChanged(m_args.Q))
@@ -394,14 +396,12 @@ namespace Control
                 sb_mpc.setKdP(m_args.K_DP);
             if(paramChanged(m_args.K_CHI))
                 sb_mpc.setKChi(m_args.K_CHI);
+            if(paramChanged(m_args.K_DCHI))
+                sb_mpc.setKdChiSB(m_args.K_DCHI);
             if(paramChanged(m_args.K_DCHI_SB))
                 sb_mpc.setKdChiSB(m_args.K_DCHI_SB);
             if(paramChanged(m_args.K_DCHI_P))
                 sb_mpc.setKdChiP(m_args.K_DCHI_P);
-            if(paramChanged(m_args.K_CHI_SB))
-                sb_mpc.setKChiSB(m_args.K_CHI_SB);
-            if(paramChanged(m_args.K_CHI_P))
-                sb_mpc.setKChiP(m_args.K_CHI_P);
             if(paramChanged(m_args.mmsi))
                 m_mmsi = m_args.mmsi;
           }
@@ -428,8 +428,7 @@ namespace Control
           {
             sb_mpc.create(m_args.T, m_args.DT, m_args.P, m_args.Q, m_args.D_CLOSE,
                         m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR,
-                        m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI_SB,
-                        m_args.K_DCHI_P, m_args.K_CHI_SB, m_args.K_CHI_P);
+                        m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI, m_args.K_DCHI_SB, m_args.K_DCHI_P);
             m_mmsi = m_args.mmsi;
           }
   
@@ -470,9 +469,18 @@ namespace Control
 
 
           void
+          consume(const IMC::DesiredPath* msg)
+          {
+            //if (!isActive())
+            //  return;
+            m_des_speed_init = msg->speed;
+          }
+
+
+          void
           consume(const IMC::DynObsVec* msg)
           {
-            double distance, dcpa, tcpa, true_bearing, rel_bearing;
+            double distance, dcpa, tcpa;
             double rule;  // OS responsibility for TS considering COLREG. rule => 0.0=None, 1.0=HO-GW, 2.0=ON-SO, 3.0=OG, 4.0=CR-SO, 5.0=CR-GW
             IMC::MessageList<IMC::CollisionAvoidance> ml;
             ml = msg -> obstacles;
@@ -525,29 +533,24 @@ namespace Control
 
 
           void 
-          publishNegotiationData(double ref, double psi_os, double u_os, int negotiation_state)
+          publishNegotiationData()
           {
             intention_to_send.mmsi = m_mmsi;
-            intention_to_send.cog_int = Angles::degrees(Angles::normalizeRadian(ref + psi_os));
-            //if (m_asv_state[3] < m_des_speed)
-            //{
-            //    m_des_speed_temp = m_asv_state[3];
-            //}
-            //else
-            //{
-            //    m_des_speed_temp = m_des_speed;
-            //}
-            intention_to_send.sog_int = m_des_speed * u_os;
+            intention_to_send.concession = concession_level;
+            intention_to_send.cog_int = Angles::degrees(Angles::normalizeRadian(m_des_heading + psi_os));
+            intention_to_send.cog_int_off = psi_os*RAD2DEG;
+            intention_to_send.sog_int = m_des_speed_init * u_os;
+            intention_to_send.sog_int_off = u_os;
             intention_to_send.state = negotiation_state;
+            msg_out_counter += 1;
             dispatch(intention_to_send); //, DF_LOOP_BACK);
             //spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(m_mmsi), Angles::degrees(Angles::normalizeRadian(ref + psi_os)), m_asv_state[3] * u_os, negotiation_state);
-            msg_out_counter += 1;
             return;
           }
 
 
           void
-          publishNegotiationMsgLog(int msg_in_counter, int msg_out_counter)
+          publishNegotiationMsgLog()
           {
             negotiation_msg_log.mmsi = m_mmsi;
             negotiation_msg_log.msg_in = msg_in_counter;
@@ -562,7 +565,7 @@ namespace Control
           {
             msg_in_counter += 1;
             spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(msg->mmsi), msg->cog_int, msg->sog_int, msg->state);
-            for(unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            for(int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
                 if(m_dyn_obst_state(n, 9) == std::stoi(msg->mmsi))
                 {
@@ -585,7 +588,9 @@ namespace Control
           double 
           trueBearing(double self_x, double self_y, double ts_x, double ts_y)
           {
-            double alpha_r, delta_alpha;
+            double alpha_r;
+            double delta_alpha = 0.0;
+
             // Alpha_r (True bearing of the targetship)
             if ((ts_y - self_y >= 0.0) && (ts_x - self_x >= 0.0))
             {
@@ -676,8 +681,9 @@ namespace Control
             double self_v = self_sog * sin(self_cog);
             double ts_u = ts_sog * cos(ts_cog);
             double ts_v = ts_sog * sin(ts_cog);
-
-            double D_r, U_r, delta_alpha, delta_chi, alpha_r, chi_r, beta, dcpa, tcpa;
+            double delta_alpha = 0.0;
+            double delta_chi = 0.0;
+            double D_r, U_r, alpha_r, chi_r, beta, dcpa, tcpa;
 
             // Distance between self and targetship
             Eigen::Vector2d d;
@@ -1099,31 +1105,29 @@ namespace Control
             //std::cout << "\tGW Resp: Low-> " << gw_low->getPertinence() << ",  Medium-> " << gw_medium->getPertinence() << ",  High-> " << gw_high->getPertinence() << std::endl;
             //std::cout << "Rules: \n\tRule01-> " << fuzzyRule1->isFired() << ", Rule02-> " << fuzzyRule2->isFired() << ", Rule03-> " << fuzzyRule3->isFired() << ", Rule04-> " << fuzzyRule4->isFired() << ", Rule05-> " << fuzzyRule5->isFired() << ", Rule06-> " << fuzzyRule6->isFired() << ", Rule07-> " << fuzzyRule7->isFired() << ", Rule08-> " << fuzzyRule8->isFired() << ", Rule09-> " << fuzzyRule9->isFired() << std::endl;
 
-            double concession_level = fuzzy->defuzzify(1);
+            double concession_level_fuzzy = fuzzy->defuzzify(1);
           
             //std::cout << "Output: \n\tConcession Level: Low-> " << concession_low->getPertinence() << ", Medium->" << concession_medium->getPertinence() << ", High-> " << concession_high->getPertinence() << std::endl;
-            //std::cout << "Result: \nConcession Level: " << concession_level << std::endl;
+            //std::cout << "Result: \nConcession Level: " << concession_level_fuzzy << std::endl;
 
-            return concession_level;
+            return concession_level_fuzzy;
           }
 
 
 
           //! Evaluate concession level based on collision risk, stand-on and give-way responsibilities
-          double 
+          void 
           concessionLevel()
           {
-            int so_counter=0;
             int gw_counter=0;
             int mmsi;
-            double so_tol_sum=0.0;
             double gw_resp_sum=0.0; 
             double collision_risk_sum=0.0;
-            double so_tol, gw_resp, collision_risk;
-            double dcpa, tcpa, rule, distance, concession_level;
+            double gw_resp, collision_risk;
+            double dcpa, tcpa, rule, distance;
 
             //! Loop over each target ship
-            for (unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            for (int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
                 mmsi = m_dyn_obst_state(n,9);
                 distance = m_dyn_obst_state(n,13);
@@ -1135,12 +1139,7 @@ namespace Control
                 
                 collision_risk_sum += fuzzyCollisionRisk(dcpa, tcpa);
 
-                if (rule==2.0 || rule==4.0) // If COLREG rule responsibility of ownship is ON-SO or CR-SO
-                {
-                    so_counter += 1;
-                    so_tol_sum += fuzzyStandOnTolerance(distance);
-                }
-                else if (rule==1.0 || rule==3.0 || rule==5.0) // If COLREG rule responsibility of ownship is HO-GW or OG or CR-GW
+                if (rule==1.0 || rule==3.0 || rule==5.0) // If COLREG rule responsibility of ownship is HO-GW or OG or CR-GW
                 {
                     gw_counter += 1;
                     gw_resp_sum += fuzzyGiveWayResponsibility(distance);
@@ -1149,23 +1148,17 @@ namespace Control
                 spew("To:  %i GW resp: %f CR: %f", mmsi, gw_resp_sum, collision_risk_sum);
             }
 
-            if (so_counter==0)
-            {
-                so_counter = 1;
-            } 
             if (gw_counter==0)
             {
                 gw_counter = 1;
             }
             collision_risk = collision_risk_sum / m_dyn_obst_state.rows();
-            so_tol = so_tol_sum / so_counter;
             gw_resp = gw_resp_sum / gw_counter;
 
             concession_level = fuzzyConcessionLevel(collision_risk, gw_resp);
 
             spew("Concession level: %f", concession_level);
 
-            return concession_level;
           }
 
 
@@ -1173,7 +1166,7 @@ namespace Control
           void 
           updateDecisionVariables(bool currentDecision=false)
           {
-            double concession_level = concessionLevel();
+            concessionLevel();
 
             if (currentDecision)
             {
@@ -1199,7 +1192,7 @@ namespace Control
                 sb_mpc.Chi_ca_ << -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0;
                 sb_mpc.Chi_ca_ *= DEG2RAD;
             }
-            else if (5 <= concession_level < 7.5)
+            else if (5 <= concession_level && concession_level < 7.5)
             {
                 sb_mpc.P_ca_.resize(3);
                 sb_mpc.P_ca_ << 0.5, 0.75, 1.0;
@@ -1228,7 +1221,7 @@ namespace Control
 
           //! Update negotiation state based on Distributed Stochastic Search
           void 
-          updateNegotiationState(double& psi_os, double& u_os, int& negotiation_state)
+          updateNegotiationState()
           {
             double probability = 0.85;
             // Create a random number generator engine
@@ -1245,8 +1238,8 @@ namespace Control
                     psi_os = psi_os_temp;
                     u_os = u_os_temp;
                     cost_prev = cost;
-                    sb_mpc.P_ca_last_ = u_os_temp;
-                    sb_mpc.Chi_ca_last_ = psi_os_temp;
+                    //sb_mpc.P_ca_last_ = u_os_temp;
+                    //sb_mpc.Chi_ca_last_ = psi_os_temp;
                 }
             }
             else if (cost >= cost_prev)
@@ -1264,9 +1257,9 @@ namespace Control
           void
           checkCOLAVstate()
           {
-            for (unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            for (int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
-                if ( (m_dyn_obst_state(n, 13) <= m_args.D_CLOSE) && m_dyn_obst_state(n, 15) > 0.0 )
+                if ( (m_dyn_obst_state(n, 13) <= m_args.D_CLOSE) && (m_dyn_obst_state(n, 15) > 0.0) )
                 {
                     colav_state = true;
                     return;
@@ -1284,7 +1277,7 @@ namespace Control
           checkNegotiationStates()
           {
             int state_counter = 0;
-            for (unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            for (int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
                 if (m_dyn_obst_state(n,12) == 1)
                 {
@@ -1303,7 +1296,7 @@ namespace Control
           checkTCPAs()
           {
             int tcpa_passed_counter = 0;
-            for (unsigned int n=0; n<m_dyn_obst_state.rows(); ++n)
+            for (int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
                 if ( (m_dyn_obst_state(n,15) < 0.0) && (m_dyn_obst_state(n, 13) > 2*m_args.D_SAFE) )
                 {
@@ -1318,12 +1311,12 @@ namespace Control
 
 
           //! Collaborative collision avoidance algorithm
-          void collabColav(double ref)
+          void collabColav(double& ref)
           {
             //std::cout << "In_Nego:" << in_negotiation << " Nego_State:" << negotiation_state << " Nego_state_others:" << others_ready << " Nego_Iter:" << negotiation_iteration <<std::endl;
             if (in_negotiation==false)
             {
-                publishNegotiationData(ref, psi_os, u_os, negotiation_state);
+                publishNegotiationData();
                 in_negotiation=true;
             }
             else if (in_negotiation==true)
@@ -1331,29 +1324,21 @@ namespace Control
                 if (negotiation_state==0)
                 {
                     updateDecisionVariables(false);
-                    //if (m_asv_state[3] < m_des_speed)
-                    //{
-                    //    m_des_speed_temp = m_asv_state[3];
-                    //}
-                    //else
-                    //{
-                    //    m_des_speed_temp = m_des_speed;
-                    //}
-                    std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
-                    updateNegotiationState(psi_os, u_os, negotiation_state);
-                    publishNegotiationData(ref, psi_os, u_os, negotiation_state);
+                    std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, u_os_prev, psi_os_prev, m_des_speed_init, ref, m_asv_state, m_dyn_obst_state);
+                    updateNegotiationState();
+                    publishNegotiationData();
                 }
                 else if (negotiation_state==1)
                 {
-                    publishNegotiationData(ref, psi_os, u_os, negotiation_state);
+                    publishNegotiationData();
                 }
             }
             checkNegotiationStates();
             if (negotiation_state==1 and others_ready==true)
             { 
-                setOptCtrl(ref, psi_os, u_os);
-                //publishNegotiationData(ref, psi_os, u_os, negotiation_state);
-                publishNegotiationMsgLog(msg_in_counter, msg_out_counter);
+                setOptCtrl(ref, m_des_speed_init, psi_os, u_os);
+                //publishNegotiationData();
+                publishNegotiationMsgLog();
                 spew("MMSI: %i Msg_in: %i Msg_out: %i", std::stoi(m_mmsi), msg_in_counter, msg_out_counter);
                 spew("MMSI: %i APPLYING COG change: %f SOG change: %f", std::stoi(m_mmsi), psi_os*RAD2DEG, u_os);
                 msg_out_counter = 0;
@@ -1368,33 +1353,27 @@ namespace Control
 
 
           //! Reactive collision avoidance algorithm without collaboration
-          void colav(double ref)
+          void colav(double& ref)
           {
-            //if (m_asv_state[3] < m_des_speed)
-            //{
-            //    m_des_speed_temp = m_asv_state[3];
-            //}
-            //else
-            //{
-            //    m_des_speed_temp = m_des_speed;
-            //}
-            std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, m_des_speed, ref, m_asv_state, m_dyn_obst_state);
+            std::tie(psi_os_temp, u_os_temp, cost) = sb_mpc.getBestControlOffset(u_os, psi_os, u_os_prev, psi_os_prev, m_des_speed_init, ref, m_asv_state, m_dyn_obst_state);
             psi_os = psi_os_temp;
             u_os = u_os_temp;
-            setOptCtrl(ref, psi_os, u_os);
+            setOptCtrl(ref, m_des_speed_init, psi_os, u_os);
           }
 
 
           //! Dispatch desired heading and speed values
-          void setOptCtrl(double ref, double psi_value, double u_value)
+          void setOptCtrl(double psi_ref, double u_ref, double psi_value, double u_value)
           {
-            des_speed.value = m_des_speed * u_value;
+            des_speed.value = u_ref * u_value;
             dispatch(des_speed, Tasks::DF_LOOP_BACK);
-            m_heading.value = Angles::normalizeRadian(ref + psi_value);
+            m_heading.value = Angles::normalizeRadian(psi_ref + psi_value);
             m_heading.off = Angles::degrees(psi_value);
             dispatch(m_heading);
-            sb_mpc.P_ca_last_ = u_value;
-            sb_mpc.Chi_ca_last_ = psi_value; //u_value;
+            //sb_mpc.P_ca_last_ = u_value;
+            //sb_mpc.Chi_ca_last_ = psi_value;
+            u_os_prev = u_value;
+            psi_os_prev = psi_value;
           }
 
 
@@ -1406,7 +1385,6 @@ namespace Control
             // Note:
             // cross-track position (lateral error) = ts.track_pos.y
             // and along-track position = ts.track_pos.x
-            double ref;
             double k1;
             double k2;
             double k3;
@@ -1438,37 +1416,37 @@ namespace Control
             if (ts.track_pos.x > ts.track_length)
             {
               // Past the track goal: this should never happen but ...
-              ref = getBearing(state, ts.end);
+              m_des_heading = getBearing(state, ts.end);
             }
             else if (akcorr > 1 && m_args.out_vec && !m_args.out_los)
             {
               // Outside corridor, m_integrator OFF, vector field guidance
-              ref = ts.track_bearing - std::atan(m_gain * ts.track_pos.y);
+              m_des_heading = ts.track_bearing - std::atan(m_gain * ts.track_pos.y);
             }
             else if (akcorr > 1 && !m_args.out_vec && m_args.out_los)
             {
               // Outside corridor, m_integrator OFF, LOS guidance
-              ref = ts.track_bearing - std::atan(ts.track_pos.y / m_args.lookahead);
+              m_des_heading = ts.track_bearing - std::atan(ts.track_pos.y / m_args.lookahead);
             }
             else
             {
               // Inside corridor, m_integrator ON, ILOS guidance
-              ref = ts.track_bearing - std::atan((ts.track_pos.y + m_args.int_gain * m_integrator) / m_args.lookahead);
+              m_des_heading = ts.track_bearing - std::atan((ts.track_pos.y + m_args.int_gain * m_integrator) / m_args.lookahead);
             }
 
-            // If COLAV is active deactivate ILOS guidance
             checkCOLAVstate();
-            if (colav_state==true)
-            {
-                ref = ts.track_bearing;
-            }
+            checkTCPAs();
+
+            //if (colav_state==true)
+            //{
+            //    m_des_heading = ts.track_bearing;
+            //}
 
             int utc_time = ((uint32_t)Clock::getSinceEpoch());
 
-            checkTCPAs();
-            if (all_tcpa_passed)
+            if (colav_state==false || all_tcpa_passed==true)
             {
-                setOptCtrl(ref, 0.0, 1.0);
+                setOptCtrl(m_des_heading, m_des_speed_init, 0.0, 1.0);
                 all_tcpa_passed = false;
             }
             //else if ((utc_time%5==0) && (utc_time != utc_time_prev))
@@ -1476,17 +1454,21 @@ namespace Control
             {
                 if (m_args.collab_colav == true)
                 {
-                    collabColav(ref);
+                    collabColav(m_des_heading);
                 } 
                 else if (m_args.collab_colav == false)
                 {
-                    colav(ref);
+                    if (utc_time%5==0)
+                    {
+                        colav(m_des_heading);
+                    }
                 }
                 utc_time_prev = utc_time;
             }
             else
             {
-                setOptCtrl(ref, sb_mpc.Chi_ca_last_, sb_mpc.P_ca_last_);
+                setOptCtrl(m_des_heading, m_des_speed_init, psi_os_prev, u_os_prev);
+                //setOptCtrl(m_des_heading, m_des_speed_init, psi_os, u_os);
             }
           }
 

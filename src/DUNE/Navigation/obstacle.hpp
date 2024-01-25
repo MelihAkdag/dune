@@ -62,10 +62,11 @@ namespace DUNE
 		Eigen::VectorXd u_;
 		Eigen::VectorXd v_;
 
+
 		double psi_;
 		double A_, B_, C_, D_, l, w;
 		double os_x, os_y;
-		
+
 		private:
 
 		void calculatePosOffsets();

@@ -28,7 +28,7 @@
 //***************************************************************************
 // Automatically generated.                                                 *
 //***************************************************************************
-// IMC XML MD5: 587c2e61a3ec9d831b6e15c41b745d88                            *
+// IMC XML MD5: feead2f5ef68963728f09deea5b4dbdd                            *
 //***************************************************************************
 
 #ifndef DUNE_IMC_DEFINITIONS_HPP_INCLUDED_
@@ -29343,10 +29343,16 @@ namespace DUNE
     public:
       //! MMSI.
       std::string mmsi;
+      //! Concession level.
+      fp32_t concession;
       //! Intended Course.
       fp32_t cog_int;
+      //! Intended Course Offset.
+      fp32_t cog_int_off;
       //! Intended Speed.
       fp32_t sog_int;
+      //! Intended Speed Offset.
+      fp32_t sog_int_off;
       //! Negotiation state.
       uint8_t state;
 
@@ -29397,7 +29403,7 @@ namespace DUNE
       unsigned
       getFixedSerializationSize(void) const
       {
-        return 9;
+        return 21;
       }
 
       unsigned
