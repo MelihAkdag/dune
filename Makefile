@@ -7395,6 +7395,30 @@ src/DUNE/Navigation/sb_mpc.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/dune-core.dir/build.make CMakeFiles/dune-core.dir/src/DUNE/Navigation/sb_mpc.cpp.s
 .PHONY : src/DUNE/Navigation/sb_mpc.cpp.s
 
+src/DUNE/Navigation/velocity_obstacle.o: src/DUNE/Navigation/velocity_obstacle.cpp.o
+.PHONY : src/DUNE/Navigation/velocity_obstacle.o
+
+# target to build an object file
+src/DUNE/Navigation/velocity_obstacle.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dune-core.dir/build.make CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.o
+.PHONY : src/DUNE/Navigation/velocity_obstacle.cpp.o
+
+src/DUNE/Navigation/velocity_obstacle.i: src/DUNE/Navigation/velocity_obstacle.cpp.i
+.PHONY : src/DUNE/Navigation/velocity_obstacle.i
+
+# target to preprocess a source file
+src/DUNE/Navigation/velocity_obstacle.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dune-core.dir/build.make CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.i
+.PHONY : src/DUNE/Navigation/velocity_obstacle.cpp.i
+
+src/DUNE/Navigation/velocity_obstacle.s: src/DUNE/Navigation/velocity_obstacle.cpp.s
+.PHONY : src/DUNE/Navigation/velocity_obstacle.s
+
+# target to generate assembly for a file
+src/DUNE/Navigation/velocity_obstacle.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/dune-core.dir/build.make CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.s
+.PHONY : src/DUNE/Navigation/velocity_obstacle.cpp.s
+
 src/DUNE/Network/Address.o: src/DUNE/Network/Address.cpp.o
 .PHONY : src/DUNE/Network/Address.o
 
@@ -15382,6 +15406,9 @@ help:
 	@echo "... src/DUNE/Navigation/sb_mpc.o"
 	@echo "... src/DUNE/Navigation/sb_mpc.i"
 	@echo "... src/DUNE/Navigation/sb_mpc.s"
+	@echo "... src/DUNE/Navigation/velocity_obstacle.o"
+	@echo "... src/DUNE/Navigation/velocity_obstacle.i"
+	@echo "... src/DUNE/Navigation/velocity_obstacle.s"
 	@echo "... src/DUNE/Network/Address.o"
 	@echo "... src/DUNE/Network/Address.i"
 	@echo "... src/DUNE/Network/Address.s"

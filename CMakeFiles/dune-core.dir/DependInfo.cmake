@@ -184,6 +184,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/parallels/dune/dune/src/DUNE/Navigation/autonaut.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/autonaut.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/autonaut.cpp.o.d"
   "/home/parallels/dune/dune/src/DUNE/Navigation/obstacle.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/obstacle.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/obstacle.cpp.o.d"
   "/home/parallels/dune/dune/src/DUNE/Navigation/sb_mpc.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/sb_mpc.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/sb_mpc.cpp.o.d"
+  "/home/parallels/dune/dune/src/DUNE/Navigation/velocity_obstacle.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.o.d"
   "/home/parallels/dune/dune/src/DUNE/Network/Address.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Network/Address.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Network/Address.cpp.o.d"
   "/home/parallels/dune/dune/src/DUNE/Network/FragmentedMessage.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Network/FragmentedMessage.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Network/FragmentedMessage.cpp.o.d"
   "/home/parallels/dune/dune/src/DUNE/Network/Fragments.cpp" "CMakeFiles/dune-core.dir/src/DUNE/Network/Fragments.cpp.o" "gcc" "CMakeFiles/dune-core.dir/src/DUNE/Network/Fragments.cpp.o.d"

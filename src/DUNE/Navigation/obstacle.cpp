@@ -47,12 +47,10 @@ namespace DUNE
 
 		calculatePosOffsets();
 
-		//psi_ = normalize(state(2)); // bug fix: use normalize angle // MR interface output sign change
-		psi_ = normalize(Angles::radians(state(10))); // Intended course
+		psi_ = normalize(Angles::radians(state(10)));
 		x_(0) = state(0) + os_x*std::cos(psi_) - os_y*std::sin(psi_);
 		y_(0) = state(1) + os_x*std::sin(psi_) + os_y*std::cos(psi_);
-		//u_(0) = state(3);
-		u_(0) = state(11); // Intended speed
+		u_(0) = state(11);
 		v_(0) = state(4);
 		
 		r11_ = std::cos(psi_);

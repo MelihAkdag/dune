@@ -211,6 +211,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/dune-core.dir/src/DUNE/Navigation/obstacle.cpp.o.d"
   "CMakeFiles/dune-core.dir/src/DUNE/Navigation/sb_mpc.cpp.o"
   "CMakeFiles/dune-core.dir/src/DUNE/Navigation/sb_mpc.cpp.o.d"
+  "CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.o"
+  "CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.o.d"
   "CMakeFiles/dune-core.dir/src/DUNE/Network/Address.cpp.o"
   "CMakeFiles/dune-core.dir/src/DUNE/Network/Address.cpp.o.d"
   "CMakeFiles/dune-core.dir/src/DUNE/Network/FragmentedMessage.cpp.o"

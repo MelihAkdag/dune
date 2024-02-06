@@ -225,6 +225,8 @@ CXX_FLAGS = -O3 -DNDEBUG -std=c++14
 
 # Custom flags: CMakeFiles/dune-core.dir/src/DUNE/Navigation/sb_mpc.cpp.o_FLAGS =  -fexceptions -Wno-long-long -Wextra -Wformat -Wformat-security -Wno-missing-field-initializers -fdiagnostics-show-option -Wall -Wshadow -pedantic
 
+# Custom flags: CMakeFiles/dune-core.dir/src/DUNE/Navigation/velocity_obstacle.cpp.o_FLAGS =  -fexceptions -Wno-long-long -Wextra -Wformat -Wformat-security -Wno-missing-field-initializers -fdiagnostics-show-option -Wall -Wshadow -pedantic
+
 # Custom flags: CMakeFiles/dune-core.dir/src/DUNE/Network/Address.cpp.o_FLAGS =  -fexceptions -Wno-long-long -Wextra -Wformat -Wformat-security -Wno-missing-field-initializers -fdiagnostics-show-option -Wall -Wshadow -pedantic
 
 # Custom flags: CMakeFiles/dune-core.dir/src/DUNE/Network/FragmentedMessage.cpp.o_FLAGS =  -fexceptions -Wno-long-long -Wextra -Wformat -Wformat-security -Wno-missing-field-initializers -fdiagnostics-show-option -Wall -Wshadow -pedantic
