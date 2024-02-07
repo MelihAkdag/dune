@@ -19,10 +19,14 @@ namespace DUNE
     //! Constructor.
     velocityObstacle::velocityObstacle(void):
     D_SAFE_(0.0),
+    K_COLL_(0.0),
     PHI_AH_(0.0),
 	PHI_OT_(0.0),
 	PHI_HO_(0.0),
-	PHI_CR_(0.0)
+	PHI_CR_(0.0),
+	KAPPA_(0.0),
+	K_DP_(0.0),
+	K_DCHI_(0.0)
     {}
 
     //! Destructor.
@@ -31,13 +35,19 @@ namespace DUNE
     }
 	
 	void
-	velocityObstacle::create(double D_SAFE, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR)
+	velocityObstacle::create(double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI)
 	{
 		D_SAFE_ = D_SAFE;
+		K_COLL_ = K_COLL;
 		PHI_AH_ = PHI_AH;
 		PHI_OT_ = PHI_OT;
 		PHI_HO_ = PHI_HO;
 		PHI_CR_ = PHI_CR;
+		KAPPA_ = KAPPA;
+		K_DP_ = K_DP;
+		K_DCHI_ = K_DCHI;
+
+		DENOM_ = K_COLL_ + KAPPA_ + K_DP_ + K_DCHI_;
 
 		Chi_ca_.resize(13);
 		Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
@@ -260,7 +270,9 @@ namespace DUNE
 				}
 
 				double cost_ = 0.0;
-				cost_ = 0.2*(distance(vel_suitable, V_desired)) + 0.3*port_turn + 0.5*(1/VO_all.rows())*cr_total;
+				//cost_ = 0.2*(distance(vel_suitable, V_desired)) + 0.3*port_turn + 0.5*(1/VO_all.rows())*cr_total;
+				//cost_ = 0.1*std::pow((psi_s-psi_next),2) + 0.2*std::pow((V_desired.norm()-vel_suitable.norm()),2) + 0.3*port_turn + 0.4*(1/VO_all.rows())*cr_total;
+				cost_ = (K_DCHI_/DENOM_)*std::pow((psi_s-psi_next),2) + (K_DP_/DENOM_)*std::pow((V_desired.norm()-vel_suitable.norm()),2) + (KAPPA_/DENOM_)*port_turn + (K_COLL_/DENOM_)*(1/VO_all.rows())*cr_total;
 				
 				if (cost_ < cost)
 				{

@@ -443,7 +443,8 @@ namespace Control
                         m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR,
                         m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI, m_args.K_DCHI_SB, m_args.K_DCHI_P);
             m_mmsi = m_args.mmsi;
-            velocity_obstacle.create(m_args.D_SAFE, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR);
+            velocity_obstacle.create(m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR, 
+                                    m_args.KAPPA, m_args.K_DP, m_args.K_DCHI);
             velocity_obstacle.Vs_opt_prev(0) = m_asv_state[3] * std::cos(m_asv_state[2]);
             velocity_obstacle.Vs_opt_prev(1) = m_asv_state[3] * std::sin(m_asv_state[2]);
           }
@@ -585,11 +586,9 @@ namespace Control
             {
                 if(m_dyn_obst_state(n, 9) == std::stoi(msg->mmsi))
                 {
-                    //std::cout << " HEYOOOO-1: " << m_dyn_obst_state(n, 9) << " " << m_dyn_obst_state(n, 10) << std::endl;
                     m_dyn_obst_state(n, 10) = msg->cog_int; // Intended COG
                     m_dyn_obst_state(n, 11) = msg->sog_int; // Intended SOG
                     m_dyn_obst_state(n, 12) = msg->state;   // Negotiation state
-                    //std::cout << " HEYOOOO-2: " << m_dyn_obst_state(n, 9) << " " << m_dyn_obst_state(n, 10) << std::endl;
                 }
             }
             return;

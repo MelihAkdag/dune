@@ -134,7 +134,7 @@ namespace DUNE
 	 */
 	double getKChi();
 	/**
-	 * @brief Returns the cost of changing the heading offset to starboard.
+	 * @brief Returns the cost of changing the heading offset.
 	 */
 	double getKdChi();
 	/**

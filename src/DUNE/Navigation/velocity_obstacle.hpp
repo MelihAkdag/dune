@@ -29,7 +29,7 @@ namespace DUNE
 			~velocityObstacle();
 		
 		
-			void create(double D_SAFE, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR);
+			void create(double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI);
 		
 			std::tuple<double, double, double> velocityUpdate(double psi_des, double U_des, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
 			
@@ -38,6 +38,15 @@ namespace DUNE
 			Eigen::VectorXd Chi_ca_;
 			Eigen::VectorXd P_ca_;
 			
+			
+		  /**
+		   * @brief Returns the minimum distance which is considered as safe [m].
+		   */
+		  double getDSafe();
+		  /**
+		   * @brief Returns the collision cost
+		   */
+		  double getKColl();
 			/**
 			 * @brief Returns the angle within which an obstacle is said to be ahead
 			 * [deg].
@@ -60,11 +69,28 @@ namespace DUNE
 			 * and not overtaking the ship.
 			 */
 			double getPhiCR();
+			/**
+			 * @brief Returns the cost of not complying with the COLREGS.
+			 */
+			double getKappa();
+			/**
+			 * @brief Returns the cost of changing the speed offset.
+			 */
+			double getKdP();
+			/**
+			 * @brief Returns the cost of changing the heading offset.
+			 */
+			double getKdChi();
 
+			void setDSafe(double d_safe);
+			void setKColl(double k_coll);
 			void setPhiAH(double phi_AH);
 			void setPhiOT(double phi_OT);
 			void setPhiHO(double phi_HO);
 			void setPhiCR(double phi_CR);
+			void setKappa(double kappa);
+			void setKdP(double K_dP);
+			void setKdChi(double K_dChi);
 
 			private:
 			Eigen::Vector2d computeVelocityDesired(double psi_des, double U_des);
@@ -79,10 +105,15 @@ namespace DUNE
 			inline double normalize_angle_360(double angle);
 
 			double D_SAFE_;
+			double K_COLL_;
 			double PHI_AH_;
 			double PHI_OT_;
 			double PHI_HO_;
 			double PHI_CR_;
+			double KAPPA_;
+			double K_DP_;
+			double K_DCHI_;
+			double DENOM_;
 		};
   }
 }
