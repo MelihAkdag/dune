@@ -145,6 +145,8 @@ namespace Control
           bool in_negotiation;
           //! Negotiation state
           int negotiation_state;
+          //! Invited to negotiation
+          bool invited_to_negotiate;
           //! All ships ready to finish negotiation
           bool others_ready;
           //! All TCPAs are negative
@@ -179,6 +181,7 @@ namespace Control
           psi_os_prev(0.0),
           in_negotiation(false),
           negotiation_state(0),
+          invited_to_negotiate(false),
           others_ready(false),
           all_tcpa_passed(false),
           in_colav_range(false),
@@ -580,7 +583,9 @@ namespace Control
           void
           consume(const IMC::NegotiationData* msg)
           {
+            invited_to_negotiate = true; // Other vessel might want to start a negotation further distances then ownship
             msg_in_counter += 1;
+            double furthest_obst = m_args.D_CLOSE;
             spew("MMSI: %i COG_int: %f SOG_int: %f State: %i", std::stoi(msg->mmsi), msg->cog_int, msg->sog_int, msg->state);
             for(int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
@@ -589,7 +594,15 @@ namespace Control
                     m_dyn_obst_state(n, 10) = msg->cog_int; // Intended COG
                     m_dyn_obst_state(n, 11) = msg->sog_int; // Intended SOG
                     m_dyn_obst_state(n, 12) = msg->state;   // Negotiation state
+                    if (m_dyn_obst_state(n, 13) > furthest_obst)
+                    {
+                        furthest_obst = m_dyn_obst_state(n, 13);
+                    }
                 }
+            }
+            if (furthest_obst > m_args.D_CLOSE)
+            {
+                sb_mpc.D_CLOSE_ = furthest_obst;
             }
             return;
           }
@@ -771,31 +784,32 @@ namespace Control
           
             // FuzzyInput
             FuzzyInput *dcpa_input = new FuzzyInput(1);
-            FuzzySet *dcpa_low = new FuzzySet(0, 10, 10, 20);
+            FuzzySet *dcpa_low = new FuzzySet(0, 0, 0.5*m_args.D_SAFE, m_args.D_SAFE); 
             dcpa_input->addFuzzySet(dcpa_low);
-            FuzzySet *dcpa_medium = new FuzzySet(10, 30, 30, 40);
+            FuzzySet *dcpa_medium = new FuzzySet(0.5*m_args.D_SAFE, m_args.D_SAFE, m_args.D_SAFE, 1.5*m_args.D_SAFE);
             dcpa_input->addFuzzySet(dcpa_medium);
-            FuzzySet *dcpa_high = new FuzzySet(30, 50, 50, 1000);
+            FuzzySet *dcpa_high = new FuzzySet(m_args.D_SAFE, 1.5*m_args.D_SAFE, 2*m_args.D_SAFE, 2*m_args.D_SAFE);
             dcpa_input->addFuzzySet(dcpa_high);
             fuzzy->addFuzzyInput(dcpa_input);
           
             // FuzzyInput
+            double T_SAFE = 0.5 * (m_args.D_CLOSE / m_des_speed_init);
             FuzzyInput *tcpa_input = new FuzzyInput(2);
-            FuzzySet *tcpa_low = new FuzzySet(0, 90, 90, 180);
+            FuzzySet *tcpa_low = new FuzzySet(0, 0, 0.5*T_SAFE, T_SAFE);
             tcpa_input->addFuzzySet(tcpa_low);
-            FuzzySet *tcpa_medium = new FuzzySet(150, 240, 240, 330);
+            FuzzySet *tcpa_medium = new FuzzySet(0.5*T_SAFE, T_SAFE, T_SAFE, 1.5*T_SAFE);
             tcpa_input->addFuzzySet(tcpa_medium);
-            FuzzySet *tcpa_high = new FuzzySet(300, 390, 390, 900);
+            FuzzySet *tcpa_high = new FuzzySet(T_SAFE, 1.5*T_SAFE, 2*T_SAFE, 2*T_SAFE);
             tcpa_input->addFuzzySet(tcpa_high);
             fuzzy->addFuzzyInput(tcpa_input);
           
             // FuzzyOutput
             FuzzyOutput *risk = new FuzzyOutput(1);
-            FuzzySet *minimum = new FuzzySet(0, 2, 2, 4);
+            FuzzySet *minimum = new FuzzySet(0, 0, 2.5, 5);
             risk->addFuzzySet(minimum);
-            FuzzySet *average = new FuzzySet(3, 5, 5, 7);
+            FuzzySet *average = new FuzzySet(2.5, 5, 5, 7.5);
             risk->addFuzzySet(average);
-            FuzzySet *maximum = new FuzzySet(6, 8, 8, 10);
+            FuzzySet *maximum = new FuzzySet(5, 7.5, 10, 10);
             risk->addFuzzySet(maximum);
             fuzzy->addFuzzyOutput(risk);
           
@@ -810,14 +824,14 @@ namespace Control
             // Building FuzzyRule
             FuzzyRuleAntecedent *dcpaLowAndTcpaMedium = new FuzzyRuleAntecedent();
             dcpaLowAndTcpaMedium->joinWithAND(dcpa_low, tcpa_medium);
-            FuzzyRule *fuzzyRule2 = new FuzzyRule(2, dcpaLowAndTcpaMedium, thenRiskMaximum);
+            FuzzyRuleConsequent *thenRiskAverage = new FuzzyRuleConsequent();
+            thenRiskAverage->addOutput(average);
+            FuzzyRule *fuzzyRule2 = new FuzzyRule(2, dcpaLowAndTcpaMedium, thenRiskAverage);
             fuzzy->addFuzzyRule(fuzzyRule2);
           
             // Building FuzzyRule
             FuzzyRuleAntecedent *dcpaLowAndTcpaHigh = new FuzzyRuleAntecedent();
             dcpaLowAndTcpaHigh->joinWithAND(dcpa_low, tcpa_high);
-            FuzzyRuleConsequent *thenRiskAverage = new FuzzyRuleConsequent();
-            thenRiskAverage->addOutput(average);
             FuzzyRule *fuzzyRule3 = new FuzzyRule(3, dcpaLowAndTcpaHigh, thenRiskAverage);
             fuzzy->addFuzzyRule(fuzzyRule3);
           
@@ -830,21 +844,21 @@ namespace Control
             // Building FuzzyRule
             FuzzyRuleAntecedent *dcpaMediumAndTcpaMedium = new FuzzyRuleAntecedent();
             dcpaMediumAndTcpaMedium->joinWithAND(dcpa_medium, tcpa_medium);
-            FuzzyRule *fuzzyRule5 = new FuzzyRule(5, dcpaMediumAndTcpaMedium, thenRiskAverage);
+            FuzzyRuleConsequent *thenRiskMinimum = new FuzzyRuleConsequent();
+            thenRiskMinimum->addOutput(minimum);
+            FuzzyRule *fuzzyRule5 = new FuzzyRule(5, dcpaMediumAndTcpaMedium, thenRiskMinimum);
             fuzzy->addFuzzyRule(fuzzyRule5);
           
             // Building FuzzyRule
             FuzzyRuleAntecedent *dcpaMediumAndTcpaHigh = new FuzzyRuleAntecedent();
             dcpaMediumAndTcpaHigh->joinWithAND(dcpa_medium, tcpa_high);
-            FuzzyRuleConsequent *thenRiskMinimum = new FuzzyRuleConsequent();
-            thenRiskMinimum->addOutput(minimum);
             FuzzyRule *fuzzyRule6 = new FuzzyRule(6, dcpaMediumAndTcpaHigh, thenRiskMinimum);
             fuzzy->addFuzzyRule(fuzzyRule6);
           
             // Building FuzzyRule
             FuzzyRuleAntecedent *dcpaHighAndTcpaLow = new FuzzyRuleAntecedent();
             dcpaHighAndTcpaLow->joinWithAND(dcpa_high, tcpa_low);
-            FuzzyRule *fuzzyRule7 = new FuzzyRule(7, dcpaHighAndTcpaLow, thenRiskAverage);
+            FuzzyRule *fuzzyRule7 = new FuzzyRule(7, dcpaHighAndTcpaLow, thenRiskMinimum);
             fuzzy->addFuzzyRule(fuzzyRule7);
           
             // Building FuzzyRule
@@ -878,73 +892,6 @@ namespace Control
             return collision_risk;
           }
 
-
-          //! Stand on tolerance level based on fuzzy logic
-          double 
-          fuzzyStandOnTolerance(double distance)
-          {
-            Fuzzy *fuzzy = new Fuzzy();
-          
-            // FuzzyInput
-            FuzzyInput *distance_input = new FuzzyInput(1);
-            FuzzySet *distance_low = new FuzzySet(0, 20, 20, 40);
-            distance_input->addFuzzySet(distance_low);
-            FuzzySet *distance_medium = new FuzzySet(30, 50, 50, 70);
-            distance_input->addFuzzySet(distance_medium);
-            FuzzySet *distance_high = new FuzzySet(60, 80, 80, 500);
-            distance_input->addFuzzySet(distance_high);
-            fuzzy->addFuzzyInput(distance_input);
-          
-            // FuzzyOutput
-            FuzzyOutput *so_tol = new FuzzyOutput(1);
-            FuzzySet *so_tol_low = new FuzzySet(0, 2, 2, 4);
-            so_tol->addFuzzySet(so_tol_low);
-            FuzzySet *so_tol_medium = new FuzzySet(3, 5, 5, 7);
-            so_tol->addFuzzySet(so_tol_medium);
-            FuzzySet *so_tol_high = new FuzzySet(6, 8, 8, 10);
-            so_tol->addFuzzySet(so_tol_high);
-            fuzzy->addFuzzyOutput(so_tol);
-          
-            // Building FuzzyRule
-            FuzzyRuleAntecedent *ifDistanceLow = new FuzzyRuleAntecedent();
-            ifDistanceLow->joinSingle(distance_low);
-            FuzzyRuleConsequent *thenStandOnToleranceLow = new FuzzyRuleConsequent();
-            thenStandOnToleranceLow->addOutput(so_tol_low);
-            FuzzyRule *fuzzyRule1 = new FuzzyRule(1, ifDistanceLow, thenStandOnToleranceLow);
-            fuzzy->addFuzzyRule(fuzzyRule1);
-          
-            // Building FuzzyRule
-            FuzzyRuleAntecedent *ifDistanceMedium = new FuzzyRuleAntecedent();
-            ifDistanceMedium->joinSingle(distance_medium);
-            FuzzyRuleConsequent *thenStandOnToleranceMedium = new FuzzyRuleConsequent();
-            thenStandOnToleranceMedium->addOutput(so_tol_medium);
-            FuzzyRule *fuzzyRule2 = new FuzzyRule(2, ifDistanceMedium, thenStandOnToleranceMedium);
-            fuzzy->addFuzzyRule(fuzzyRule2);
-          
-            // Building FuzzyRule
-            FuzzyRuleAntecedent *ifDistanceHigh = new FuzzyRuleAntecedent();
-            ifDistanceHigh->joinSingle(distance_high);
-            FuzzyRuleConsequent *thenStandOnToleranceHigh = new FuzzyRuleConsequent();
-            thenStandOnToleranceHigh->addOutput(so_tol_high);
-            FuzzyRule *fuzzyRule3 = new FuzzyRule(3, ifDistanceHigh, thenStandOnToleranceHigh);
-            fuzzy->addFuzzyRule(fuzzyRule3);
-          
-            //std::cout << "Distance: " << distance << std::endl;
-          
-            fuzzy->setInput(1, distance);
-          
-            fuzzy->fuzzify();
-          
-            //std::cout << "Input: \n\tDistance: Low-> " << distance_low->getPertinence() << ", Medium->" << distance_medium->getPertinence() << ", High-> " << distance_high->getPertinence() << std::endl;
-            //std::cout << "Rules: \n\tRule01-> " << fuzzyRule1->isFired() << ", Rule02-> " << fuzzyRule2->isFired() << ", Rule03-> " << fuzzyRule3->isFired() << std::endl;
-          
-            double stand_on_tol = fuzzy->defuzzify(1);
-          
-            //std::cout << "Output: \n\tSO Tolerance: Low-> " << so_tol_low->getPertinence() << ", Medium->" << so_tol_medium->getPertinence() << ", High-> " << so_tol_high->getPertinence() << std::endl;
-            //std::cout << "Result: \n\tSO Tolerance: " << stand_on_tol << std::endl;
-          
-            return stand_on_tol;
-          }
           
           
           //! Give way responsibility level based on fuzzy logic
@@ -952,24 +899,26 @@ namespace Control
           fuzzyGiveWayResponsibility(double distance)
           {
             Fuzzy *fuzzy = new Fuzzy();
+
+            double Dist_safe = 0.5 * m_args.D_CLOSE;
           
             // FuzzyInput
             FuzzyInput *distance_input = new FuzzyInput(1);
-            FuzzySet *distance_low = new FuzzySet(0, 20, 20, 40); 
+            FuzzySet *distance_low = new FuzzySet(0, 0, 0.5*Dist_safe, Dist_safe); //new FuzzySet(0, 20, 20, 40); 
             distance_input->addFuzzySet(distance_low);
-            FuzzySet *distance_medium = new FuzzySet(30, 50, 50, 70); 
+            FuzzySet *distance_medium = new FuzzySet(0.5*Dist_safe, Dist_safe, Dist_safe, 1.5*Dist_safe); //new FuzzySet(30, 50, 50, 70); 
             distance_input->addFuzzySet(distance_medium);
-            FuzzySet *distance_high = new FuzzySet(60, 80, 80, 500);
+            FuzzySet *distance_high = new FuzzySet(Dist_safe, 1.5*Dist_safe, 2*Dist_safe, 2*Dist_safe); //new FuzzySet(60, 80, 80, 500);
             distance_input->addFuzzySet(distance_high);
             fuzzy->addFuzzyInput(distance_input);
           
             // FuzzyOutput
             FuzzyOutput *gw_resp = new FuzzyOutput(1);
-            FuzzySet *gw_resp_low = new FuzzySet(0, 2, 2, 4);
+            FuzzySet *gw_resp_low = new FuzzySet(0, 0, 2.5, 5);
             gw_resp->addFuzzySet(gw_resp_low);
-            FuzzySet *gw_resp_medium = new FuzzySet(3, 5, 5, 7);
+            FuzzySet *gw_resp_medium = new FuzzySet(2.5, 5, 5, 7.5);
             gw_resp->addFuzzySet(gw_resp_medium);
-            FuzzySet *gw_resp_high = new FuzzySet(6, 8, 8, 10);
+            FuzzySet *gw_resp_high = new FuzzySet(5, 7.5, 10, 10);
             gw_resp->addFuzzySet(gw_resp_high);
             fuzzy->addFuzzyOutput(gw_resp);
           
@@ -1023,31 +972,31 @@ namespace Control
 
             // FuzzyInput
             FuzzyInput *cr_input = new FuzzyInput(1);
-            FuzzySet *cr_low = new FuzzySet(0, 2, 2, 4);
+            FuzzySet *cr_low = new FuzzySet(0, 0, 2.5, 5);
             cr_input->addFuzzySet(cr_low);
-            FuzzySet *cr_medium = new FuzzySet(3, 5, 5, 7);
+            FuzzySet *cr_medium = new FuzzySet(2.5, 5, 5, 7.5);
             cr_input->addFuzzySet(cr_medium);
-            FuzzySet *cr_high = new FuzzySet(6, 8, 8, 10);
+            FuzzySet *cr_high = new FuzzySet(5, 7.5, 10, 10);
             cr_input->addFuzzySet(cr_high);
             fuzzy->addFuzzyInput(cr_input);
 
             // FuzzyInput
             FuzzyInput *gw_resp_input = new FuzzyInput(2);
-            FuzzySet *gw_low = new FuzzySet(0, 2, 2, 4);
+            FuzzySet *gw_low = new FuzzySet(0, 0, 2.5, 5);
             gw_resp_input->addFuzzySet(gw_low);
-            FuzzySet *gw_medium = new FuzzySet(3, 5, 5, 7);
+            FuzzySet *gw_medium = new FuzzySet(2.5, 5, 5, 7.5);
             gw_resp_input->addFuzzySet(gw_medium);
-            FuzzySet *gw_high = new FuzzySet(6, 8, 8, 10);
+            FuzzySet *gw_high = new FuzzySet(5, 7.5, 10, 10);
             gw_resp_input->addFuzzySet(gw_high);
             fuzzy->addFuzzyInput(gw_resp_input);
 
             // FuzzyOutput
             FuzzyOutput *concession = new FuzzyOutput(1);
-            FuzzySet *concession_low = new FuzzySet(0, 2, 2, 4);
+            FuzzySet *concession_low = new FuzzySet(0, 0, 2.5, 5);
             concession->addFuzzySet(concession_low);
-            FuzzySet *concession_medium = new FuzzySet(3, 5, 5, 7);
+            FuzzySet *concession_medium = new FuzzySet(2.5, 5, 5, 7.5);
             concession->addFuzzySet(concession_medium);
-            FuzzySet *concession_high = new FuzzySet(6, 8, 8, 10);
+            FuzzySet *concession_high = new FuzzySet(5, 7.5, 10, 10);
             concession->addFuzzySet(concession_high);
             fuzzy->addFuzzyOutput(concession);
 
@@ -1082,7 +1031,7 @@ namespace Control
             // Rule 5: CR medium & GW medium -> Concession medium
             FuzzyRuleAntecedent *crMedAndGwMed = new FuzzyRuleAntecedent();
             crMedAndGwMed->joinWithAND(cr_medium, gw_medium);
-            FuzzyRule *fuzzyRule5 = new FuzzyRule(5, crMedAndGwMed, thenConcessionMedium);
+            FuzzyRule *fuzzyRule5 = new FuzzyRule(5, crMedAndGwMed, thenConcessionLow);
             fuzzy->addFuzzyRule(fuzzyRule5);
 
             // Rule 6: CR medium & GW high -> Concession medium
@@ -1183,60 +1132,70 @@ namespace Control
           void 
           updateDecisionVariables(bool currentDecision=false)
           {
+            Eigen::VectorXd P_ca_;
+            Eigen::VectorXd Chi_ca_;
+            
             concessionLevel();
 
             if (currentDecision)
             {
-                sb_mpc.P_ca_.resize(1);
-                sb_mpc.P_ca_ << 1.0;
-                sb_mpc.Chi_ca_.resize(1);
-                sb_mpc.Chi_ca_ << 0.0;
-                sb_mpc.Chi_ca_ *= DEG2RAD;
+                P_ca_.resize(1);
+                P_ca_ << 1.0;
+                Chi_ca_.resize(1);
+                Chi_ca_ << 0.0;
+                Chi_ca_ *= DEG2RAD;
             }
             else if (0 <= concession_level && concession_level < 2.5)
             {
-                sb_mpc.P_ca_.resize(1);
-                sb_mpc.P_ca_ << 1.0;
-                sb_mpc.Chi_ca_.resize(7);
-                sb_mpc.Chi_ca_ << -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0;
-                sb_mpc.Chi_ca_ *= DEG2RAD;
+                P_ca_.resize(1);
+                P_ca_ << 1.0;
+                Chi_ca_.resize(7);
+                Chi_ca_ << -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0;
+                Chi_ca_ *= DEG2RAD;
             }
             else if (2.5 <= concession_level && concession_level < 5)
             {
-                sb_mpc.P_ca_.resize(2);
-                sb_mpc.P_ca_ << 0.75, 1.0;
-                sb_mpc.Chi_ca_.resize(13);
-                sb_mpc.Chi_ca_ << -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0;
-                sb_mpc.Chi_ca_ *= DEG2RAD;
+                P_ca_.resize(2);
+                P_ca_ << 0.75, 1.0;
+                Chi_ca_.resize(13);
+                Chi_ca_ << -30.0, -25.0, -20.0, -15.0, -10.0, -5.0, 0.0, 5.0, 10.0, 15.0, 20.0, 25.0, 30.0;
+                Chi_ca_ *= DEG2RAD;
             }
             else if (5 <= concession_level && concession_level < 7.5)
             {
-                sb_mpc.P_ca_.resize(3);
-                sb_mpc.P_ca_ << 0.5, 0.75, 1.0;
-                sb_mpc.Chi_ca_.resize(13);
-                sb_mpc.Chi_ca_ << -60.0,-50.0,-40.0,-30.0,-20.0,-10.0,0.0,10.0,20.0,30.0,40.0,50.0,60.0;
-                sb_mpc.Chi_ca_ *= DEG2RAD;
+                P_ca_.resize(3);
+                P_ca_ << 0.5, 0.75, 1.0;
+                Chi_ca_.resize(13);
+                Chi_ca_ << -60.0,-50.0,-40.0,-30.0,-20.0,-10.0,0.0,10.0,20.0,30.0,40.0,50.0,60.0;
+                Chi_ca_ *= DEG2RAD;
             }
             else if (concession_level >= 7.5)
             {
-                sb_mpc.P_ca_.resize(4);
-                sb_mpc.P_ca_ << 0.0, 0.25, 0.5, 1.0;
-                sb_mpc.Chi_ca_.resize(13);
-                sb_mpc.Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
-                sb_mpc.Chi_ca_ *= DEG2RAD;
+                P_ca_.resize(4);
+                P_ca_ << 0.0, 0.25, 0.5, 1.0;
+                Chi_ca_.resize(13);
+                Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
+                Chi_ca_ *= DEG2RAD;
             }
             else
             {
-                sb_mpc.P_ca_.resize(4);
-                sb_mpc.P_ca_ << 0.0, 0.25, 0.5, 1.0;
-                sb_mpc.Chi_ca_.resize(13);
-                sb_mpc.Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
-                sb_mpc.Chi_ca_ *= DEG2RAD;
+                P_ca_.resize(4);
+                P_ca_ << 0.0, 0.25, 0.5, 1.0;
+                Chi_ca_.resize(13);
+                Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
+                Chi_ca_ *= DEG2RAD;
             }
 
-            // Apply same variables for VO algorithm too
-            velocity_obstacle.P_ca_ = sb_mpc.P_ca_;
-            velocity_obstacle.Chi_ca_ = sb_mpc.Chi_ca_;
+            if (m_args.colav_algorithm==1)
+            {
+                sb_mpc.P_ca_ = P_ca_;
+                sb_mpc.Chi_ca_ = Chi_ca_;
+            }
+            else if (m_args.colav_algorithm==2)
+            {
+                velocity_obstacle.P_ca_ = P_ca_;
+                velocity_obstacle.Chi_ca_ = Chi_ca_;
+            }
           }
 
 
@@ -1244,7 +1203,7 @@ namespace Control
           void 
           updateNegotiationState()
           {
-            double probability = 0.5;
+            double probability = 0.75;
             // Create a random number generator engine
             std::random_device rd;
             std::mt19937 gen(rd());
@@ -1265,7 +1224,7 @@ namespace Control
             {
                 same_decision_counter += 1;
             }
-            if (same_decision_counter > 3)
+            if (same_decision_counter > 10)
             {
                 negotiation_state = 1;
             }
@@ -1279,7 +1238,7 @@ namespace Control
           {
             for (int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
-                if ( (m_dyn_obst_state(n, 13) <= m_args.D_CLOSE) && (m_dyn_obst_state(n, 15) > 0.0))
+                if ( (invited_to_negotiate==true) || ((m_dyn_obst_state(n, 13) <= m_args.D_CLOSE) && (m_dyn_obst_state(n, 15) > 0.0)) )
                 {
                     in_colav_range = true;
                     return;
@@ -1337,7 +1296,7 @@ namespace Control
             int tcpa_passed_counter = 0;
             for (int n=0; n<m_dyn_obst_state.rows(); ++n)
             {
-                if ( (m_dyn_obst_state(n,15) < 0.0) && (m_dyn_obst_state(n, 13) > 2*m_args.D_SAFE) )
+                if ( (m_dyn_obst_state(n,15) < 0.0) && (m_dyn_obst_state(n, 13) > m_args.D_SAFE) )
                 {
                     tcpa_passed_counter+=1;
                 }
@@ -1352,6 +1311,7 @@ namespace Control
             }
           }
 
+          
 
           //! Collaborative collision avoidance algorithm
           void collabColav(double& ref)
@@ -1401,6 +1361,7 @@ namespace Control
                     in_negotiation = false;
                     others_ready = false;
                     cost_prev = std::numeric_limits<double>::infinity();  
+                    invited_to_negotiate = false;
                 }
             }
             else

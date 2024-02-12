@@ -168,6 +168,8 @@ namespace DUNE
 	double Chi_ca_last_;
 	double P_ca_last_;
 
+	double D_CLOSE_;
+
 	/**
 	 * @brief Sets the prediction horizon [sec].
 	 */
@@ -220,7 +222,7 @@ namespace DUNE
 	// Tuning Parameters
 	double P_;
 	double Q_;
-	double D_CLOSE_;
+	//double D_CLOSE_;
 	double D_SAFE_;
 	double K_COLL_;
 	double PHI_AH_;

@@ -133,8 +133,8 @@ namespace DUNE
 			{
 				// Simulate ASV trajectory for current control behavior
 				asv->linearPredictionInger(asv_state, u_d*P_ca_[j], Angles::normalizeRadian(psi_d_ + Chi_ca_[i]));
-
-				cost_i = -1;
+				
+				cost_i = 0; //-1;
 				for (int k=0; k<n_obst; k++)
 				{
 					cost_k = costFunction(Chi_ca_[i], P_ca_[j], u_os_prev, psi_os_prev, k);
@@ -274,7 +274,6 @@ namespace DUNE
 
 			}
 
-			
 			H0 = (K_COLL_/DENOM_)*sigmoid(C*R) + (KAPPA_/DENOM_)*mu;
 
 			if (H0 > H1)
@@ -329,7 +328,8 @@ namespace DUNE
 
 	double simulationBasedMpc::sigmoid(double value)
 	{
-		return 1.0 / (1.0 + exp(-value));
+		// An activation function used as a normalization tool
+		return value / (1.0 + std::abs(value));
 	}
 
 
