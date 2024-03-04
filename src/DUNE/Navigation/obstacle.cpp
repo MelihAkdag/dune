@@ -16,7 +16,7 @@
 /**
  *    \file   obstacle.cpp
  *    \brief  Defines the obstacle class.
- *    \author Inger Berge Hagen, Giorgio D. K. M. Kufoalor
+ *    \author Inger Berge Hagen, Giorgio D. K. M. Kufoalor, adapted by Melih Akdağ
  */ 
 
 #include <DUNE/DUNE.hpp>
@@ -46,10 +46,10 @@ namespace DUNE
 		w = C_ + D_;
 
 		calculatePosOffsets();
-
+		
 		psi_ = normalize(Angles::radians(state(10)));
-		x_(0) = state(0) + os_x*std::cos(psi_) - os_y*std::sin(psi_);
-		y_(0) = state(1) + os_x*std::sin(psi_) + os_y*std::cos(psi_);
+		x_(0) = state(0); 
+		y_(0) = state(1);
 		u_(0) = state(11);
 		v_(0) = state(4);
 		
@@ -57,6 +57,8 @@ namespace DUNE
 		r12_ = -std::sin(psi_);
 		r21_ = std::sin(psi_);
 		r22_ = std::cos(psi_);
+
+		rule = state(16);
 
 		calculateTrajectory();
 	}

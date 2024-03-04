@@ -24,7 +24,7 @@
 // https://github.com/LSTS/dune/blob/master/LICENCE.md and                  *
 // http://ec.europa.eu/idabc/eupl.html.                                     *
 //***************************************************************************
-// Author: Alberto Dallolio                                                 *
+// Author: Alberto Dallolio, adapted by Melih Akdağ.                        *
 //***************************************************************************
 
 // Local headers.
@@ -69,18 +69,18 @@ namespace DUNE
     void ownship::linearPredictionInger(const std::vector<double>& state, double u_d, double psi_d)
     {
       m_psi(0) = normalize_angle(psi_d);
-      m_x(0) = state[0] + m_os_x*cos(state[2]) - m_os_y*sin(state[2]);
-      m_y(0) = state[1] + m_os_x*sin(state[2]) + m_os_y*cos(state[2]);
-      m_u(0) = state[3];
+      m_x(0) = state[0];
+      m_y(0) = state[1];
+      m_u(0) = u_d;
       m_v(0) = state[4];
       m_r(0) = state[5];
 
       double r11, r12, r21, r22;
 
-      r11 = cos(psi_d);
-      r12 = -sin(psi_d);
-      r21 = sin(psi_d);
-      r22 = cos(psi_d);
+      r11 = cos(m_psi(0));
+      r12 = -sin(m_psi(0));
+      r21 = sin(m_psi(0));
+      r22 = cos(m_psi(0));
 
       for (int i = 0; i < m_n_samp-1; i++)
       {

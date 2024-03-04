@@ -29,7 +29,7 @@ namespace DUNE
 			~velocityObstacle();
 		
 		
-			void create(double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI);
+			void create(double D_CLOSE, double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI);
 		
 			std::tuple<double, double, double> velocityUpdate(double psi_des, double U_des, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
 			
@@ -38,7 +38,10 @@ namespace DUNE
 			Eigen::VectorXd Chi_ca_;
 			Eigen::VectorXd P_ca_;
 			
-			
+			/**
+			 * @brief Returns the distance where COLREGS are said to apply [m].
+			 */
+			double getDClose();
 		  /**
 		   * @brief Returns the minimum distance which is considered as safe [m].
 		   */
@@ -82,6 +85,7 @@ namespace DUNE
 			 */
 			double getKdChi();
 
+			void setDClose(double d_close);
 			void setDSafe(double d_safe);
 			void setKColl(double k_coll);
 			void setPhiAH(double phi_AH);
@@ -92,15 +96,15 @@ namespace DUNE
 			void setKdP(double K_dP);
 			void setKdChi(double K_dChi);
 
+			double D_CLOSE_;
+
 			private:
 			Eigen::Vector2d computeVelocityDesired(double psi_des, double U_des);
 			std::tuple<double, double> calculateDesiredCourseAndSpeed(const Eigen::Vector2d& V_opt);
-			std::tuple<double, double, double> intersect(const Eigen::Vector2d& Ps, double psi_des, double U_des, const Math::Matrix& VO_all);
+			std::tuple<double, double, double> intersect(const Eigen::Vector2d& Ps, const Eigen::Vector2d& Vs, double psi_des, double U_des, const Math::Matrix& VO_all);
 			bool in_between(double theta_right, double theta_dif, double theta_left);
 			double distance(const Eigen::Vector2d& Ps, const Eigen::Vector2d& Po);
 			std::tuple<double, double> calculateCPA(const Eigen::Vector2d& Ps, const Eigen::Vector2d& Vs, const Eigen::Vector2d& Po, const Eigen::Vector2d& Vo);
-			double collisionRiskIndex(double dcpa, double tcpa);
-			double sigmoid(double value);
 			inline double normalize_angle(double angle); 
 			inline double normalize_angle_360(double angle);
 
@@ -113,7 +117,6 @@ namespace DUNE
 			double KAPPA_;
 			double K_DP_;
 			double K_DCHI_;
-			double DENOM_;
 		};
   }
 }

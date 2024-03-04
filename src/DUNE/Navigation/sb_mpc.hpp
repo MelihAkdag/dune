@@ -16,7 +16,7 @@
 /**
  *    \file   sb_mpc.h
  *    \brief  Declares the simulationBasedMpc class.
- *    \author Inger Berge Hagen, Giorgio D. K. M. Kufoalor
+ *    \author Inger Berge Hagen, Giorgio D. K. M. Kufoalor, adapted by Melih Akdağ.
  */
 
 #ifndef DUNE_NAVIGATION_SB_MPC_HPP_INCLUDED_
@@ -155,7 +155,7 @@ namespace DUNE
 	 */
 	Eigen::VectorXd getPCA();
 
-
+	double D_CLOSE_;
 
 	Eigen::VectorXd Chi_ca_;
 	Eigen::VectorXd P_ca_;
@@ -168,8 +168,6 @@ namespace DUNE
 	double Chi_ca_last_;
 	double P_ca_last_;
 
-	double D_CLOSE_;
-
 	/**
 	 * @brief Sets the prediction horizon [sec].
 	 */
@@ -180,7 +178,6 @@ namespace DUNE
 	void setDt(double dt);
 
 	void setP(double p);
-	void setP_G(double p_g);
 	void setQ(double q);
 	void setDClose(double d_close);
 	void setDSafe(double d_safe);
@@ -208,9 +205,7 @@ namespace DUNE
 	inline double normalize_angle_360(double angle); 
 	inline double angle_diff(double a,double b); // Computes angle difference
 	void rot2d(double yaw, Eigen::Vector2d &res);
-
-	double sigmoid(double value);
-
+	
 	double trueBearing(double self_x, double self_y, double ts_x, double ts_y);
 	double relativeBearing(double self_x, double self_y, double self_psi, double ts_x, double ts_y);
 	double colregRule(double self_x, double self_y, double self_cog, double self_sog, double ts_x, double ts_y, double ts_cog, double ts_sog);
@@ -222,7 +217,6 @@ namespace DUNE
 	// Tuning Parameters
 	double P_;
 	double Q_;
-	//double D_CLOSE_;
 	double D_SAFE_;
 	double K_COLL_;
 	double PHI_AH_;
@@ -236,8 +230,6 @@ namespace DUNE
 	double K_DCHI_;
 	double K_DCHI_SB_;
 	double K_DCHI_P_;
-	double DENOM_;
-
 	
 	ownship *asv;
 	std::vector<obstacle*> obst_vect;

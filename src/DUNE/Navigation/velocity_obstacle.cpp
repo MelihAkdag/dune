@@ -18,6 +18,7 @@ namespace DUNE
   {
     //! Constructor.
     velocityObstacle::velocityObstacle(void):
+    D_CLOSE_(0.0),
     D_SAFE_(0.0),
     K_COLL_(0.0),
     PHI_AH_(0.0),
@@ -35,8 +36,9 @@ namespace DUNE
     }
 	
 	void
-	velocityObstacle::create(double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI)
+	velocityObstacle::create(double D_CLOSE, double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI)
 	{
+		D_CLOSE_ = D_CLOSE;
 		D_SAFE_ = D_SAFE;
 		K_COLL_ = K_COLL;
 		PHI_AH_ = PHI_AH;
@@ -46,8 +48,6 @@ namespace DUNE
 		KAPPA_ = KAPPA;
 		K_DP_ = K_DP;
 		K_DCHI_ = K_DCHI;
-
-		DENOM_ = K_COLL_ + KAPPA_ + K_DP_ + K_DCHI_;
 
 		Chi_ca_.resize(13);
 		Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
@@ -87,7 +87,7 @@ namespace DUNE
 		
 		// A matrix with a row of [trans_Vo_Vs(0), trans_Vo_Vs(1), bound_left(0), bound_left(1), bound_right(0), bound_right(1), dist, 2*obs_radius] for each obstacle
 		Math::Matrix VO_all;
-		VO_all.resize(obst_states.rows(), 12); 
+		VO_all.resize(obst_states.rows(), 13); 
 
 		Ps(0) = asv_state[0];
 		Ps(1) = asv_state[1];
@@ -114,14 +114,14 @@ namespace DUNE
 
 			dist = distance(Ps, Po);
 			theta_o_s = atan2(Po(1)-Ps(1), Po(0)-Ps(0));
-			if (2*obs_radius > dist)
+			if (obs_radius > dist) //if (2*obs_radius > dist)
 			{
-				dist = 2*obs_radius;
+				dist = obs_radius; //dist = 2*obs_radius;
 			}
-			theta_obst = asin(2*obs_radius/dist);
+			theta_obst = asin(obs_radius/dist); //theta_obst = asin(2*obs_radius/dist);
 			theta_obst_left = theta_o_s + theta_obst;
 			theta_obst_right = theta_o_s - theta_obst;
-			
+
 			VO_all(i, 0) = trans_Vo_Vs(0);
 			VO_all(i, 1) = trans_Vo_Vs(1);
 			VO_all(i, 2) = std::cos(theta_obst_left);
@@ -129,25 +129,26 @@ namespace DUNE
 			VO_all(i, 4) = std::cos(theta_obst_right);
 			VO_all(i, 5) = std::sin(theta_obst_right);
 			VO_all(i, 6) = dist;
-			VO_all(i, 7) = 2*obs_radius;
+			VO_all(i, 7) = obs_radius; //VO_all(i, 7) = 2*obs_radius;
 			VO_all(i, 8) = Vo(0);
 			VO_all(i, 9) = Vo(1);
 			VO_all(i, 10) = Po(0);
 			VO_all(i, 11) = Po(1);
+			VO_all(i, 12) = obst_states(i, 16); // Self vessel's COLREG rule responsibility towards the obstacle
 		}
-		std::tie(psi_desired, U_desired, cost) = intersect(Ps, psi_des, U_des, VO_all);
+		std::tie(psi_desired, U_desired, cost) = intersect(Ps, Vs, psi_des, U_des, VO_all);
 		
-		double psi_os_temp = normalize_angle(psi_desired) - asv_state[2];
-		double u_os_temp = U_desired / asv_state[3];
-		//std::cout << "Psi:" << asv_state[2] << " + Psi_off:" << psi_os_temp << " = " << Angles::normalizeRadian(asv_state[2]+psi_os_temp) << " Psi_des:" << psi_desired << std::endl;
-		//std::cout << "U:" << asv_state[3] << " + U_off:" << u_os_temp << " = "  << asv_state[3]*u_os_temp << " U_des:" << U_desired << std::endl; 
+		double psi_os_temp = normalize_angle(psi_desired) - normalize_angle(psi_des); //asv_state[2];
+		double u_os_temp = U_desired / U_des; //asv_state[3];
+		//std::cout << "Psi_d:" << psi_des << " + Psi_off:" << psi_os_temp << " = " << Angles::normalizeRadian(psi_des+psi_os_temp) << " Psi_des:" << psi_desired << std::endl;
+		//std::cout << "U_d:" << U_des << " + U_off:" << u_os_temp << " = "  << U_des*u_os_temp << " U_des:" << U_desired << std::endl; 
 		return std::make_tuple(psi_os_temp, u_os_temp, cost);
 	}
 
 
 
 	std::tuple<double, double, double> 
-	velocityObstacle::intersect(const Eigen::Vector2d& Ps, double psi_des, double U_des, const Math::Matrix& VO_all)
+	velocityObstacle::intersect(const Eigen::Vector2d& Ps, const Eigen::Vector2d& Vs, double psi_des, double U_des, const Math::Matrix& VO_all)
 	{
 		Eigen::Vector2d V_desired = computeVelocityDesired(psi_des, U_des);
 
@@ -157,34 +158,29 @@ namespace DUNE
 		std::vector<Eigen::Vector2d> unsuitable_V;
 		Eigen::Vector2d new_v;
 
-		//for (double theta=0.0; theta<2*M_PI; theta+=10*DEG2RAD)
-		//{
-		//	for (double rad=0.02; rad<norm_v+0.02; rad+=(norm_v/10.0))
-		//	{
 		for (int i=0; i<Chi_ca_.size(); i++)
 		{
 			for (int j=0; j<P_ca_.size(); j++)
 			{
-				//new_v(0) = rad * std::cos(theta);
-				//new_v(1) = rad * std::sin(theta);
 				new_v(0) = U_des*P_ca_[j] * std::cos(Angles::normalizeRadian(psi_des+Chi_ca_[i]));
 				new_v(1) = U_des*P_ca_[j] * std::sin(Angles::normalizeRadian(psi_des+Chi_ca_[i]));
 				bool suit = true;
 				
-				for (int i=0; i<VO_all.rows(); i++)
+				for (int k=0; k<VO_all.rows(); k++)
 				{
-					double trans_Vo_Vs_0 = VO_all(i,0);
-					double trans_Vo_Vs_1 = VO_all(i,1);
-					double theta_obst_left_0 = VO_all(i,2);
-					double theta_obst_left_1 = VO_all(i,3);
-					double theta_obst_right_0 = VO_all(i,4);
-					double theta_obst_right_1 = VO_all(i,5);
+					double trans_Vo_Vs_0 = VO_all(k,0);
+					double trans_Vo_Vs_1 = VO_all(k,1);
+					double theta_obst_left_0 = VO_all(k,2);
+					double theta_obst_left_1 = VO_all(k,3);
+					double theta_obst_right_0 = VO_all(k,4);
+					double theta_obst_right_1 = VO_all(k,5);
 					double dif_0 = new_v(0)+Ps(0)-trans_Vo_Vs_0;
 					double dif_1 = new_v(1)+Ps(1)-trans_Vo_Vs_1;
 					double theta_dif = atan2(dif_1, dif_0);
 					double theta_right = atan2(theta_obst_right_1, theta_obst_right_0);
 					double theta_left = atan2(theta_obst_left_1, theta_obst_left_0);
 					
+					//if ( (VO_all(k,6) <= D_CLOSE_) && (in_between(theta_right, theta_dif, theta_left)) )
 					if (in_between(theta_right, theta_dif, theta_left))
 					{
 						suit = false;
@@ -234,28 +230,30 @@ namespace DUNE
 
 		Eigen::Vector2d Vs_opt; 
 		double cost = std::numeric_limits<double>::infinity();
-		int rule_violation_counter=0;
-
 
 		if (!suitable_V.empty()) 	// Suitable velocity found
 		{
 			for (const auto& vel_suitable : suitable_V)
 			{
 				// Check whether ownship is turning to port
-				double psi_s = atan2(V_desired(1), V_desired(0));
-				psi_s = normalize_angle_360(psi_s);
+				double psi_ref = atan2(V_desired(1), V_desired(0));
+				psi_ref = normalize_angle(psi_ref);
+				
+				double psi_s = atan2(Vs(1), Vs(0));
+				psi_s = normalize_angle(psi_s);
 
 				double psi_next = atan2(vel_suitable(1), vel_suitable(0));
-				psi_next = normalize_angle_360(psi_next);
+				psi_next = normalize_angle(psi_next);
 
-				int port_turn = 0;
-				if (psi_next - psi_s < 0)
+				double mu = 0.0;
+				bool port_turn = false;
+				if (normalize_angle(psi_next - psi_s) < 0)
 				{
-					port_turn = 1;
+					port_turn = true;
 				}
 
-				// Calculate total collision risk based on CPA and fuzzy logic for each target ship
-				double cr_total = 0.0;
+				double cost_ = 0.0;
+				
 				for (int i=0; i<VO_all.rows(); i++)
 				{
 					Eigen::Vector2d Vo, Po;
@@ -263,21 +261,27 @@ namespace DUNE
 					Vo(1) = VO_all(i,9);
 					Po(0) = VO_all(i,10);
 					Po(1) = VO_all(i,11);
-					double dcpa, tcpa, collision_risk;
-					std::tie(dcpa, tcpa) = calculateCPA(Ps, vel_suitable, Po, Vo);
-					collision_risk = collisionRiskIndex(dcpa, tcpa);
-					cr_total += collision_risk;
-				}
 
-				double cost_ = 0.0;
-				//cost_ = 0.2*(distance(vel_suitable, V_desired)) + 0.3*port_turn + 0.5*(1/VO_all.rows())*cr_total;
-				//cost_ = 0.1*std::pow((psi_s-psi_next),2) + 0.2*std::pow((V_desired.norm()-vel_suitable.norm()),2) + 0.3*port_turn + 0.4*(1/VO_all.rows())*cr_total;
-				cost_ = (K_DCHI_/DENOM_)*std::pow((psi_s-psi_next),2) + (K_DP_/DENOM_)*std::pow((V_desired.norm()-vel_suitable.norm()),2) + (KAPPA_/DENOM_)*port_turn + (K_COLL_/DENOM_)*(1/VO_all.rows())*cr_total;
-				
-				if (cost_ < cost)
-				{
-					cost = cost_;
-					Vs_opt = vel_suitable;
+					double rule = VO_all(i, 12); // rule => 0.0=None, 1.0=HO-GW, 2.0=ON-SO, 3.0=OG, 4.0=CR-SO, 5.0=CR-GW
+
+					if ((VO_all(i,6) <= D_CLOSE_) && (rule == 1.0 || rule == 4.0 || rule == 5.0) && port_turn==true)
+					{
+						mu = KAPPA_*std::fabs(normalize_angle(psi_s - psi_next));
+					}
+					else
+					{
+						mu = 0.1*KAPPA_*std::fabs(normalize_angle(psi_s - psi_next));
+					}
+
+					cost_ = K_DP_*std::pow((1-vel_suitable.norm()),2) + mu;
+
+					//std::cout << "Psi_next:" << normalize_angle_360(psi_next)*RAD2DEG << " Cost_obst:" <<  cost_obst << " Cost:" << cost_ <<std::endl;
+
+					if (cost_ < cost)
+					{
+						cost = cost_;
+						Vs_opt = vel_suitable;
+					}
 				}
 			}
 		}
@@ -439,23 +443,23 @@ namespace DUNE
 		alpha_r = atan2((Po(1)-Ps(1)), (Po(0)-Ps(0))) + delta_alpha; 
 
 		// Chi_r (Relative course of targetship - from 0 to U_r)
-		if ((Vo(1) - Vs(1) >= 0) && (Vs(0) - Vs(0) >= 0))
+		if ((Vo(1) - Vs(1) >= 0) && (Vo(0) - Vs(0) >= 0))
 		{
 		    delta_chi = 0;
 		}
-		else if ((Vs(1) - Vs(1) >= 0) && (Vs(0) - Vs(0) < 0))
+		else if ((Vo(1) - Vs(1) >= 0) && (Vo(0) - Vs(0) < 0))
 		{
 		    delta_chi = 0;
 		}
-		else if ((Vs(1) - Vs(1) < 0) && (Vs(0) - Vs(0) < 0))
+		else if ((Vo(1) - Vs(1) < 0) && (Vo(0) - Vs(0) < 0))
 		{
 		    delta_chi = 2*M_PI;
 		}
-		else if ((Vs(1) - Vs(1) < 0) && (Vs(0) - Vs(0) >= 0))
+		else if ((Vo(1) - Vs(1) < 0) && (Vo(0) - Vs(0) >= 0))
 		{
 		    delta_chi = 2*M_PI;
 		}
-		chi_r = atan2((Vs(1)-Vs(1)), (Vs(0)-Vs(0))) + delta_chi;
+		chi_r = atan2((Vo(1)-Vs(1)), (Vo(0)-Vs(0))) + delta_chi;
 
 		// beta
         beta = chi_r - alpha_r - M_PI;
@@ -465,29 +469,6 @@ namespace DUNE
         tcpa = (D_r * cos(beta)) / (std::abs(U_r)+1);
 
         return std::make_tuple(dcpa, tcpa);
-	}
-
-	double 
-	velocityObstacle::collisionRiskIndex(double dcpa, double tcpa)
-	{
-		double cri;
-
-		if (dcpa <= D_SAFE_ && tcpa <= 180)
-		{
-			cri = std::exp(0.001 * (D_SAFE_ - dcpa + 180 - tcpa)) - 1;
-		}
-
-		else
-		{
-			cri = 0.0;
-		}
-		return cri;
-	}
-
-
-	double velocityObstacle::sigmoid(double value)
-	{
-		return 1.0 / (1.0 + exp(-value));
 	}
 
 

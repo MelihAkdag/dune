@@ -24,7 +24,7 @@
 // https://github.com/LSTS/dune/blob/master/LICENCE.md and                  *
 // http://ec.europa.eu/idabc/eupl.html.                                     *
 //***************************************************************************
-// Author: Alberto Dallolio                                                 *
+// Author: Alberto Dallolio, adapted by Melih Akdağ.                        *
 //***************************************************************************
 
 #ifndef DUNE_NAVIGATION_AUTONAUT_HPP_INCLUDED_
