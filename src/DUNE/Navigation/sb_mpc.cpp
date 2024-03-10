@@ -262,6 +262,10 @@ namespace DUNE
 				{
 					d_safe_i = 0.5*d_safe_i;
 				}
+				else if (rule == 3.0)
+				{
+					d_safe_i = 1.5*d_safe_i;
+				}
         
 				if (dist < d_safe_i)
 				{

@@ -67,6 +67,9 @@ namespace Control
 
           bool collab_colav;
           int colav_algorithm;
+          int vo_method;
+          int guidance_method;
+          bool update_dclose;
 
           // Sbmpc parameters
           double T, DT, P, Q, D_CLOSE, D_SAFE, K_COLL, 
@@ -209,6 +212,14 @@ namespace Control
             .defaultValue("1")
             .description("COLAV algorithm 1=SB-MPC, 2=Velocity Obstacle");
 
+            param("VO Method", m_args.vo_method)
+            .defaultValue("1")
+            .description("VO framework 1=VO, 2=Reciprocal VO");
+
+            param("Guidance Method", m_args.guidance_method)
+            .defaultValue("1")
+            .description("Guidance method 1=Pure pursuit, 2=LOS");
+
             param("Corridor -- Width", m_args.corridor)
             .minimumValue("1.0")
             .maximumValue("500.0")
@@ -275,6 +286,10 @@ namespace Control
             .maximumValue("10.0")
             .defaultValue("3.0")
             .description("Weight on Distance at Evaluation Instant.");
+
+            param("Update COLREG distance with the furthest obstacle", m_args.update_dclose)
+            .defaultValue("false")
+            .description("Update DCLOSE with the furthest obstacle.");
   
             param("COLREGS Distance", m_args.D_CLOSE)
             .units(Units::Meter)
@@ -453,12 +468,11 @@ namespace Control
                         m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR,
                         m_args.KAPPA, m_args.K_P, m_args.K_CHI, m_args.K_DP, m_args.K_DCHI, m_args.K_DCHI_SB, m_args.K_DCHI_P);
             m_mmsi = m_args.mmsi;
-            velocity_obstacle.create(m_args.D_CLOSE, m_args.D_SAFE, m_args.K_COLL, m_args.PHI_AH, m_args.PHI_OT, m_args.PHI_HO, m_args.PHI_CR, 
-                                    m_args.KAPPA, m_args.K_DP, m_args.K_DCHI);
+            velocity_obstacle.create(m_args.D_CLOSE, m_args.D_SAFE, m_args.KAPPA, m_args.K_P, m_args.vo_method);
             velocity_obstacle.Vs_opt_prev(0) = m_asv_state[3] * std::cos(m_asv_state[2]);
             velocity_obstacle.Vs_opt_prev(1) = m_asv_state[3] * std::sin(m_asv_state[2]);
           }
-  
+
 
           void
           reset(void)
@@ -633,11 +647,14 @@ namespace Control
                     m_dyn_obst_state(n, 12) = 255;  // Change negotiation state to default if there is no incoming message from the obstacle.
                 }
             }
-            if (furthest_obst > m_args.D_CLOSE)
+            if (m_args.update_dclose==true)
             {
-                sb_mpc.D_CLOSE_ = furthest_obst+250;
-                velocity_obstacle.D_CLOSE_ = furthest_obst+250;
-                m_args.D_CLOSE = furthest_obst+250;
+                if (furthest_obst > m_args.D_CLOSE)
+                {
+                    sb_mpc.D_CLOSE_ = furthest_obst+100;
+                    velocity_obstacle.D_CLOSE_ = furthest_obst+100;
+                    m_args.D_CLOSE = furthest_obst+100;
+                }
             }
           }
 
@@ -1432,60 +1449,63 @@ namespace Control
           //! From base class PathController
           void
           step(const IMC::EstimatedState& state, const TrackingState& ts)
-          {        
-            /*
-            // Note:
-            // cross-track position (lateral error) = ts.track_pos.y
-            // and along-track position = ts.track_pos.x
-            double k1;
-            double k2;
-            double k3;
-            double k4;
-            double loc_1 = m_args.lookahead * ts.track_pos.y;
-            double loc_2 = std::pow(m_args.lookahead, 2);
-            double timestep = m_last_step.getDelta();
-            double kcorr = ts.track_pos.y / m_args.corridor;
-            double akcorr = std::fabs(kcorr);
-            
-            if (akcorr > 1)
+          { 
+            if (m_args.guidance_method == 1)        //Pure pursuit guidance
             {
-              // Outside corridor, m_integrator OFF
-              m_integrator = 0.0;
+                m_des_heading = ts.los_angle; 
             }
-            else
+            else if (m_args.guidance_method == 2)   // LOS guidance
             {
-              // Inside corridor, m_integrator ON
-              // RK4 integration
-              k1 = computeK(loc_1, loc_2, ts.track_pos.y, 0.0);
-              k2 = computeK(loc_1, loc_2, ts.track_pos.y, k1/2);
-              k3 = computeK(loc_1, loc_2, ts.track_pos.y, k2/2);
-              k4 = computeK(loc_1, loc_2, ts.track_pos.y, k3);
-              m_integrator += timestep * (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+                // Note:
+                // cross-track position (lateral error) = ts.track_pos.y
+                // and along-track position = ts.track_pos.x
+                double k1;
+                double k2;
+                double k3;
+                double k4;
+                double loc_1 = m_args.lookahead * ts.track_pos.y;
+                double loc_2 = std::pow(m_args.lookahead, 2);
+                double timestep = m_last_step.getDelta();
+                double kcorr = ts.track_pos.y / m_args.corridor;
+                double akcorr = std::fabs(kcorr);
+                
+                if (akcorr > 1)
+                {
+                  // Outside corridor, m_integrator OFF
+                  m_integrator = 0.0;
+                }
+                else
+                {
+                  // Inside corridor, m_integrator ON
+                  // RK4 integration
+                  k1 = computeK(loc_1, loc_2, ts.track_pos.y, 0.0);
+                  k2 = computeK(loc_1, loc_2, ts.track_pos.y, k1/2);
+                  k3 = computeK(loc_1, loc_2, ts.track_pos.y, k2/2);
+                  k4 = computeK(loc_1, loc_2, ts.track_pos.y, k3);
+                  m_integrator += timestep * (k1 + 2 * k2 + 2 * k3 + k4) / 6;
+                }
+                // ILOS guidance
+                if (ts.track_pos.x > ts.track_length)
+                {
+                  // Past the track goal: this should never happen but ...
+                  m_des_heading = getBearing(state, ts.end);
+                }
+                else if (akcorr > 1 && m_args.out_vec && !m_args.out_los)
+                {
+                  // Outside corridor, m_integrator OFF, vector field guidance
+                  m_des_heading = ts.track_bearing - std::atan(m_gain * ts.track_pos.y);
+                }
+                else if (akcorr > 1 && !m_args.out_vec && m_args.out_los)
+                {
+                  // Outside corridor, m_integrator OFF, LOS guidance
+                  m_des_heading = ts.track_bearing - std::atan(ts.track_pos.y / m_args.lookahead);
+                }
+                else
+                {
+                  // Inside corridor, m_integrator ON, ILOS guidance
+                  m_des_heading = ts.track_bearing - std::atan((ts.track_pos.y + m_args.int_gain * m_integrator) / m_args.lookahead);
+                }
             }
-            // ILOS guidance
-            if (ts.track_pos.x > ts.track_length)
-            {
-              // Past the track goal: this should never happen but ...
-              m_des_heading = getBearing(state, ts.end);
-            }
-            else if (akcorr > 1 && m_args.out_vec && !m_args.out_los)
-            {
-              // Outside corridor, m_integrator OFF, vector field guidance
-              m_des_heading = ts.track_bearing - std::atan(m_gain * ts.track_pos.y);
-            }
-            else if (akcorr > 1 && !m_args.out_vec && m_args.out_los)
-            {
-              // Outside corridor, m_integrator OFF, LOS guidance
-              m_des_heading = ts.track_bearing - std::atan(ts.track_pos.y / m_args.lookahead);
-            }
-            else
-            {
-              // Inside corridor, m_integrator ON, ILOS guidance
-              m_des_heading = ts.track_bearing - std::atan((ts.track_pos.y + m_args.int_gain * m_integrator) / m_args.lookahead);
-            }
-            */
-
-            m_des_heading = ts.los_angle; // Pure pursuit guidance
 
             int utc_time = ((uint32_t)Clock::getSinceEpoch());
             checkTCPAs();

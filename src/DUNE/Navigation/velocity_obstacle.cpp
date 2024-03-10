@@ -20,14 +20,8 @@ namespace DUNE
     velocityObstacle::velocityObstacle(void):
     D_CLOSE_(0.0),
     D_SAFE_(0.0),
-    K_COLL_(0.0),
-    PHI_AH_(0.0),
-	PHI_OT_(0.0),
-	PHI_HO_(0.0),
-	PHI_CR_(0.0),
 	KAPPA_(0.0),
-	K_DP_(0.0),
-	K_DCHI_(0.0)
+	K_P_(0.0)
     {}
 
     //! Destructor.
@@ -36,18 +30,12 @@ namespace DUNE
     }
 	
 	void
-	velocityObstacle::create(double D_CLOSE, double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI)
+	velocityObstacle::create(double D_CLOSE, double D_SAFE, double KAPPA, double K_P, int VO_METHOD)
 	{
 		D_CLOSE_ = D_CLOSE;
 		D_SAFE_ = D_SAFE;
-		K_COLL_ = K_COLL;
-		PHI_AH_ = PHI_AH;
-		PHI_OT_ = PHI_OT;
-		PHI_HO_ = PHI_HO;
-		PHI_CR_ = PHI_CR;
 		KAPPA_ = KAPPA;
-		K_DP_ = K_DP;
-		K_DCHI_ = K_DCHI;
+		K_P_ = K_P;
 
 		Chi_ca_.resize(13);
 		Chi_ca_ << -90.0,-75.0,-60.0,-45.0,-30.0,-15.0,0.0,15.0,30.0,45.0,60.0,75.0,90.0;
@@ -55,6 +43,8 @@ namespace DUNE
 
 		P_ca_.resize(4);
 		P_ca_ << 0.0, 0.25, 0.5, 1.0;
+
+		vo_method = VO_METHOD; 	// VO=1, RVO=2
 	}
 
 
@@ -104,13 +94,16 @@ namespace DUNE
 			Vo(0) = obst_states(i,11)*std::cos(Angles::radians(obst_states(i,10)));
 			Vo(1) = obst_states(i,11)*std::sin(Angles::radians(obst_states(i,10)));
 
-			// RVO
-			trans_Vo_Vs(0) = Ps(0)+0.5*(Vo(0)+Vs(0));
-			trans_Vo_Vs(1) = Ps(1)+0.5*(Vo(1)+Vs(1));
-
-			// VO
-			//trans_Vo_Vs(0) = Ps(0)+Vo(0);
-			//trans_Vo_Vs(1) = Ps(1)+Vo(1);
+			if (vo_method==1)	// Classical VO
+			{
+				trans_Vo_Vs(0) = Ps(0)+Vo(0);
+				trans_Vo_Vs(1) = Ps(1)+Vo(1);
+			}	
+			else if (vo_method==2)	// Reciprocal VO
+			{
+				trans_Vo_Vs(0) = Ps(0)+0.5*(Vo(0)+Vs(0));
+				trans_Vo_Vs(1) = Ps(1)+0.5*(Vo(1)+Vs(1));
+			}
 
 			dist = distance(Ps, Po);
 			theta_o_s = atan2(Po(1)-Ps(1), Po(0)-Ps(0));
@@ -273,7 +266,7 @@ namespace DUNE
 						mu = 0.1*KAPPA_*std::fabs(normalize_angle(psi_s - psi_next));
 					}
 
-					cost_ = K_DP_*std::pow((1-vel_suitable.norm()),2) + mu;
+					cost_ = K_P_*std::pow((1-vel_suitable.norm()),2) + mu;
 
 					//std::cout << "Psi_next:" << normalize_angle_360(psi_next)*RAD2DEG << " Cost_obst:" <<  cost_obst << " Cost:" << cost_ <<std::endl;
 

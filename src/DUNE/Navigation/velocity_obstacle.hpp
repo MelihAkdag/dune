@@ -29,7 +29,7 @@ namespace DUNE
 			~velocityObstacle();
 		
 		
-			void create(double D_CLOSE, double D_SAFE, double K_COLL, double PHI_AH, double PHI_OT, double PHI_HO, double PHI_CR, double KAPPA, double K_DP, double K_DCHI);
+			void create(double D_CLOSE, double D_SAFE, double KAPPA, double K_P, int VO_METHOD);
 		
 			std::tuple<double, double, double> velocityUpdate(double psi_des, double U_des, const std::vector<double>& asv_state, const Math::Matrix& obst_states);
 			
@@ -42,61 +42,31 @@ namespace DUNE
 			 * @brief Returns the distance where COLREGS are said to apply [m].
 			 */
 			double getDClose();
-		  /**
-		   * @brief Returns the minimum distance which is considered as safe [m].
-		   */
-		  double getDSafe();
-		  /**
-		   * @brief Returns the collision cost
-		   */
-		  double getKColl();
 			/**
-			 * @brief Returns the angle within which an obstacle is said to be ahead
-			 * [deg].
-			 */
-			double getPhiAH();
-			/**
-			 * @brief Returns the angle outside of which an obstacle will be said to
-			 * be overtaking, if the speed of the obstacle is larger than the ship's
-			 * own speed.
-			 */
-			double getPhiOT();
-			/**
-			 * @brief Returns the angle within which an obstacle is said to be head
-			 * on [deg].
-			 */
-			double getPhiHO();
-			/**
-			 * @brief Returns the angle outside of which an obstacle is said to be
-			 * crossing, if it is on the starboard side, heading towards the ship
-			 * and not overtaking the ship.
-			 */
-			double getPhiCR();
+	 		* @brief Returns the minimum distance which is considered as safe [m].
+	 		*/
+			double getDSafe();
 			/**
 			 * @brief Returns the cost of not complying with the COLREGS.
 			 */
 			double getKappa();
 			/**
-			 * @brief Returns the cost of changing the speed offset.
+			 * @brief Returns the cost of deviating from the nominal speed.
 			 */
-			double getKdP();
+			double getKP();
 			/**
-			 * @brief Returns the cost of changing the heading offset.
+			 * @brief Returns the VO method.
 			 */
-			double getKdChi();
-
+			int getVoMethod();
+			
 			void setDClose(double d_close);
 			void setDSafe(double d_safe);
-			void setKColl(double k_coll);
-			void setPhiAH(double phi_AH);
-			void setPhiOT(double phi_OT);
-			void setPhiHO(double phi_HO);
-			void setPhiCR(double phi_CR);
 			void setKappa(double kappa);
-			void setKdP(double K_dP);
-			void setKdChi(double K_dChi);
+			void setKdP(double K_P);
+			void setVoMethod(int vo_method);
 
 			double D_CLOSE_;
+			int vo_method;
 
 			private:
 			Eigen::Vector2d computeVelocityDesired(double psi_des, double U_des);
@@ -109,14 +79,8 @@ namespace DUNE
 			inline double normalize_angle_360(double angle);
 
 			double D_SAFE_;
-			double K_COLL_;
-			double PHI_AH_;
-			double PHI_OT_;
-			double PHI_HO_;
-			double PHI_CR_;
 			double KAPPA_;
-			double K_DP_;
-			double K_DCHI_;
+			double K_P_;
 		};
   }
 }
